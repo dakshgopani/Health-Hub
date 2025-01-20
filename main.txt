@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+
+// void main(){
+//   runApp(MaterialApp(
+//     home: Scaffold(
+//       appBar: AppBar(
+//         title: const Text("My First Application"),
+//         centerTitle: true,
+//         backgroundColor: Colors.red,
+//       ),
+//       body: const Center(
+//         child: Text("Hello World my name is Daksh Ankur Gopani and I live in India",style: TextStyle(fontSize: 20,fontWeight: FontWeight.normal,letterSpacing: 1.0,color: Colors.grey,fontFamily: 'Ubuntu'),),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: (){ },
+//         backgroundColor: Colors.blue[50],
+//         child: const Text("Click"),
+//       ),
+//     ),
+//   ));
+// }
+
+void main() {
+  runApp(const MaterialApp(
+    home: Test(),
+  ));
+}
+
+class Test extends StatelessWidget {
+  const Test({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("My First Application"),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+      body: const Center(
+        child: Text(
+          "Hello World my name is Daksh Ankur Gopani and I live in India",
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 1.0,
+              color: Colors.grey,
+              fontFamily: 'Ubuntu'),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.blue[50],
+        child: const Text("Click"),
+      ),
+    );
+  }
+}
