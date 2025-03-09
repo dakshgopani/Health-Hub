@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart'; // Geolocator for location fetching
 import 'package:flutter_map/flutter_map.dart'; // Flutter Map for OpenStreetMap
 import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
 import 'package:geocoding/geocoding.dart'; // Geocoding for location name
-import 'home_page.dart'; // Ensure HomePage is imported
+import 'home/home_page.dart'; // Ensure HomePage is imported
 
 class ProfileSetupPage extends StatefulWidget {
   final String userId;
@@ -51,8 +51,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       });
 
       // Use geocoding to get the address based on the coordinates
-      List<Placemark> placemarks = await GeocodingPlatform.instance!
-          .placemarkFromCoordinates(
+      List<Placemark> placemarks =
+          await GeocodingPlatform.instance!.placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );
@@ -60,20 +60,20 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       if (placemarks.isNotEmpty) {
         setState(() {
           // Extract detailed address information
-          String buildingName = placemarks[0].name ??
-              'N/A'; // This may contain the building name
+          String buildingName =
+              placemarks[0].name ?? 'N/A'; // This may contain the building name
           String roadName = placemarks[0].thoroughfare ??
               'N/A'; // This is the road/street name
           String subLocality = placemarks[0].subLocality ??
               'N/A'; // This is a more detailed area like a neighborhood
           String locality = placemarks[0].locality ?? 'N/A'; // City name
-          String administrativeArea = placemarks[0].administrativeArea ??
-              'N/A'; // State/Region
+          String administrativeArea =
+              placemarks[0].administrativeArea ?? 'N/A'; // State/Region
           String country = placemarks[0].country ?? 'N/A'; // Country
 
           // Format the location as a more detailed string
           _locationName =
-          '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
+              '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
 
           // Save each location detail separately in Firestore
           _saveLocationToFirestore(
@@ -102,17 +102,18 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
 // Function to save location details to Firestore
 // Save location details if the document exists or create a new one if it doesn't
   Future<void> _saveLocationToFirestore(
-      String buildingName,
-      String roadName,
-      String subLocality,
-      String locality,
-      String administrativeArea,
-      String country,
-      double latitude,
-      double longitude,
-      ) async {
+    String buildingName,
+    String roadName,
+    String subLocality,
+    String locality,
+    String administrativeArea,
+    String country,
+    double latitude,
+    double longitude,
+  ) async {
     try {
-      final userRef = FirebaseFirestore.instance.collection('users').doc(widget.userId);
+      final userRef =
+          FirebaseFirestore.instance.collection('users').doc(widget.userId);
 
       // Fetch the document
       final userDoc = await userRef.get();
@@ -160,15 +161,12 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     }
   }
 
-
-
-
-
   // Function to fetch the address of the manually tapped location
   Future<void> _getLocationNameFromCoordinates(LatLng coordinates) async {
     try {
       // Fetch placemarks (address components) from coordinates
-      List<Placemark> placemarks = await GeocodingPlatform.instance!.placemarkFromCoordinates(
+      List<Placemark> placemarks =
+          await GeocodingPlatform.instance!.placemarkFromCoordinates(
         coordinates.latitude,
         coordinates.longitude,
       );
@@ -176,15 +174,20 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       if (placemarks.isNotEmpty) {
         setState(() {
           // Extract detailed address information
-          String buildingName = placemarks[0].name ?? 'N/A'; // This may contain the building name
-          String roadName = placemarks[0].thoroughfare ?? 'N/A'; // This is the road/street name
-          String subLocality = placemarks[0].subLocality ?? 'N/A'; // This is a more detailed area like a neighborhood
+          String buildingName =
+              placemarks[0].name ?? 'N/A'; // This may contain the building name
+          String roadName = placemarks[0].thoroughfare ??
+              'N/A'; // This is the road/street name
+          String subLocality = placemarks[0].subLocality ??
+              'N/A'; // This is a more detailed area like a neighborhood
           String locality = placemarks[0].locality ?? 'N/A'; // City name
-          String administrativeArea = placemarks[0].administrativeArea ?? 'N/A'; // State/Region
+          String administrativeArea =
+              placemarks[0].administrativeArea ?? 'N/A'; // State/Region
           String country = placemarks[0].country ?? 'N/A'; // Country
 
           // Format the location as a more detailed string
-          _locationName = '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
+          _locationName =
+              '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
 
           // Save each location detail separately in Firestore
           _saveLocationToFirestore(
@@ -210,7 +213,6 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     }
   }
 
-
   // Function to complete the profile setup
   Future<void> completeProfile() async {
     if (_nameController.text.isEmpty) {
@@ -233,7 +235,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     });
 
     try {
-      final userRef = FirebaseFirestore.instance.collection('users').doc(widget.userId);
+      final userRef =
+          FirebaseFirestore.instance.collection('users').doc(widget.userId);
 
       // Update user profile data in Firestore
       await userRef.set(
@@ -255,7 +258,10 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         context,
         MaterialPageRoute(
           builder: (context) => HomePage(
-            userId: widget.userId, // Pass userId to HomePage
+            // userId: widget.userId, // Pass userId to HomePage
+            userId: FirebaseAuth.instance.currentUser!.uid,
+            userName: FirebaseAuth.instance.currentUser!.displayName ?? "User",
+            userEmail: FirebaseAuth.instance.currentUser!.email ?? "Email",
           ),
         ),
       );
@@ -307,43 +313,47 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                   Expanded(
                     child: _currentLatLng == null
                         ? const Center(
-                      child: Text(
-                        'Fetching your location...',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    )
-                        : FlutterMap(
-                      options: MapOptions(
-                        center: _currentLatLng!, // Set the initial center of the map
-                        zoom: 15, // Set the initial zoom level
-                        onTap: (tapPosition, point) {
-                          setState(() {
-                            _currentLatLng = point;
-                            _getLocationNameFromCoordinates(point); // Get address for the tapped location
-                          });
-                        },
-                      ),
-                      children: [
-                        // Tile Layer for OpenStreetMap
-                        TileLayer(
-                          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                          subdomains: ['a', 'b', 'c'],
-                        ),
-                        // Marker Layer
-                        MarkerLayer(
-                          markers: [
-                            Marker(
-                              point: _currentLatLng!,
-                              builder: (context) => const Icon(
-                                Icons.location_pin,
-                                color: Colors.red,
-                                size: 40,
-                              ),
+                            child: Text(
+                              'Fetching your location...',
+                              style: TextStyle(color: Colors.red),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          )
+                        : FlutterMap(
+                            options: MapOptions(
+                              center: _currentLatLng!,
+                              // Set the initial center of the map
+                              zoom: 15,
+                              // Set the initial zoom level
+                              onTap: (tapPosition, point) {
+                                setState(() {
+                                  _currentLatLng = point;
+                                  _getLocationNameFromCoordinates(
+                                      point); // Get address for the tapped location
+                                });
+                              },
+                            ),
+                            children: [
+                              // Tile Layer for OpenStreetMap
+                              TileLayer(
+                                urlTemplate:
+                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                subdomains: const ['a', 'b', 'c'],
+                              ),
+                              // Marker Layer
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: _currentLatLng!,
+                                    builder: (context) => const Icon(
+                                      Icons.location_pin,
+                                      color: Colors.red,
+                                      size: 40,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                   ),
 
                   const SizedBox(height: 10),
@@ -358,9 +368,9 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                   _isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
-                    onPressed: completeProfile,
-                    child: const Text('Complete Profile'),
-                  ),
+                          onPressed: completeProfile,
+                          child: const Text('Complete Profile'),
+                        ),
                 ],
               ),
             ),

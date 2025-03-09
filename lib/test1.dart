@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart'; // Geolocator for location fetching
 import 'package:flutter_map/flutter_map.dart'; // Flutter Map for OpenStreetMap
 import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
 import 'package:geocoding/geocoding.dart'; // Geocoding for location name
-import 'welcome_screen.dart'; // Import your WelcomeScreen
+// import 'welcome_screen.dart'; // Import your WelcomeScreen
 
 class ProfileScreen extends StatefulWidget {
   final String userId; // Pass the user's ID for Firestore operations
@@ -218,12 +218,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _signOut() async {
     try {
       await FirebaseAuth.instance.signOut(); // Sign out from Firebase
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => WelcomeScreen(), // Navigate to the Welcome Screen
-        ),
-      );
+      // Navigator.pushReplacement(
+        // context,
+        // MaterialPageRoute(
+          // builder: (context) => WelcomeScreen(), // Navigate to the Welcome Screen
+        // ),
+      // );
     } catch (e) {
       print("Error signing out: $e");
       ScaffoldMessenger.of(context).showSnackBar(

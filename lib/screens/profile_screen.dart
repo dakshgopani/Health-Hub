@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart'; // Geolocator for location fetching
 import 'package:flutter_map/flutter_map.dart'; // Flutter Map for OpenStreetMap
 import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
 import 'package:geocoding/geocoding.dart'; // Geocoding for location name
-import 'package:mad_practice_one/screens/qr_code_scanner.dart';
-import 'welcome_screen.dart'; // Import your WelcomeScreen
+import 'auth/welcome_screen.dart';
+import 'qr_code_scanner.dart';
+import 'store_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userId; // Pass the user's ID for Firestore operations
-  const ProfileScreen({Key? key, required this.userId}) : super(key: key);
+  final String userName;
+
+  const ProfileScreen({Key? key, required this.userId, required this.userName})
+      : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -18,6 +21,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
+
+  // final TextEditingController _UidController = TextEditingController();
   bool _isLoading = false;
   LatLng? _currentLatLng; // To store user's current coordinates
   String _locationName = ''; // To store the location name
@@ -30,10 +35,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String administrativeArea = '';
   String country = '';
 
+  String? _localUserId;
+
   @override
   void initState() {
     super.initState();
     _loadUserProfile();
+    _localUserId = widget.userId;
   }
 
   // Load user data from Firestore
@@ -50,6 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (userDoc.exists) {
         final userData = userDoc.data();
         _nameController.text = userData?['name'] ?? ''; // Pre-fill the name
+        // _UidController.text = userData?['uid']??'';
 
         // Fetch and set the location from Firestore
         if (userData?['location'] != null) {
@@ -116,6 +125,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _locationName = 'Location not found';
         });
       }
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Location updated successfully')),
+      // );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error fetching location: $error')),
@@ -174,9 +186,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location updated successfully')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Location updated successfully')),
+      // );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error saving location: $error')),
@@ -228,6 +240,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _signOut() async {
     try {
       await FirebaseAuth.instance.signOut(); // Sign out from Firebase
+      setState(() {
+        _localUserId = null;
+      });
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -282,18 +297,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
                 const Divider(thickness: 1.0),
-                ListTile(
-                  leading: const Icon(Icons.color_lens, color: Colors.blue),
-                  title: const Text('Theme'),
-                  subtitle: const Text('Switch between light and dark mode'),
-                  trailing: Switch(
-                    value: false, // Replace with a state variable
-                    onChanged: (value) {
-                      // Handle theme switch
-                    },
-                  ),
-                ),
-                const Divider(thickness: 1.0),
                 _buildListTile(
                   icon: Icons.person,
                   iconColor: Colors.blue,
@@ -329,16 +332,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const Divider(thickness: 1.0),
                 _buildListTile(
-                  icon: Icons.person,
+                  icon: Icons.qr_code,
                   iconColor: Colors.blue,
                   title: 'Scan QR code',
-                  subtitle: 'scan your qr code over here',
+                  subtitle:
+                      'Scan your QR code to proceed with \nblood donation',
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ScanQRCodeScreen(
-                          userId: 'req_12345',
+                          userId: widget.userId,
+                          userName: widget.userName,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(thickness: 1.0),
+                _buildListTile(
+                  icon: Icons.local_grocery_store_rounded,
+                  iconColor: Colors.blue,
+                  title: 'MediMart',
+                  subtitle:
+                      'Explore the Store for all your \nessential medicines',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoreScreen(
+                          userId: widget.userId,
                         ),
                       ),
                     );
@@ -620,7 +643,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                         TileLayer(
                           urlTemplate:
                               "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                          subdomains: ['a', 'b', 'c'],
+                          subdomains: const ['a', 'b', 'c'],
                         ),
                         MarkerLayer(
                           markers: [
@@ -648,7 +671,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
             ElevatedButton(
               onPressed: _isLoading ? null : () => _saveProfile(),
               child: _isLoading
-                  ? CircularProgressIndicator(color: Colors.white)
+                  ? const CircularProgressIndicator(color: Colors.white)
                   : const Text('Save Profile'),
             ),
             const SizedBox(height: 20),

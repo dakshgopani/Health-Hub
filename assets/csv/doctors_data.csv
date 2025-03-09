@@ -1,0 +1,201 @@
+Doctor ID,Name,Specialization,Clinic/Hospital,Area,Days Available,Time Available,Rating,Consultation Fee,Contact Number,Reviews,Experience (years),Languages Spoken,Appointment Booking Link
+D001,Dr. Pankaj Malik,General Physician,Apollo Clinic,Vile Parle,All days,6:00 PM - 9:00 PM,4.4,₹1358,9844542754,Detailed consultations and follow-ups,5,"English, Hindi",http://bookdoc.com/1
+D002,Dr. Rajesh Sethi,Dermatologist,Juhu Hospital,Kurla,"Mon, Wed",2:00 PM - 5:00 PM,4.4,₹581,9846839091,"Clear explanations, good care",24,"English, Hindi, Marathi",http://bookdoc.com/2
+D003,Dr. Rohit Verma,Urologist,Siddhivinayak Hospital,Navi Mumbai,"Wed, Fri",4:00 PM - 7:00 PM,4.8,₹625,9863759330,Great communicator,8,"English, Hindi",http://bookdoc.com/3
+D004,Dr. Deepak Singh,General Physician,Aditya Birla Memorial Hospital,Kurla,"Mon, Wed, Fri",8:00 AM - 10:00 AM,4.0,₹762,9820094127,Knowledgeable and approachable,12,"English, Hindi, Marathi",http://bookdoc.com/4
+D005,Dr. Rajesh Patel,Rheumatologist,Juhu Hospital,Chembur,All days,8:00 AM - 10:00 AM,4.9,₹1818,9895055017,Attentive and thorough,26,"English, Hindi",http://bookdoc.com/5
+D006,Dr. Kavya Reddy,General Physician,Kokilaben Dhirubhai Ambani Hospital,Thane,"Tue, Thu",6:00 PM - 9:00 PM,4.4,₹1621,9825689754,"Quick diagnosis, effective treatment",27,"English, Hindi, Marathi",http://bookdoc.com/6
+D007,Dr. Pankaj Desai,Orthopedic Surgeon,Bombay Hospital,Thane,"Tue, Thu, Sat",10:00 AM - 12:00 PM,4.1,₹1694,9844285991,"Quick diagnosis, effective treatment",22,"English, Hindi, Marathi",http://bookdoc.com/7
+D008,Dr. Amit Malik,General Physician,Sunrise Hospital,Kandivali,"Sat, Sun",9:00 AM - 1:00 PM,4.3,₹1275,9843352471,Understanding and empathetic,13,"English, Hindi, Marathi",http://bookdoc.com/8
+D009,Dr. Rajesh Gupta,Internal Medicine Specialist,Jaslok Hospital,Borivali,Tue-Fri,9:00 AM - 1:00 PM,4.0,₹822,9864012318,Top-notch expertise,18,"English, Hindi, Marathi",http://bookdoc.com/9
+D010,Dr. Shreya Verma,Cardiologist,Breach Candy Hospital,Versova,All days,8:00 AM - 10:00 AM,4.5,₹1975,9841756683,Excellent bedside manner,28,"English, Marathi",http://bookdoc.com/10
+D011,Dr. Isha Sethi,Pulmonologist,Hegde Hospital,Powai,All days,4:00 PM - 7:00 PM,4.6,₹762,9815641286,Well-experienced and calm,12,"English, Hindi, Marathi",http://bookdoc.com/11
+D012,Dr. Deepak Chopra,Pulmonologist,Jaslok Hospital,Powai,"Mon, Wed",11:00 AM - 3:00 PM,5.0,₹1193,9897536077,"Great doctor, very patient",18,"English, Hindi, Marathi",http://bookdoc.com/12
+D013,Dr. Manish Mehta,ENT Specialist,Kokilaben Dhirubhai Ambani Hospital,Andheri,"Mon, Wed, Fri",10:00 AM - 12:00 PM,4.4,₹1460,9847605656,Makes you feel comfortable and informed,21,"English, Hindi, Marathi",http://bookdoc.com/13
+D014,Dr. Niharika Joshi,Gynecologist,Wockhardt Hospital,Vile Parle,Tue-Fri,8:00 AM - 10:00 AM,4.1,₹1725,9812987086,Excellent with kids,17,"English, Hindi",http://bookdoc.com/14
+D015,Dr. Ananya Nair,Psychiatrist,Juhu Hospital,Dadar,"Mon, Wed",8:00 AM - 10:00 AM,4.3,₹1212,9816499220,Compassionate and skilled,10,"English, Marathi",http://bookdoc.com/15
+D016,Dr. Kavya Desai,ENT Specialist,Hiranandani Hospital,Kandivali,"Tue, Thu",6:00 PM - 9:00 PM,4.4,₹1011,9869665922,"Clear explanations, good care",8,"English, Hindi",http://bookdoc.com/16
+D017,Dr. Pankaj Nair,Bariatric Surgeon,Breach Candy Hospital,Mulund,All days,2:00 PM - 5:00 PM,4.1,₹712,9868108967,Well-experienced and calm,16,"English, Hindi, Marathi",http://bookdoc.com/17
+D018,Dr. Vikram Mehta,Bariatric Surgeon,Kokilaben Dhirubhai Ambani Hospital,Borivali,"Wed, Fri",8:00 AM - 10:00 AM,4.5,₹831,9824789123,Excellent bedside manner,8,"English, Hindi",http://bookdoc.com/18
+D019,Dr. Nitin Chopra,Hematologist,Saifee Hospital,Colaba,"Tue, Thu, Sat",10:00 AM - 12:00 PM,4.4,₹1844,9844285991,Attentive and thorough,21,"English, Marathi",http://bookdoc.com/19
+D020,Dr. Rajesh Rao,Hematologist,Kokilaben Dhirubhai Ambani Hospital,Navi Mumbai,"Tue, Thu, Sat",6:00 PM - 9:00 PM,4.1,₹745,9830492950,Great communicator,5,"English, Marathi",http://bookdoc.com/20
+D021,Dr. Rajesh Kumar,General Physician,Sunrise Hospital,Lower Parel,Mon-Fri,8:00 AM - 10:00 AM,4.4,₹1489,9856019656,"Great doctor, very patient",11,"English, Hindi",http://bookdoc.com/21
+D022,Dr. Manish Kapoor,Ophthalmologist,Breach Candy Hospital,Kurla,"Mon, Wed",2:00 PM - 5:00 PM,4.4,₹600,9831337584,Attentive and thorough,16,"English, Hindi",http://bookdoc.com/22
+D023,Dr. Arjun Bhat,ENT Specialist,Bharati Vidyapeeth Medical College,Thane,"Mon, Wed",4:00 PM - 7:00 PM,4.9,₹1190,9864012318,Prompt and accurate diagnoses,18,"English, Hindi",http://bookdoc.com/23
+D024,Dr. Vikram Sharma,Plastic Surgeon,Bharati Vidyapeeth Medical College,Wadala,"Sat, Sun",10:00 AM - 12:00 PM,5.0,₹1367,9828501375,Respectful and considerate,13,"English, Hindi",http://bookdoc.com/24
+D025,Dr. Sneha Kapoor,Urologist,Wockhardt Hospital,Mulund,Mon-Sat,9:00 AM - 1:00 PM,4.6,₹822,9877864764,Understanding and empathetic,24,"English, Hindi",http://bookdoc.com/25
+D026,Dr. Vikram Sharma,Plastic Surgeon,Breach Candy Hospital,Colaba,Mon-Fri,10:00 AM - 12:00 PM,4.8,₹1806,9837748906,"Clear explanations, good care",13,"English, Hindi, Marathi",http://bookdoc.com/26
+D027,Dr. Rajesh Sethi,Gastroenterologist,Breach Candy Hospital,Wadala,"Mon, Wed, Fri",6:00 PM - 9:00 PM,5.0,₹818,9877864764,Great communicator,7,"English, Marathi",http://bookdoc.com/27
+D028,Dr. Isha Agarwal,Internal Medicine Specialist,Aditya Birla Memorial Hospital,Marine Lines,"Mon, Wed, Fri",8:00 AM - 10:00 AM,4.8,₹1061,9865491751,Detailed consultations and follow-ups,25,"English, Hindi",http://bookdoc.com/28
+D029,Dr. Ananya Kapoor,Plastic Surgeon,Siddhivinayak Hospital,Colaba,"Mon, Wed, Fri",2:00 PM - 5:00 PM,4.5,₹897,9855412035,"Clear explanations, good care",12,"English, Marathi",http://bookdoc.com/29
+D030,Dr. Vikram Malik,Oncologist,Ruby Hall Clinic,Powai,Tue-Fri,8:00 AM - 10:00 AM,4.6,₹898,9836469099,Detailed consultations and follow-ups,26,"English, Marathi",http://bookdoc.com/30
+D031,Dr. Pankaj Sharma,Psychiatrist,S L Raheja Hospital,Ghatkopar,"Sat, Sun",9:00 AM - 1:00 PM,4.2,₹1231,9885537934,Top-notch expertise,6,"English, Hindi, Marathi",http://bookdoc.com/31
+D032,Dr. Ayesha Bansal,Cardiologist,Hiranandani Hospital,Thane,"Mon, Wed, Fri",8:00 AM - 10:00 AM,4.1,₹538,9881494993,"Effective treatment, friendly",8,"English, Marathi",http://bookdoc.com/32
+D033,Dr. Rohit Nair,Internal Medicine Specialist,Apollo Clinic,Bandra,"Mon, Wed",4:00 PM - 7:00 PM,4.6,₹594,9838510891,Very professional and helpful,10,"English, Hindi",http://bookdoc.com/33
+D034,Dr. Sneha Rao,Gastroenterologist,Nanavati Hospital,Marine Lines,"Tue, Thu, Sat",2:00 PM - 5:00 PM,4.6,₹600,9820384420,Respectful and considerate,21,"English, Marathi",http://bookdoc.com/34
+D035,Dr. Sneha Malik,Pediatrician,Apollo Clinic,Powai,"Wed, Fri",6:00 PM - 9:00 PM,4.3,₹1778,9841810052,Understanding and empathetic,16,"English, Hindi",http://bookdoc.com/35
+D036,Dr. Rajesh Desai,Psychiatrist,Global Hospital,Colaba,"Sat, Sun",10:00 AM - 12:00 PM,4.6,₹1358,9863286216,Respectful and considerate,27,"English, Hindi, Marathi",http://bookdoc.com/36
+D037,Dr. Priya Malik,Endocrinologist,Kokilaben Dhirubhai Ambani Hospital,Kandivali,All days,9:00 AM - 1:00 PM,4.3,₹898,9813023767,Respectful and considerate,18,"English, Hindi, Marathi",http://bookdoc.com/37
+D038,Dr. Kiran Kumar,Gynecologist,Ruby Hall Clinic,Marine Lines,"Tue, Thu, Sat",6:00 PM - 9:00 PM,4.1,₹506,9865823339,Makes you feel comfortable and informed,28,"English, Hindi, Marathi",http://bookdoc.com/38
+D039,Dr. Priya Sethi,Bariatric Surgeon,Saifee Hospital,Andheri,"Tue, Thu",11:00 AM - 3:00 PM,4.8,₹1566,9839447377,Detailed consultations and follow-ups,19,"English, Hindi, Marathi",http://bookdoc.com/39
+D040,Dr. Niharika Malik,Psychiatrist,Sunrise Hospital,Mulund,"Sat, Sun",9:00 AM - 1:00 PM,4.3,₹1460,9869665922,Top-notch expertise,16,"English, Hindi",http://bookdoc.com/40
+D041,Dr. Deepak Kapoor,Bariatric Surgeon,S L Raheja Hospital,Chembur,"Tue, Thu",6:00 PM - 9:00 PM,4.4,₹762,9812987086,Compassionate and skilled,24,"English, Marathi",http://bookdoc.com/41
+D042,Dr. Vikram Kumar,Neurologist,Lilavati Hospital,Thane,"Tue, Thu, Sat",2:00 PM - 5:00 PM,4.1,₹777,9832814773,Attentive and thorough,6,"English, Hindi",http://bookdoc.com/42
+D043,Dr. Simran Chopra,Dermatologist,Siddhivinayak Hospital,Kandivali,"Tue, Thu",11:00 AM - 3:00 PM,4.7,₹1104,9817372086,"Effective treatment, friendly",21,"English, Hindi",http://bookdoc.com/43
+D044,Dr. Amit Desai,Internal Medicine Specialist,Siddhivinayak Hospital,Malad,Mon-Sat,6:00 PM - 9:00 PM,4.5,₹1696,9854506196,"Great doctor, very patient",9,"English, Marathi",http://bookdoc.com/44
+D045,Dr. Rajesh Reddy,Rheumatologist,Hegde Hospital,Mulund,"Mon, Wed",10:00 AM - 12:00 PM,4.1,₹762,9859343820,"Great doctor, very patient",20,"English, Marathi",http://bookdoc.com/45
+D046,Dr. Isha Mehta,Ophthalmologist,Fortis Hospital,Borivali,Tue-Fri,6:00 PM - 9:00 PM,4.3,₹1210,9833485858,Understanding and empathetic,7,"English, Hindi",http://bookdoc.com/46
+D047,Dr. Shreya Kumar,Psychiatrist,Sunrise Hospital,Kandivali,"Mon, Wed",2:00 PM - 5:00 PM,4.8,₹897,9849896387,"Great doctor, very patient",12,"English, Marathi",http://bookdoc.com/47
+D048,Dr. Rohit Sethi,Dermatologist,Global Hospital,Andheri,"Mon, Wed",8:00 AM - 10:00 AM,4.1,₹1231,9899870919,Knowledgeable and approachable,12,"English, Marathi",http://bookdoc.com/48
+D049,Dr. Rohit Kapoor,Internal Medicine Specialist,Bharati Vidyapeeth Medical College,Navi Mumbai,"Mon, Wed",6:00 PM - 9:00 PM,4.1,₹1654,9899596386,Efficient and reliable,19,"English, Marathi",http://bookdoc.com/49
+D050,Dr. Ayesha Patel,Gastroenterologist,Jaslok Hospital,Wadala,"Tue, Thu, Sat",9:00 AM - 1:00 PM,4.7,₹1136,9885637869,Prompt and accurate diagnoses,26,"English, Marathi",http://bookdoc.com/50
+D051,Dr. Ayesha Patel,Orthopedic Surgeon,Ruby Hall Clinic,Ghatkopar,Tue-Fri,10:00 AM - 12:00 PM,4.8,₹1705,9839606104,Very supportive during recovery,24,"English, Marathi",http://bookdoc.com/51
+D052,Dr. Shreya Singhal,Orthopedic Surgeon,Bombay Hospital,Versova,"Mon, Wed, Fri",9:00 AM - 1:00 PM,5.0,₹1486,9877891288,Excellent with kids,14,"English, Hindi",http://bookdoc.com/52
+D053,Dr. Amit Kumar,General Physician,Nanavati Hospital,Lower Parel,"Tue, Thu, Sat",6:00 PM - 9:00 PM,4.4,₹818,9869665922,Compassionate and skilled,6,"English, Hindi",http://bookdoc.com/53
+D054,Dr. Deepak Malik,Hematologist,Bombay Hospital,Malad,"Mon, Wed",8:00 AM - 10:00 AM,4.3,₹1863,9866685818,Very professional and helpful,26,"English, Hindi",http://bookdoc.com/54
+D055,Dr. Nitin Sharma,Hematologist,Sunrise Hospital,Kandivali,All days,10:00 AM - 12:00 PM,4.8,₹1051,9867916578,"Clear explanations, good care",26,"English, Marathi",http://bookdoc.com/55
+D056,Dr. Kiran Sethi,Endocrinologist,Saifee Hospital,Dadar,Mon-Sat,6:00 PM - 9:00 PM,5.0,₹1338,9843577106,Makes you feel comfortable and informed,23,"English, Marathi",http://bookdoc.com/56
+D057,Dr. Arjun Kumar,Endocrinologist,Bharati Vidyapeeth Medical College,Thane,"Wed, Fri",2:00 PM - 5:00 PM,4.1,₹588,9880400409,"Great doctor, very patient",26,"English, Hindi",http://bookdoc.com/57
+D058,Dr. Niharika Bansal,Plastic Surgeon,Aditya Birla Memorial Hospital,Powai,Mon-Sat,10:00 AM - 12:00 PM,4.7,₹1440,9867873987,Very professional and helpful,14,"English, Hindi",http://bookdoc.com/58
+D059,Dr. Manish Singh,Neurologist,Breach Candy Hospital,Versova,Mon-Sat,9:00 AM - 1:00 PM,4.5,₹705,9898831425,Attentive and thorough,7,"English, Marathi",http://bookdoc.com/59
+D060,Dr. Isha Singhal,Bariatric Surgeon,Lilavati Hospital,Juhu,Mon-Fri,8:00 AM - 10:00 AM,4.6,₹1104,9831337584,Great communicator,12,"English, Hindi",http://bookdoc.com/60
+D061,Dr. Niharika Patel,Internal Medicine Specialist,S L Raheja Hospital,Borivali,"Mon, Wed",5:00 PM - 8:00 PM,4.2,₹594,9864154018,Excellent bedside manner,9,"English, Hindi",http://bookdoc.com/61
+D062,Dr. Rajesh Chopra,Pediatrician,Apollo Clinic,Ghatkopar,"Tue, Thu",5:00 PM - 8:00 PM,5.0,₹1367,9881494993,"Clear explanations, good care",24,"English, Hindi, Marathi",http://bookdoc.com/62
+D063,Dr. Niharika Sharma,Pulmonologist,Wockhardt Hospital,Bandra,All days,5:00 PM - 8:00 PM,4.6,₹959,9875693948,Prompt and accurate diagnoses,9,"English, Marathi",http://bookdoc.com/63
+D064,Dr. Manish Bansal,Hematologist,Breach Candy Hospital,Colaba,"Sat, Sun",5:00 PM - 8:00 PM,4.1,₹1180,9855412035,Prompt and accurate diagnoses,14,"English, Marathi",http://bookdoc.com/64
+D065,Dr. Kavya Reddy,Pediatrician,Hiranandani Hospital,Navi Mumbai,"Mon, Wed, Fri",8:00 AM - 10:00 AM,4.0,₹1179,9877864764,Great communicator,15,"English, Hindi, Marathi",http://bookdoc.com/65
+D066,Dr. Kavya Sethi,Internal Medicine Specialist,Saifee Hospital,Lower Parel,"Tue, Thu",5:00 PM - 8:00 PM,4.3,₹1852,9869173678,Very supportive during recovery,9,"English, Hindi, Marathi",http://bookdoc.com/66
+D067,Dr. Amit Nair,Endocrinologist,Nanavati Hospital,Powai,"Sat, Sun",8:00 AM - 10:00 AM,4.7,₹1957,9875295835,Top-notch expertise,17,"English, Marathi",http://bookdoc.com/67
+D068,Dr. Vikram Sethi,Psychiatrist,Aditya Birla Memorial Hospital,Mulund,"Tue, Thu, Sat",8:00 AM - 10:00 AM,4.4,₹1688,9821251250,Attentive and thorough,22,"English, Marathi",http://bookdoc.com/68
+D069,Dr. Rohit Singh,Oncologist,Juhu Hospital,Wadala,"Mon, Wed, Fri",6:00 PM - 9:00 PM,4.6,₹823,9825989818,"Great doctor, very patient",22,"English, Hindi",http://bookdoc.com/69
+D070,Dr. Nitin Reddy,Dermatologist,Breach Candy Hospital,Marine Lines,Mon-Sat,9:00 AM - 1:00 PM,4.3,₹1008,9854505586,Very supportive during recovery,29,"English, Hindi",http://bookdoc.com/70
+D071,Dr. Sneha Bhat,Internal Medicine Specialist,Siddhivinayak Hospital,Thane,"Sat, Sun",8:00 AM - 10:00 AM,4.5,₹822,9863286216,Great communicator,17,"English, Marathi",http://bookdoc.com/71
+D072,Dr. Manish Singh,Pediatrician,Wockhardt Hospital,Bandra,"Sat, Sun",4:00 PM - 7:00 PM,4.7,₹967,9869665922,"Great doctor, very patient",29,"English, Hindi, Marathi",http://bookdoc.com/72
+D073,Dr. Ravi Mehta,Gynecologist,Wockhardt Hospital,Colaba,Tue-Fri,10:00 AM - 12:00 PM,4.7,₹1219,9868013146,Excellent with kids,25,"English, Marathi",http://bookdoc.com/73
+D074,Dr. Sneha Patel,Endocrinologist,Jaslok Hospital,Chembur,Mon-Sat,4:00 PM - 7:00 PM,4.6,₹1063,9876057837,Excellent bedside manner,29,"English, Marathi",http://bookdoc.com/74
+D075,Dr. Sneha Nair,Dermatologist,Wockhardt Hospital,Ghatkopar,All days,2:00 PM - 5:00 PM,4.4,₹1403,9898831425,Detailed consultations and follow-ups,12,"English, Hindi",http://bookdoc.com/75
+D076,Dr. Pankaj Patel,ENT Specialist,Hegde Hospital,Borivali,Mon-Fri,8:00 AM - 10:00 AM,4.8,₹823,9887403479,Understanding and empathetic,14,"English, Hindi, Marathi",http://bookdoc.com/76
+D077,Dr. Sneha Sethi,Psychiatrist,Hiranandani Hospital,Chembur,All days,11:00 AM - 3:00 PM,4.9,₹698,9892033876,Well-experienced and calm,6,"English, Hindi",http://bookdoc.com/77
+D078,Dr. Isha Sharma,Pediatrician,Global Hospital,Wadala,"Tue, Thu",6:00 PM - 9:00 PM,4.9,₹690,9853950161,Very supportive during recovery,11,"English, Hindi, Marathi",http://bookdoc.com/78
+D079,Dr. Ananya Joshi,Ophthalmologist,Saifee Hospital,Navi Mumbai,"Wed, Fri",10:00 AM - 12:00 PM,4.8,₹1614,9840575266,"Effective treatment, friendly",24,"English, Hindi",http://bookdoc.com/79
+D080,Dr. Kiran Malik,Rheumatologist,Juhu Hospital,Juhu,"Tue, Thu, Sat",9:00 AM - 1:00 PM,4.9,₹967,9818822416,"Quick diagnosis, effective treatment",25,"English, Hindi",http://bookdoc.com/80
+D081,Dr. Sneha Singhal,Cardiologist,Jaslok Hospital,Vile Parle,"Tue, Thu",11:00 AM - 3:00 PM,5.0,₹1597,9841810052,Excellent bedside manner,14,"English, Hindi",http://bookdoc.com/81
+D082,Dr. Arjun Bansal,Oncologist,Siddhivinayak Hospital,Dadar,"Mon, Wed",10:00 AM - 12:00 PM,4.4,₹1403,9849743107,Top-notch expertise,27,"English, Hindi, Marathi",http://bookdoc.com/82
+D083,Dr. Manish Mehta,Internal Medicine Specialist,Aditya Birla Memorial Hospital,Juhu,All days,8:00 AM - 10:00 AM,4.3,₹1302,9840593179,"Effective treatment, friendly",19,"English, Marathi",http://bookdoc.com/83
+D084,Dr. Manish Kumar,Cardiologist,Kokilaben Dhirubhai Ambani Hospital,Ghatkopar,"Wed, Fri",2:00 PM - 5:00 PM,4.4,₹1271,9857083024,Excellent bedside manner,29,"English, Hindi, Marathi",http://bookdoc.com/84
+D085,Dr. Amit Rao,Oncologist,Siddhivinayak Hospital,Mulund,"Mon, Wed, Fri",9:00 AM - 1:00 PM,4.5,₹946,9850673511,"Effective treatment, friendly",8,"English, Hindi, Marathi",http://bookdoc.com/85
+D086,Dr. Simran Kumar,Ophthalmologist,Wockhardt Hospital,Kurla,Tue-Fri,8:00 AM - 10:00 AM,4.6,₹1210,9885167029,Very supportive during recovery,8,"English, Hindi, Marathi",http://bookdoc.com/86
+D087,Dr. Deepak Bansal,Plastic Surgeon,Ruby Hall Clinic,Malad,Mon-Fri,10:00 AM - 12:00 PM,4.0,₹1489,9843344649,Attentive and thorough,15,"English, Hindi",http://bookdoc.com/87
+D088,Dr. Sneha Gupta,Rheumatologist,S L Raheja Hospital,Chembur,Mon-Sat,2:00 PM - 5:00 PM,4.8,₹1863,9896870652,Well-experienced and calm,20,"English, Marathi",http://bookdoc.com/88
+D089,Dr. Rajesh Reddy,Urologist,Jaslok Hospital,Malad,Mon-Sat,2:00 PM - 5:00 PM,4.6,₹1577,9854506196,Top-notch expertise,10,"English, Hindi",http://bookdoc.com/89
+D090,Dr. Ravi Desai,Gynecologist,Ruby Hall Clinic,Chembur,"Tue, Thu",6:00 PM - 9:00 PM,4.4,₹951,9848849576,Compassionate and skilled,27,"English, Marathi",http://bookdoc.com/90
+D091,Dr. Rohit Gupta,Dermatologist,Aditya Birla Memorial Hospital,Colaba,"Tue, Thu",10:00 AM - 12:00 PM,4.3,₹1776,9894259459,Well-experienced and calm,23,"English, Hindi, Marathi",http://bookdoc.com/91
+D092,Dr. Kiran Desai,Neurologist,Hegde Hospital,Navi Mumbai,"Tue, Thu, Sat",9:00 AM - 1:00 PM,4.2,₹873,9843179236,"Quick diagnosis, effective treatment",5,"English, Marathi",http://bookdoc.com/92
+D093,Dr. Amit Sharma,Orthopedic Surgeon,Ruby Hall Clinic,Malad,"Mon, Wed",9:00 AM - 1:00 PM,4.5,₹850,9849540043,Respectful and considerate,18,"English, Hindi",http://bookdoc.com/93
+D094,Dr. Kavya Nair,Bariatric Surgeon,S L Raheja Hospital,Versova,"Tue, Thu",2:00 PM - 5:00 PM,4.3,₹1597,9885167029,"Clear explanations, good care",22,"English, Hindi",http://bookdoc.com/94
+D095,Dr. Ravi Joshi,Neurologist,Kokilaben Dhirubhai Ambani Hospital,Powai,"Sat, Sun",9:00 AM - 1:00 PM,4.7,₹1566,9849540043,Compassionate and skilled,5,"English, Marathi",http://bookdoc.com/95
+D096,Dr. Manish Nair,Gastroenterologist,Jaslok Hospital,Ghatkopar,"Tue, Thu",8:00 AM - 10:00 AM,4.1,₹1079,9840139909,Respectful and considerate,12,"English, Hindi, Marathi",http://bookdoc.com/96
+D097,Dr. Ayesha Reddy,Psychiatrist,Apollo Clinic,Marine Lines,Mon-Sat,5:00 PM - 8:00 PM,5.0,₹1079,9812987086,"Quick diagnosis, effective treatment",24,"English, Hindi, Marathi",http://bookdoc.com/97
+D098,Dr. Simran Bansal,Urologist,Aditya Birla Memorial Hospital,Wadala,All days,4:00 PM - 7:00 PM,4.4,₹745,9837070059,Efficient and reliable,30,"English, Hindi",http://bookdoc.com/98
+D099,Dr. Shreya Agarwal,Dermatologist,Fortis Hospital,Powai,"Mon, Wed, Fri",8:00 AM - 10:00 AM,4.4,₹898,9829396008,"Quick diagnosis, effective treatment",17,"English, Hindi, Marathi",http://bookdoc.com/99
+D100,Dr. Ravi Singhal,General Physician,Lilavati Hospital,Marine Lines,"Sat, Sun",5:00 PM - 8:00 PM,4.2,₹1286,9841756683,Efficient and reliable,23,"English, Hindi, Marathi",http://bookdoc.com/100
+D101,Dr. Pankaj Agarwal,Bariatric Surgeon,Wockhardt Hospital,Marine Lines,"Tue, Thu",8:00 AM - 10:00 AM,4.4,₹526,9831337584,Detailed consultations and follow-ups,18,"English, Hindi",http://bookdoc.com/101
+D102,Dr. Vikram Nair,Psychiatrist,Jaslok Hospital,Andheri,"Mon, Wed, Fri",4:00 PM - 7:00 PM,4.7,₹1138,9820006965,Top-notch expertise,12,"English, Marathi",http://bookdoc.com/102
+D103,Dr. Vikram Desai,Psychiatrist,Nanavati Hospital,Chembur,All days,4:00 PM - 7:00 PM,4.3,₹897,9820389888,Prompt and accurate diagnoses,20,"English, Hindi, Marathi",http://bookdoc.com/103
+D104,Dr. Simran Patel,Hematologist,Breach Candy Hospital,Dadar,Tue-Fri,5:00 PM - 8:00 PM,4.1,₹1374,9887457412,Knowledgeable and approachable,28,"English, Marathi",http://bookdoc.com/104
+D105,Dr. Kiran Sethi,Ophthalmologist,Breach Candy Hospital,Mulund,"Tue, Thu",9:00 AM - 1:00 PM,4.4,₹1852,9869173678,Highly recommended,27,"English, Marathi",http://bookdoc.com/105
+D106,Dr. Kiran Chopra,General Physician,Aditya Birla Memorial Hospital,Colaba,"Tue, Thu",11:00 AM - 3:00 PM,4.4,₹1654,9845180566,Respectful and considerate,21,"English, Marathi",http://bookdoc.com/106
+D107,Dr. Kiran Bhat,Bariatric Surgeon,Hegde Hospital,Ghatkopar,"Tue, Thu",8:00 AM - 10:00 AM,4.1,₹1448,9887457412,"Effective treatment, friendly",21,"English, Marathi",http://bookdoc.com/107
+D108,Dr. Arjun Malik,Bariatric Surgeon,Juhu Hospital,Versova,"Tue, Thu",10:00 AM - 12:00 PM,4.3,₹959,9840139909,Excellent bedside manner,10,"English, Marathi",http://bookdoc.com/108
+D109,Dr. Priya Patel,Neurologist,Nanavati Hospital,Juhu,"Tue, Thu",6:00 PM - 9:00 PM,4.7,₹1601,9828501375,Very supportive during recovery,7,"English, Hindi",http://bookdoc.com/109
+D110,Dr. Kavya Bhat,Nephrologist,Apollo Clinic,Versova,"Mon, Wed",5:00 PM - 8:00 PM,4.8,₹1338,9852849856,"Clear explanations, good care",7,"English, Hindi",http://bookdoc.com/110
+D111,Dr. Isha Kumar,Internal Medicine Specialist,Nanavati Hospital,Mulund,"Mon, Wed",6:00 PM - 9:00 PM,4.6,₹1374,9828501375,Very supportive during recovery,12,"English, Hindi, Marathi",http://bookdoc.com/111
+D112,Dr. Niharika Bhat,Rheumatologist,Sunrise Hospital,Kandivali,"Tue, Thu, Sat",10:00 AM - 12:00 PM,4.8,₹1079,9891256639,Makes you feel comfortable and informed,14,"English, Marathi",http://bookdoc.com/112
+D113,Dr. Kiran Sethi,General Physician,Bombay Hospital,Chembur,All days,10:00 AM - 12:00 PM,4.1,₹1374,9830923825,"Effective treatment, friendly",20,"English, Hindi, Marathi",http://bookdoc.com/113
+D114,Dr. Kavya Kumar,Endocrinologist,Wockhardt Hospital,Navi Mumbai,Tue-Fri,10:00 AM - 12:00 PM,4.3,₹1957,9828501375,Detailed consultations and follow-ups,15,"English, Marathi",http://bookdoc.com/114
+D115,Dr. Manish Sharma,General Physician,Breach Candy Hospital,Juhu,All days,6:00 PM - 9:00 PM,4.2,₹1889,9838510891,Very supportive during recovery,21,"English, Hindi, Marathi",http://bookdoc.com/115
+D116,Dr. Kavya Mehta,Rheumatologist,Juhu Hospital,Vile Parle,"Tue, Thu, Sat",8:00 AM - 10:00 AM,5.0,₹1063,9842934322,Compassionate and skilled,9,"English, Hindi",http://bookdoc.com/116
+D117,Dr. Rajesh Malik,Plastic Surgeon,Hegde Hospital,Borivali,Tue-Fri,10:00 AM - 12:00 PM,4.9,₹1110,9815641286,Great communicator,28,"English, Hindi, Marathi",http://bookdoc.com/117
+D118,Dr. Ananya Sethi,Gastroenterologist,Ruby Hall Clinic,Lower Parel,"Wed, Fri",2:00 PM - 5:00 PM,4.1,₹783,9883788233,Very supportive during recovery,21,"English, Hindi",http://bookdoc.com/118
+D119,Dr. Ananya Malik,Gynecologist,Apollo Clinic,Lower Parel,"Mon, Wed",4:00 PM - 7:00 PM,4.6,₹1752,9845607268,Very supportive during recovery,15,"English, Hindi, Marathi",http://bookdoc.com/119
+D120,Dr. Ayesha Kumar,Urologist,S L Raheja Hospital,Mulund,"Mon, Wed",10:00 AM - 12:00 PM,4.6,₹1275,9868489318,"Effective treatment, friendly",14,"English, Hindi",http://bookdoc.com/120
+D121,Dr. Ananya Malik,Pediatrician,Breach Candy Hospital,Thane,"Mon, Wed",11:00 AM - 3:00 PM,4.8,₹1136,9881494993,Compassionate and skilled,18,"English, Hindi, Marathi",http://bookdoc.com/121
+D122,Dr. Simran Verma,Rheumatologist,Global Hospital,Malad,All days,9:00 AM - 1:00 PM,4.1,₹1219,9813425598,Very professional and helpful,9,"English, Hindi, Marathi",http://bookdoc.com/122
+D123,Dr. Deepak Kapoor,Orthopedic Surgeon,Bombay Hospital,Kandivali,"Mon, Wed",9:00 AM - 1:00 PM,4.0,₹1695,9825815483,Understanding and empathetic,18,"English, Hindi",http://bookdoc.com/123
+D124,Dr. Kiran Singh,ENT Specialist,Global Hospital,Versova,"Mon, Wed",6:00 PM - 9:00 PM,4.3,₹1953,9849834572,Understanding and empathetic,6,"English, Hindi",http://bookdoc.com/124
+D125,Dr. Deepak Chopra,Ophthalmologist,Fortis Hospital,Wadala,"Tue, Thu",5:00 PM - 8:00 PM,4.9,₹1043,9820371530,Excellent bedside manner,15,"English, Hindi",http://bookdoc.com/125
+D126,Dr. Kiran Reddy,Neurologist,Hiranandani Hospital,Powai,"Wed, Fri",8:00 AM - 10:00 AM,4.3,₹1275,9868108967,Top-notch expertise,20,"English, Hindi, Marathi",http://bookdoc.com/126
+D127,Dr. Arjun Sethi,Plastic Surgeon,Bombay Hospital,Marine Lines,Tue-Fri,10:00 AM - 12:00 PM,4.7,₹1098,9898211228,Highly recommended,15,"English, Marathi",http://bookdoc.com/127
+D128,Dr. Sneha Bhat,Dermatologist,Aditya Birla Memorial Hospital,Marine Lines,"Sat, Sun",4:00 PM - 7:00 PM,4.8,₹1994,9838510891,Understanding and empathetic,17,"English, Hindi, Marathi",http://bookdoc.com/128
+D129,Dr. Rohit Patel,Endocrinologist,Hegde Hospital,Kandivali,All days,10:00 AM - 12:00 PM,4.2,₹662,9870304014,Prompt and accurate diagnoses,18,"English, Hindi",http://bookdoc.com/129
+D130,Dr. Simran Singhal,Pulmonologist,Nanavati Hospital,Versova,"Tue, Thu",2:00 PM - 5:00 PM,4.7,₹1190,9889277264,Efficient and reliable,25,"English, Hindi, Marathi",http://bookdoc.com/130
+D131,Dr. Vikram Chopra,Orthopedic Surgeon,Apollo Clinic,Marine Lines,"Sat, Sun",9:00 AM - 1:00 PM,4.7,₹1066,9848947502,Great communicator,9,"English, Marathi",http://bookdoc.com/131
+D132,Dr. Kavya Verma,Pediatrician,Lilavati Hospital,Lower Parel,"Tue, Thu, Sat",9:00 AM - 1:00 PM,4.5,₹1778,9894151901,Knowledgeable and approachable,21,"English, Hindi, Marathi",http://bookdoc.com/132
+D133,Dr. Kavya Verma,Neurologist,Juhu Hospital,Chembur,Mon-Fri,10:00 AM - 12:00 PM,4.2,₹1276,9883788233,"Effective treatment, friendly",9,"English, Marathi",http://bookdoc.com/133
+D134,Dr. Amit Agarwal,Neurologist,Apollo Clinic,Marine Lines,Mon-Sat,5:00 PM - 8:00 PM,4.8,₹1645,9874675757,"Clear explanations, good care",11,"English, Hindi",http://bookdoc.com/134
+D135,Dr. Pankaj Kapoor,General Physician,Lilavati Hospital,Thane,"Tue, Thu",8:00 AM - 10:00 AM,4.6,₹822,9854506196,"Effective treatment, friendly",18,"English, Hindi, Marathi",http://bookdoc.com/135
+D136,Dr. Nitin Rao,Orthopedic Surgeon,Bharati Vidyapeeth Medical College,Wadala,Mon-Sat,9:00 AM - 1:00 PM,4.7,₹1271,9858074131,Great communicator,25,"English, Hindi, Marathi",http://bookdoc.com/136
+D137,Dr. Vikram Joshi,General Physician,Juhu Hospital,Thane,"Wed, Fri",11:00 AM - 3:00 PM,4.9,₹1712,9865823339,Attentive and thorough,28,"English, Hindi, Marathi",http://bookdoc.com/137
+D138,Dr. Arjun Nair,Psychiatrist,Bharati Vidyapeeth Medical College,Dadar,"Mon, Wed",10:00 AM - 12:00 PM,4.1,₹783,9891256639,Attentive and thorough,17,"English, Hindi",http://bookdoc.com/138
+D139,Dr. Shreya Singh,Hematologist,Sunrise Hospital,Kurla,"Tue, Thu, Sat",9:00 AM - 1:00 PM,4.7,₹1185,9899596386,"Clear explanations, good care",7,"English, Hindi, Marathi",http://bookdoc.com/139
+D140,Dr. Kavya Malik,Ophthalmologist,Wockhardt Hospital,Dadar,"Mon, Wed, Fri",11:00 AM - 3:00 PM,4.7,₹1863,9887457412,Attentive and thorough,7,"English, Marathi",http://bookdoc.com/140
+D141,Dr. Kiran Sharma,Nephrologist,Lilavati Hospital,Juhu,Tue-Fri,8:00 AM - 10:00 AM,5.0,₹1193,9871028330,Prompt and accurate diagnoses,25,"English, Marathi",http://bookdoc.com/141
+D142,Dr. Arjun Nair,Rheumatologist,Juhu Hospital,Colaba,"Wed, Fri",8:00 AM - 10:00 AM,4.1,₹1276,9874572285,Respectful and considerate,5,"English, Hindi, Marathi",http://bookdoc.com/142
+D143,Dr. Deepak Bhat,Pediatrician,Bombay Hospital,Ghatkopar,"Wed, Fri",10:00 AM - 12:00 PM,4.3,₹1708,9858381122,Efficient and reliable,26,"English, Marathi",http://bookdoc.com/143
+D144,Dr. Nitin Sethi,Neurologist,Aditya Birla Memorial Hospital,Mulund,Tue-Fri,2:00 PM - 5:00 PM,4.1,₹1577,9830492950,Detailed consultations and follow-ups,11,"English, Hindi, Marathi",http://bookdoc.com/144
+D145,Dr. Nitin Desai,Cardiologist,S L Raheja Hospital,Dadar,"Sat, Sun",10:00 AM - 12:00 PM,4.9,₹1179,9813425598,"Great doctor, very patient",12,"English, Hindi",http://bookdoc.com/145
+D146,Dr. Priya Agarwal,Pulmonologist,Kokilaben Dhirubhai Ambani Hospital,Dadar,Tue-Fri,10:00 AM - 12:00 PM,4.8,₹1762,9871028330,Excellent with kids,28,"English, Hindi",http://bookdoc.com/146
+D147,Dr. Rohit Patel,Ophthalmologist,Apollo Clinic,Navi Mumbai,All days,5:00 PM - 8:00 PM,4.3,₹1162,9884868229,Understanding and empathetic,7,"English, Hindi, Marathi",http://bookdoc.com/147
+D148,Dr. Ravi Patel,Nephrologist,Breach Candy Hospital,Powai,Mon-Sat,10:00 AM - 12:00 PM,4.8,₹1498,9820371530,Makes you feel comfortable and informed,5,"English, Hindi",http://bookdoc.com/148
+D149,Dr. Vikram Reddy,Ophthalmologist,Breach Candy Hospital,Vile Parle,Mon-Fri,5:00 PM - 8:00 PM,4.5,₹1351,9823504587,Attentive and thorough,30,"English, Hindi, Marathi",http://bookdoc.com/149
+D150,Dr. Deepak Agarwal,Nephrologist,Siddhivinayak Hospital,Mulund,Tue-Fri,10:00 AM - 12:00 PM,4.8,₹898,9832814773,Efficient and reliable,21,"English, Marathi",http://bookdoc.com/150
+D151,Dr. Ayesha Joshi,ENT Specialist,Wockhardt Hospital,Chembur,Tue-Fri,8:00 AM - 10:00 AM,4.5,₹1201,9830492950,"Quick diagnosis, effective treatment",18,"English, Hindi, Marathi",http://bookdoc.com/151
+D152,Dr. Ravi Sharma,Rheumatologist,Hegde Hospital,Mulund,"Mon, Wed",2:00 PM - 5:00 PM,4.1,₹1201,9849743107,Compassionate and skilled,10,"English, Hindi, Marathi",http://bookdoc.com/152
+D153,Dr. Priya Reddy,Gynecologist,Bombay Hospital,Chembur,"Mon, Wed, Fri",9:00 AM - 1:00 PM,4.1,₹1011,9875295835,Understanding and empathetic,6,"English, Hindi, Marathi",http://bookdoc.com/153
+D154,Dr. Vikram Mehta,Pediatrician,Kokilaben Dhirubhai Ambani Hospital,Vile Parle,"Mon, Wed",6:00 PM - 9:00 PM,4.4,₹777,9858381122,Detailed consultations and follow-ups,30,"English, Hindi, Marathi",http://bookdoc.com/154
+D155,Dr. Manish Bhat,Psychiatrist,Lilavati Hospital,Marine Lines,Mon-Fri,2:00 PM - 5:00 PM,4.7,₹1712,9843577106,"Quick diagnosis, effective treatment",9,"English, Hindi",http://bookdoc.com/155
+D156,Dr. Kiran Kumar,Hematologist,Juhu Hospital,Thane,Mon-Sat,4:00 PM - 7:00 PM,4.6,₹1778,9844622297,"Clear explanations, good care",11,"English, Marathi",http://bookdoc.com/156
+D157,Dr. Amit Bhat,Orthopedic Surgeon,S L Raheja Hospital,Kandivali,"Wed, Fri",10:00 AM - 12:00 PM,4.5,₹1776,9853624512,Great communicator,17,"English, Hindi, Marathi",http://bookdoc.com/157
+D158,Dr. Kiran Sethi,Pediatrician,Fortis Hospital,Bandra,Tue-Fri,5:00 PM - 8:00 PM,4.3,₹1844,9869173678,Excellent bedside manner,8,"English, Marathi",http://bookdoc.com/158
+D159,Dr. Isha Bhat,Endocrinologist,Apollo Clinic,Navi Mumbai,"Tue, Thu",4:00 PM - 7:00 PM,4.3,₹1614,9898212732,Understanding and empathetic,5,"English, Hindi",http://bookdoc.com/159
+D160,Dr. Kavya Sethi,Cardiologist,Sunrise Hospital,Colaba,Tue-Fri,5:00 PM - 8:00 PM,4.1,₹1476,9840288552,"Great doctor, very patient",5,"English, Hindi",http://bookdoc.com/160
+D161,Dr. Kavya Malik,Internal Medicine Specialist,Juhu Hospital,Marine Lines,Tue-Fri,9:00 AM - 1:00 PM,4.1,₹1742,9893567777,Attentive and thorough,18,"English, Marathi",http://bookdoc.com/161
+D162,Dr. Ananya Malik,Endocrinologist,Sunrise Hospital,Versova,"Sat, Sun",4:00 PM - 7:00 PM,4.2,₹1136,9898163923,"Clear explanations, good care",30,"English, Hindi, Marathi",http://bookdoc.com/162
+D163,Dr. Nitin Kumar,Neurologist,Fortis Hospital,Chembur,"Mon, Wed",4:00 PM - 7:00 PM,4.3,₹662,9876057837,Highly recommended,13,"English, Marathi",http://bookdoc.com/163
+D164,Dr. Vikram Verma,Bariatric Surgeon,Jaslok Hospital,Dadar,"Wed, Fri",4:00 PM - 7:00 PM,4.7,₹1179,9854505586,"Effective treatment, friendly",28,"English, Hindi, Marathi",http://bookdoc.com/164
+D165,Dr. Pankaj Gupta,Ophthalmologist,Aditya Birla Memorial Hospital,Malad,"Tue, Thu",6:00 PM - 9:00 PM,5.0,₹1104,9844285991,Detailed consultations and follow-ups,30,"English, Hindi",http://bookdoc.com/165
+D166,Dr. Rohit Bhat,Gynecologist,Sunrise Hospital,Vile Parle,"Wed, Fri",6:00 PM - 9:00 PM,4.2,₹1104,9896870652,Knowledgeable and approachable,12,"English, Marathi",http://bookdoc.com/166
+D167,Dr. Vikram Bhat,Cardiologist,Nanavati Hospital,Ghatkopar,Mon-Fri,8:00 AM - 10:00 AM,4.8,₹1994,9820094127,Very supportive during recovery,16,"English, Hindi, Marathi",http://bookdoc.com/167
+D168,Dr. Kiran Malik,Psychiatrist,Ruby Hall Clinic,Wadala,"Wed, Fri",11:00 AM - 3:00 PM,4.1,₹1162,9833221287,Excellent bedside manner,22,"English, Hindi",http://bookdoc.com/168
+D169,Dr. Shreya Rao,Nephrologist,Jaslok Hospital,Colaba,Tue-Fri,8:00 AM - 10:00 AM,4.2,₹937,9875693948,Efficient and reliable,9,"English, Hindi",http://bookdoc.com/169
+D170,Dr. Niharika Bansal,Nephrologist,Bharati Vidyapeeth Medical College,Marine Lines,All days,6:00 PM - 9:00 PM,4.5,₹1104,9843912942,Top-notch expertise,5,"English, Hindi, Marathi",http://bookdoc.com/170
+D171,Dr. Isha Agarwal,Gastroenterologist,Fortis Hospital,Borivali,Tue-Fri,2:00 PM - 5:00 PM,4.7,₹1859,9843179236,"Quick diagnosis, effective treatment",9,"English, Hindi, Marathi",http://bookdoc.com/171
+D172,Dr. Ravi Bansal,Oncologist,Juhu Hospital,Mulund,"Wed, Fri",10:00 AM - 12:00 PM,4.6,₹1231,9881487860,Excellent bedside manner,20,"English, Hindi",http://bookdoc.com/172
+D173,Dr. Niharika Gupta,Nephrologist,Lilavati Hospital,Lower Parel,"Sat, Sun",5:00 PM - 8:00 PM,4.4,₹1955,9840575266,Knowledgeable and approachable,15,"English, Hindi",http://bookdoc.com/173
+D174,Dr. Priya Malik,Pediatrician,Fortis Hospital,Malad,"Mon, Wed, Fri",5:00 PM - 8:00 PM,4.5,₹1216,9848849576,Efficient and reliable,21,"English, Marathi",http://bookdoc.com/174
+D175,Dr. Shreya Gupta,Cardiologist,Bharati Vidyapeeth Medical College,Marine Lines,Mon-Fri,5:00 PM - 8:00 PM,4.3,₹538,9833278679,Respectful and considerate,30,"English, Marathi",http://bookdoc.com/175
+D176,Dr. Manish Verma,Rheumatologist,Nanavati Hospital,Lower Parel,Tue-Fri,8:00 AM - 10:00 AM,4.3,₹713,9843912942,Knowledgeable and approachable,20,"English, Marathi",http://bookdoc.com/176
+D177,Dr. Isha Bhat,Urologist,S L Raheja Hospital,Ghatkopar,"Wed, Fri",5:00 PM - 8:00 PM,4.8,₹783,9841756683,Very professional and helpful,19,"English, Hindi, Marathi",http://bookdoc.com/177
+D178,Dr. Kiran Nair,Urologist,Fortis Hospital,Andheri,Mon-Fri,4:00 PM - 7:00 PM,4.1,₹1302,9856019656,Well-experienced and calm,28,"English, Hindi",http://bookdoc.com/178
+D179,Dr. Isha Rao,Orthopedic Surgeon,Hegde Hospital,Wadala,All days,11:00 AM - 3:00 PM,4.9,₹813,9839447377,Highly recommended,21,"English, Marathi",http://bookdoc.com/179
+D180,Dr. Simran Joshi,Cardiologist,Hiranandani Hospital,Bandra,"Mon, Wed, Fri",4:00 PM - 7:00 PM,4.2,₹1621,9830993636,Makes you feel comfortable and informed,25,"English, Hindi",http://bookdoc.com/180
+D181,Dr. Deepak Sharma,Neurologist,Wockhardt Hospital,Lower Parel,Tue-Fri,2:00 PM - 5:00 PM,4.5,₹879,9881487860,Very professional and helpful,11,"English, Hindi",http://bookdoc.com/181
+D182,Dr. Nitin Gupta,Pediatrician,Nanavati Hospital,Borivali,"Tue, Thu",9:00 AM - 1:00 PM,5.0,₹1725,9870979859,Very professional and helpful,23,"English, Hindi, Marathi",http://bookdoc.com/182
+D183,Dr. Ananya Nair,Gynecologist,Hiranandani Hospital,Andheri,Mon-Fri,10:00 AM - 12:00 PM,4.2,₹1051,9819299989,"Great doctor, very patient",7,"English, Marathi",http://bookdoc.com/183
+D184,Dr. Amit Mehta,Bariatric Surgeon,Siddhivinayak Hospital,Wadala,"Tue, Thu",10:00 AM - 12:00 PM,4.2,₹1007,9869466411,Compassionate and skilled,5,"English, Marathi",http://bookdoc.com/184
+D185,Dr. Vikram Verma,Neurologist,Hiranandani Hospital,Ghatkopar,Tue-Fri,6:00 PM - 9:00 PM,4.9,₹1597,9848947502,Very professional and helpful,9,"English, Hindi",http://bookdoc.com/185
+D186,Dr. Pankaj Desai,Ophthalmologist,Bharati Vidyapeeth Medical College,Wadala,"Tue, Thu, Sat",8:00 AM - 10:00 AM,4.8,₹1498,9820389888,Efficient and reliable,25,"English, Marathi",http://bookdoc.com/186
+D187,Dr. Kavya Rao,Dermatologist,Hegde Hospital,Dadar,All days,10:00 AM - 12:00 PM,4.8,₹1082,9868013146,Understanding and empathetic,8,"English, Hindi, Marathi",http://bookdoc.com/187
+D188,Dr. Sneha Singh,Psychiatrist,Sunrise Hospital,Juhu,"Sat, Sun",10:00 AM - 12:00 PM,4.6,₹1367,9846839091,"Great doctor, very patient",26,"English, Hindi, Marathi",http://bookdoc.com/188
+D189,Dr. Rohit Gupta,Neurologist,Nanavati Hospital,Borivali,Mon-Fri,5:00 PM - 8:00 PM,4.0,₹1863,9891048083,Excellent bedside manner,18,"English, Marathi",http://bookdoc.com/189
+D190,Dr. Rajesh Desai,Neurologist,Kokilaben Dhirubhai Ambani Hospital,Vile Parle,Mon-Fri,6:00 PM - 9:00 PM,4.4,₹1654,9887403479,Very supportive during recovery,18,"English, Hindi, Marathi",http://bookdoc.com/190
+D191,Dr. Vikram Rao,Orthopedic Surgeon,Fortis Hospital,Bandra,Mon-Sat,6:00 PM - 9:00 PM,4.8,₹1210,9840288552,Compassionate and skilled,18,"English, Marathi",http://bookdoc.com/191
+D192,Dr. Shreya Singh,Neurologist,Hiranandani Hospital,Chembur,All days,9:00 AM - 1:00 PM,4.4,₹1874,9813023767,Well-experienced and calm,25,"English, Hindi, Marathi",http://bookdoc.com/192
+D193,Dr. Deepak Joshi,Oncologist,Hegde Hospital,Juhu,"Sat, Sun",4:00 PM - 7:00 PM,4.3,₹792,9858074131,Well-experienced and calm,20,"English, Marathi",http://bookdoc.com/193
+D194,Dr. Arjun Rao,Nephrologist,Sunrise Hospital,Malad,Mon-Fri,4:00 PM - 7:00 PM,4.8,₹1902,9863314010,Highly recommended,24,"English, Hindi",http://bookdoc.com/194
+D195,Dr. Kavya Sharma,ENT Specialist,Hiranandani Hospital,Chembur,"Mon, Wed",11:00 AM - 3:00 PM,5.0,₹783,9870993457,Highly recommended,12,"English, Marathi",http://bookdoc.com/195
+D196,Dr. Deepak Malik,Neurologist,Apollo Clinic,Navi Mumbai,"Mon, Wed",5:00 PM - 8:00 PM,4.1,₹1340,9885537934,"Great doctor, very patient",18,"English, Hindi, Marathi",http://bookdoc.com/196
+D197,Dr. Manish Joshi,Neurologist,Apollo Clinic,Powai,"Mon, Wed, Fri",9:00 AM - 1:00 PM,4.5,₹1476,9820384420,"Clear explanations, good care",18,"English, Marathi",http://bookdoc.com/197
+D198,Dr. Manish Malik,Cardiologist,Saifee Hospital,Malad,"Sat, Sun",6:00 PM - 9:00 PM,4.9,₹1844,9841810052,Excellent bedside manner,27,"English, Hindi",http://bookdoc.com/198
+D199,Dr. Shreya Bhat,Hematologist,Sunrise Hospital,Mulund,"Wed, Fri",2:00 PM - 5:00 PM,4.4,₹1007,9830993636,Excellent with kids,17,"English, Hindi",http://bookdoc.com/199
+D200,Dr. Kavya Bhat,Gynecologist,Bharati Vidyapeeth Medical College,Kurla,Mon-Sat,9:00 AM - 1:00 PM,4.1,₹1762,9875295835,Makes you feel comfortable and informed,14,"English, Hindi",http://bookdoc.com/200
