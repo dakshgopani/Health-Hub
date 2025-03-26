@@ -54,7 +54,7 @@ dependencies:
   mobile_scanner: ^6.0.5
   permission_handler: ^11.3.1
   image_picker: ^1.1.2
-  flutter_barcode_scanner: ^2.0.0
+#  flutter_barcode_scanner: ^2.0.0
   qr: ^3.0.1
   flutter_svg: ^2.0.17
   flutter_email_sender: ^6.0.3
@@ -81,12 +81,20 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   csv: ^6.0.0
   razorpay_flutter: ^1.3.7
-  #  lottie: ^3.3.0
+#  lottie: ^3.3.0
   workmanager: ^0.5.2
   flutter_local_notifications: ^18.0.1
+  share_plus: ^10.1.4
+  agora_rtc_engine: ^5.3.0
+  firebase_storage: ^12.4.4
+  file_picker: ^8.3.2
+  flutter_fortune_wheel: ^1.3.2
+
+
 
   flutter_localizations:
     sdk: flutter
+  lottie: ^3.3.1
 
 
 
@@ -98,7 +106,7 @@ dev_dependencies:
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  # rules and acivating additional ones.
   flutter_lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -115,10 +123,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/google.jpg
-    - assets/medal.png
-    - assets/cert_first_img.png
-    - assets/cert_sec_img.png
-    - assets/cert_third_img.png
+    - assets/images/certificate_img/medal.png
+    - assets/images/certificate_img/cert_first_img.png
+    - assets/images/certificate_img/cert_sec_img.png
+    - assets/images/certificate_img/cert_third_img.png
+    - assets/images/certificate_img/cert_signature.jpg
     - assets/waiting_room.jpg
     - assets/waiting_room_second.jpg
     - assets/qr_scan_img.png
@@ -142,6 +151,8 @@ flutter:
     - assets/images/auth/login_signup_img.png
     - assets/csv/doctors_data.csv
     - assets/json/health_tips.json
+    - assets/json/medicine_recommendation.json
+    - assets/json/medicine_quiz_data.json
     - assets/logo/LOGO_HH.png
     - assets/images/home_page/symptoms_analysis.png
     - assets/images/home_page/medical_history.png

@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
-import 'ambulance_booking_screen.dart';
-import 'blood_donation/blood_donation_page_screen.dart';
-import 'nearby_hospitals_screen.dart';
+import 'package:mad_practice_one/screens/medication_page.dart';
+import 'package:mad_practice_one/screens/quiz_screen.dart';
+import 'medicine_recommender.dart';
 
-class EmergencyServicesScreen extends StatefulWidget {
-  final String userId;
-  final String userName;
-  final String userEmail;
-
-  const EmergencyServicesScreen({
-    super.key,
-    required this.userId,
-    required this.userName,
-    required this.userEmail,
-  });
+class MedicinePage extends StatefulWidget {
+  const MedicinePage({super.key});
 
   @override
-  _EmergencyServicesScreenState createState() =>
-      _EmergencyServicesScreenState();
+  _MedicinePageState createState() => _MedicinePageState();
 }
 
-class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
+class _MedicinePageState extends State<MedicinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +25,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
               children: [
                 const SizedBox(height: 20),
 
-                // Emergency Services Card with gradient
+                // Medicine Scanner Card with gradient
                 Container(
                   height: 180,
                   width: double.infinity,
@@ -43,7 +33,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
                     gradient: const LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Color(0xFF6A4BBA), Color(0xFF432C81)],
+                      colors: [Color(0xFF7A5CC6), Color(0xFF432C81)],
                     ),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
@@ -56,13 +46,13 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
                   ),
                   child: Stack(
                     children: [
-                      // Decorative circles
+                      // Decorative elements
                       Positioned(
-                        right: -20,
-                        top: -20,
+                        right: -30,
+                        top: -30,
                         child: Container(
-                          width: 100,
-                          height: 100,
+                          width: 120,
+                          height: 120,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             shape: BoxShape.circle,
@@ -70,11 +60,11 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
                         ),
                       ),
                       Positioned(
-                        left: -30,
-                        bottom: -30,
+                        left: -20,
+                        bottom: -20,
                         child: Container(
-                          width: 120,
-                          height: 120,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.1),
                             shape: BoxShape.circle,
@@ -93,22 +83,22 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Emergency\nServices",
+                                  "Medicine\nScanner",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 24,
+                                    fontSize: 26,
                                     fontWeight: FontWeight.w900,
                                     height: 1.2,
                                     fontFamily: 'Raleway',
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: 10),
                                 Text(
-                                  "Get help immediately",
+                                  "Identify medications instantly",
                                   style: TextStyle(
                                     color: Colors.white70,
-                                    fontSize: 14,
                                     fontWeight: FontWeight.w700,
+                                    fontSize: 14,
                                     fontFamily: 'Raleway',
                                   ),
                                 ),
@@ -121,7 +111,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Image.asset(
-                                'assets/emergency_icon.png',
+                                'assets/images/home_page/medicine_reminder.png',
                                 width: 50,
                                 height: 50,
                               ),
@@ -137,7 +127,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
 
                 // Section title
                 const Text(
-                  "Quick Actions",
+                  "Medical Tools",
                   style: TextStyle(
                     color: Color(0xFF432C81),
                     fontSize: 20,
@@ -148,51 +138,47 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
 
                 const SizedBox(height: 16),
 
-                // Emergency Options with enhanced design
-                _buildEmergencyOption(
-                  "Contact Nearby Hospitals",
-                  "Find hospitals close to your location",
-                  Icons.local_hospital,
+                // Medicine Options with enhanced design
+                _buildMedicineOption(
+                  "Scan a Medicine",
+                  "Identify pills and medications",
+                  Icons.document_scanner,
+                  Colors.blue,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MedicineScannerPage(),
+                      ),
+                    );
+                  },
+                ),
+
+                _buildMedicineOption(
+                  "Medicine Recommender",
+                  "Get personalized medication suggestions",
+                  Icons.medical_services,
                   Colors.green,
                   () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HospitalLocator(),
+                        builder: (context) => MedicineRecommender(),
                       ),
                     );
                   },
                 ),
 
-                _buildEmergencyOption(
-                  "Book Ambulance",
-                  "Request emergency transport",
-                  Icons.emergency,
+                _buildMedicineOption(
+                  "MediMaster Quiz",
+                  "Test your medical knowledge",
+                  Icons.quiz,
                   Colors.orange,
                   () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AmbulanceBookingScreen(),
-                      ),
-                    );
-                  },
-                ),
-
-                _buildEmergencyOption(
-                  "Donate Blood",
-                  "Help those in need nearby",
-                  Icons.bloodtype,
-                  Colors.red,
-                  () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BloodDonationPage(
-                          userId: widget.userId,
-                          userName: widget.userName,
-                          userEmail: widget.userEmail,
-                        ),
+                        builder: (context) => QuizScreen(),
                       ),
                     );
                   },
@@ -207,7 +193,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
     );
   }
 
-  Widget _buildEmergencyOption(String title, String subtitle, IconData icon,
+  Widget _buildMedicineOption(String title, String subtitle, IconData icon,
       Color iconColor, VoidCallback onTap) {
     return Padding(
         padding: const EdgeInsets.only(bottom: 16),
@@ -223,7 +209,7 @@ class _EmergencyServicesScreenState extends State<EmergencyServicesScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [

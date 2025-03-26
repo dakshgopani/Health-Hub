@@ -3,6 +3,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CheckoutPage extends StatefulWidget {
   final double fee;
+
   const CheckoutPage({super.key, required this.fee});
 
   @override

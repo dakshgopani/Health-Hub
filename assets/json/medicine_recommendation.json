@@ -1,0 +1,572 @@
+{
+  "Headache": {
+    "medicine": "Paracetamol",
+    "dosage": "500mg every 6-8 hours",
+    "precautions": ["Avoid if you have liver disease", "Not recommended for alcoholics"],
+    "side_effects": ["Nausea", "Rash", "Liver damage (in overdose)"],
+    "drug_interactions": ["Avoid with warfarin", "Caution with other liver-metabolized drugs"],
+    "alternative_treatments": ["Hydration", "Rest in a dark room", "Cold compress"],
+    "severity_levels": {
+      "mild": "500mg every 8 hours",
+      "moderate": "500mg every 6 hours",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage (consult doctor)",
+      "elderly": "Reduce dosage to 250mg if kidney function is impaired"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Tylenol", "Panadol"]
+  },
+  "Cold": {
+    "medicine": "Cetirizine",
+    "dosage": "10mg once daily",
+    "precautions": ["Avoid driving after taking", "Not for children under 6 years"],
+    "side_effects": ["Drowsiness", "Dry mouth", "Dizziness"],
+    "drug_interactions": ["Avoid alcohol", "Caution with other sedatives"],
+    "alternative_treatments": ["Steam inhalation", "Honey and lemon tea", "Adequate rest"],
+    "severity_levels": {
+      "mild": "5mg once daily",
+      "moderate": "10mg once daily",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use 5mg dosage",
+      "elderly": "Start with 5mg to assess tolerance"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Zyrtec", "Aller-Tec"]
+  },
+  "Fever": {
+    "medicine": "Ibuprofen",
+    "dosage": "200-400mg every 4-6 hours",
+    "precautions": ["Take with food to avoid stomach upset", "Not for people with ulcers or kidney disease"],
+    "side_effects": ["Stomach pain", "Nausea", "Increased blood pressure"],
+    "drug_interactions": ["Avoid with aspirin", "Caution with blood thinners"],
+    "alternative_treatments": ["Cold compress", "Stay hydrated", "Rest"],
+    "severity_levels": {
+      "mild": "200mg every 6 hours",
+      "moderate": "400mg every 4-6 hours",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage",
+      "elderly": "Use lowest effective dose"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Advil", "Motrin"]
+  },
+  "Cough": {
+    "medicine": "Dextromethorphan",
+    "dosage": "10-20mg every 4 hours",
+    "precautions": ["Avoid if you have asthma", "Not recommended for children under 4"],
+    "side_effects": ["Dizziness", "Upset stomach", "Sleep disturbances"],
+    "drug_interactions": ["Avoid with MAO inhibitors", "Caution with antidepressants"],
+    "alternative_treatments": ["Honey and warm water", "Gargling salt water", "Ginger tea"],
+    "severity_levels": {
+      "mild": "10mg every 6 hours",
+      "moderate": "20mg every 4 hours",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric syrup",
+      "elderly": "Use lower dose to prevent dizziness"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Robitussin", "Delsym"]
+  },
+  "Acidity": {
+    "medicine": "Omeprazole",
+    "dosage": "20mg once daily before breakfast",
+    "precautions": ["Avoid long-term use without doctor's advice", "Not recommended for pregnant women"],
+    "side_effects": ["Headache", "Bloating", "Nausea"],
+    "drug_interactions": ["Avoid with clopidogrel", "Caution with antifungal medications"],
+    "alternative_treatments": ["Drink cold milk", "Eat smaller meals", "Avoid spicy foods"],
+    "severity_levels": {
+      "mild": "10mg once daily",
+      "moderate": "20mg once daily",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Monitor for kidney function changes"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Prilosec", "Losec"]
+  },
+  "Diarrhea": {
+    "medicine": "Loperamide",
+    "dosage": "2mg after each loose stool (max 8mg/day)",
+    "precautions": ["Do not use if stool is bloody", "Not recommended for children under 6"],
+    "side_effects": ["Constipation", "Dizziness", "Abdominal cramps"],
+    "drug_interactions": ["Avoid with opioid painkillers", "Caution with antibiotics"],
+    "alternative_treatments": ["Oral rehydration solution (ORS)", "Bananas and rice diet", "Ginger tea"],
+    "severity_levels": {
+      "mild": "2mg after each loose stool",
+      "moderate": "4mg initially, then 2mg as needed",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use only on doctor’s advice",
+      "elderly": "Start with lower dose due to sensitivity"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Imodium", "Diamode"]
+  },
+  "Sore Throat": {
+    "medicine": "Lozenges (Benzocaine)",
+    "dosage": "1 lozenge every 2 hours",
+    "precautions": ["Do not use if allergic to anesthetics", "Not recommended for prolonged use"],
+    "side_effects": ["Mild irritation", "Numbness in mouth", "Rare allergic reactions"],
+    "drug_interactions": ["Avoid with other anesthetic medications", "May interact with certain antibiotics"],
+    "alternative_treatments": ["Saltwater gargle", "Honey and warm tea", "Hydration"],
+    "severity_levels": {
+      "mild": "1 lozenge every 3 hours",
+      "moderate": "1 lozenge every 2 hours",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children_under_6": "Not recommended",
+      "elderly": "Use with caution due to swallowing difficulties"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Cepacol", "Chloraseptic"]
+  },
+  "Stomach Pain": {
+    "medicine": "Antacid (Magnesium Hydroxide)",
+    "dosage": "5-10ml after meals",
+    "precautions": ["Avoid if you have kidney disease", "Do not exceed the recommended dose"],
+    "side_effects": ["Diarrhea", "Bloating", "Nausea"],
+    "drug_interactions": ["May reduce absorption of some antibiotics", "Avoid with certain heart medications"],
+    "alternative_treatments": ["Peppermint tea", "Ginger tea", "Warm compress on stomach"],
+    "severity_levels": {
+      "mild": "5ml after meals",
+      "moderate": "10ml after meals",
+      "severe": "Consult a doctor"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage (consult doctor)",
+      "elderly": "Use with caution if kidney function is impaired"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Milk of Magnesia", "Mylanta"]
+  },
+  "Constipation": {
+    "medicine": "Lactulose",
+    "dosage": "15-30ml per day",
+    "precautions": ["Avoid if you have diabetes", "Not for prolonged use without medical advice"],
+    "side_effects": ["Bloating", "Cramps", "Diarrhea (with excessive use)"],
+    "drug_interactions": ["May interact with antacids", "Avoid with other laxatives"],
+    "alternative_treatments": ["High-fiber diet", "Increased water intake", "Exercise"],
+    "severity_levels": {
+      "mild": "Increase fiber intake",
+      "moderate": "Use Lactulose 15ml daily",
+      "severe": "Consult a doctor for stronger laxatives"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage (5-10ml/day)",
+      "elderly": "Start with 10ml to prevent dehydration"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Duphalac", "Enulose"]
+  },
+  "Nausea": {
+    "medicine": "Domperidone",
+    "dosage": "10mg before meals",
+    "precautions": ["Avoid if you have heart conditions", "Not for children under 12"],
+    "side_effects": ["Dry mouth", "Drowsiness", "Irregular heartbeat (rare)"],
+    "drug_interactions": ["Avoid with ketoconazole", "Caution with antidepressants"],
+    "alternative_treatments": ["Ginger tea", "Acupressure", "Deep breathing exercises"],
+    "severity_levels": {
+      "mild": "Drink ginger tea",
+      "moderate": "Use Domperidone 10mg",
+      "severe": "Seek medical advice"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Monitor heart function before use"
+    },
+    "availability": "Prescription-based",
+    "brand_names": ["Motilium", "Domstal"]
+  },
+  "Vomiting": {
+    "medicine": "Ondansetron",
+    "dosage": "4mg every 8 hours",
+    "precautions": ["Use cautiously in liver disease", "Not recommended during pregnancy without doctor’s advice"],
+    "side_effects": ["Headache", "Constipation", "Dizziness"],
+    "drug_interactions": ["Avoid with tramadol", "Caution with serotonin-modulating drugs"],
+    "alternative_treatments": ["Hydration", "BRAT diet (Bananas, Rice, Applesauce, Toast)", "Rest"],
+    "severity_levels": {
+      "mild": "Rest and hydrate",
+      "moderate": "Use Ondansetron 4mg",
+      "severe": "Seek emergency medical care"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage (2mg if prescribed)",
+      "elderly": "Monitor for dizziness"
+    },
+    "availability": "Prescription-based",
+    "brand_names": ["Zofran", "Ondem"]
+  },
+  "Allergy": {
+    "medicine": "Loratadine",
+    "dosage": "10mg once daily",
+    "precautions": ["Avoid alcohol", "May cause drowsiness"],
+    "side_effects": ["Drowsiness", "Dry mouth", "Headache"],
+    "drug_interactions": ["Avoid with ketoconazole", "Caution with sedatives"],
+    "alternative_treatments": ["Steam inhalation", "Saline nasal rinse", "Avoid allergens"],
+    "severity_levels": {
+      "mild": "Use Loratadine 10mg",
+      "moderate": "Combine with nasal spray if needed",
+      "severe": "Consult a doctor for stronger antihistamines"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage (5mg if prescribed)",
+      "elderly": "Monitor for excessive drowsiness"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Claritin", "Alavert"]
+  },
+  "Muscle Pain": {
+    "medicine": "Diclofenac Gel",
+    "dosage": "Apply a thin layer 3-4 times daily",
+    "precautions": ["Avoid broken skin", "Wash hands after use"],
+    "side_effects": ["Skin irritation", "Burning sensation", "Redness"],
+    "drug_interactions": ["Avoid with oral NSAIDs", "Caution with blood thinners"],
+    "alternative_treatments": ["Hot/cold compress", "Stretching exercises", "Epsom salt baths"],
+    "severity_levels": {
+      "mild": "Use Diclofenac Gel",
+      "moderate": "Apply with pain-relief patches",
+      "severe": "Consider oral painkillers if prescribed"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Use with caution if skin is sensitive"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Voltaren Gel", "Emulgel"]
+  },
+  "Back Pain": {
+    "medicine": "Ibuprofen",
+    "dosage": "400mg every 6-8 hours",
+    "precautions": ["Avoid if you have stomach ulcers", "Take with food"],
+    "side_effects": ["Stomach upset", "Heartburn", "Kidney issues (long-term use)"],
+    "drug_interactions": ["Avoid with aspirin", "Caution with blood pressure medications"],
+    "alternative_treatments": ["Heat therapy", "Posture correction", "Massage"],
+    "severity_levels": {
+      "mild": "Use Ibuprofen 200mg",
+      "moderate": "Increase to 400mg with food",
+      "severe": "Consult a doctor for stronger pain relief"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Reduce dosage to 200mg to prevent kidney stress"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Advil", "Motrin"]
+  },
+  "Migraine": {
+    "medicine": "Sumatriptan",
+    "dosage": "50mg at migraine onset",
+    "precautions": ["Not for people with heart disease", "Do not take more than 2 doses in 24 hours"],
+    "side_effects": ["Dizziness", "Tingling sensation", "Increased blood pressure"],
+    "drug_interactions": ["Avoid with antidepressants", "Caution with blood pressure medications"],
+    "alternative_treatments": ["Cold compress", "Caffeine intake (in moderation)", "Quiet, dark room rest"],
+    "severity_levels": {
+      "mild": "Rest in a dark room, try caffeine",
+      "moderate": "Take Sumatriptan 50mg",
+      "severe": "Seek medical attention if unresponsive to medication"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Monitor for cardiovascular effects"
+    },
+    "availability": "Prescription-based",
+    "brand_names": ["Imitrex", "Treximet"]
+  },
+  "Heartburn": {
+    "medicine": "Ranitidine",
+    "dosage": "150mg twice daily",
+    "precautions": ["Avoid alcohol and spicy foods", "Not for long-term use"],
+    "side_effects": ["Nausea", "Constipation", "Liver function abnormalities"],
+    "drug_interactions": ["Avoid with warfarin", "Caution with ketoconazole"],
+    "alternative_treatments": ["Drink cold milk", "Eat smaller meals", "Avoid acidic foods"],
+    "severity_levels": {
+      "mild": "Take 75mg once daily",
+      "moderate": "Increase to 150mg twice daily",
+      "severe": "Consult a doctor for alternative medications"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage if prescribed",
+      "elderly": "Monitor kidney function during long-term use"
+    },
+    "availability": "Prescription-based",
+    "brand_names": ["Zantac", "Rantac"]
+  },
+  "Dizziness": {
+    "medicine": "Meclizine",
+    "dosage": "25mg every 6-8 hours",
+    "precautions": ["Avoid driving", "Not recommended for glaucoma patients"],
+    "side_effects": ["Drowsiness", "Dry mouth", "Blurred vision"],
+    "drug_interactions": ["Avoid with alcohol", "Caution with sedatives"],
+    "alternative_treatments": ["Lie down and rest", "Stay hydrated", "Practice deep breathing"],
+    "severity_levels": {
+      "mild": "Rest and drink water",
+      "moderate": "Take Meclizine 25mg",
+      "severe": "Seek medical help if dizziness is persistent"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage if prescribed",
+      "elderly": "Monitor for excessive drowsiness"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Bonine", "Dramamine"]
+  },
+  "Gas": {
+    "medicine": "Simethicone",
+    "dosage": "125-250mg after meals",
+    "precautions": ["Avoid carbonated drinks", "Not recommended for long-term use"],
+    "side_effects": ["Mild bloating", "Nausea", "Diarrhea (rare)"],
+    "drug_interactions": ["No significant interactions"],
+    "alternative_treatments": ["Ginger tea", "Walk after meals", "Avoid gas-producing foods"],
+    "severity_levels": {
+      "mild": "Reduce intake of gas-forming foods",
+      "moderate": "Take Simethicone 125mg after meals",
+      "severe": "Consult a doctor for underlying conditions"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric drops if prescribed",
+      "elderly": "Monitor for digestive discomfort"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Gas-X", "Mylanta Gas"]
+  },
+  "Anxiety": {
+    "medicine": "Ashwagandha (Herbal)",
+    "dosage": "300mg twice daily",
+    "precautions": ["Avoid if pregnant", "Not recommended for thyroid disorders"],
+    "side_effects": ["Drowsiness", "Lower blood pressure", "Digestive issues"],
+    "drug_interactions": ["Avoid with sedatives", "Caution with thyroid medications"],
+    "alternative_treatments": ["Meditation", "Exercise", "Deep breathing exercises"],
+    "severity_levels": {
+      "mild": "Try meditation and lifestyle changes",
+      "moderate": "Take Ashwagandha 300mg",
+      "severe": "Consult a doctor for stronger medications"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Monitor for blood pressure changes"
+    },
+    "availability": "Herbal supplement (OTC)",
+    "brand_names": ["Himalaya Ashwagandha", "KSM-66"]
+  },
+  "Insomnia": {
+    "medicine": "Melatonin",
+    "dosage": "3mg 30 minutes before bedtime",
+    "precautions": ["Avoid long-term use", "Not recommended for children"],
+    "side_effects": ["Drowsiness", "Dizziness", "Headache"],
+    "drug_interactions": ["Avoid with sedatives", "Caution with blood thinners"],
+    "alternative_treatments": ["Maintain sleep schedule", "Reduce screen time", "Drink warm milk"],
+    "severity_levels": {
+      "mild": "Try relaxation techniques",
+      "moderate": "Take Melatonin 3mg before bedtime",
+      "severe": "Consult a doctor for stronger medications"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Use lower doses (1-2mg) due to increased sensitivity"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Natrol Melatonin", "Nature Made Melatonin"]
+  },
+  "Eye Redness": {
+    "medicine": "Naphazoline Eye Drops",
+    "dosage": "1-2 drops in each eye every 6 hours",
+    "precautions": ["Do not use for more than 3 days", "Avoid if you have glaucoma"],
+    "side_effects": ["Eye irritation", "Blurred vision", "Increased eye pressure"],
+    "drug_interactions": ["Avoid with beta-blockers", "Caution with antihypertensive drugs"],
+    "alternative_treatments": ["Cold compress", "Blink frequently", "Use preservative-free artificial tears"],
+    "severity_levels": {
+      "mild": "Use artificial tears",
+      "moderate": "Take Naphazoline eye drops as directed",
+      "severe": "Consult an ophthalmologist if symptoms persist"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Use with caution due to risk of increased eye pressure"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Clear Eyes", "Visine"]
+  },
+  "Skin Rash": {
+    "medicine": "Hydrocortisone Cream",
+    "dosage": "Apply a thin layer twice daily",
+    "precautions": ["Do not use on open wounds", "Avoid prolonged use"],
+    "side_effects": ["Skin thinning", "Burning sensation", "Increased risk of infections"],
+    "drug_interactions": ["Avoid with other corticosteroids", "Caution with immunosuppressants"],
+    "alternative_treatments": ["Apply aloe vera gel", "Avoid irritants", "Use hypoallergenic moisturizer"],
+    "severity_levels": {
+      "mild": "Apply moisturizer and avoid irritants",
+      "moderate": "Use Hydrocortisone cream as directed",
+      "severe": "Consult a dermatologist if rash worsens"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use only under medical supervision",
+      "elderly": "Use with caution due to skin thinning"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Cortizone-10", "Aveeno Hydrocortisone"]
+  },
+  "Ear Pain": {
+    "medicine": "Ear Drops (Benzocaine)",
+    "dosage": "2-3 drops in affected ear every 6 hours",
+    "precautions": ["Avoid if eardrum is perforated", "Not for children under 2"],
+    "side_effects": ["Temporary burning sensation", "Mild irritation", "Allergic reaction (rare)"],
+    "drug_interactions": ["Avoid with other ear medications", "Caution with blood thinners"],
+    "alternative_treatments": ["Warm compress", "Use garlic oil drops", "Avoid exposure to loud noise"],
+    "severity_levels": {
+      "mild": "Use warm compress and rest",
+      "moderate": "Take Benzocaine ear drops",
+      "severe": "Consult a doctor if symptoms persist"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage if prescribed",
+      "elderly": "Monitor for allergic reactions"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Auralgan", "Ototemp"]
+  },
+  "Toothache": {
+    "medicine": "Clove Oil",
+    "dosage": "Apply 1-2 drops on affected area",
+    "precautions": ["Do not ingest", "Avoid direct contact with gums"],
+    "side_effects": ["Mild irritation", "Burning sensation", "Allergic reactions (rare)"],
+    "drug_interactions": ["Avoid with blood thinners", "Caution with oral painkillers"],
+    "alternative_treatments": ["Saltwater rinse", "Apply a cold compress", "Use over-the-counter pain relievers"],
+    "severity_levels": {
+      "mild": "Apply clove oil and rinse with warm salt water",
+      "moderate": "Use over-the-counter painkillers",
+      "severe": "Consult a dentist for persistent pain"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Dilute before use",
+      "elderly": "Use with caution to avoid gum irritation"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Eugenol Oil", "Dentek Oral Pain Relief"]
+  },
+  "Burns": {
+    "medicine": "Silver Sulfadiazine Cream",
+    "dosage": "Apply a thin layer twice daily",
+    "precautions": ["Avoid if allergic to sulfa drugs", "Do not use on deep wounds"],
+    "side_effects": ["Skin discoloration", "Burning sensation", "Delayed wound healing"],
+    "drug_interactions": ["Avoid with other topical antibiotics", "Caution with immunosuppressants"],
+    "alternative_treatments": ["Cool the area with running water", "Use aloe vera gel", "Keep the burn clean and covered"],
+    "severity_levels": {
+      "mild": "Apply aloe vera or cold water",
+      "moderate": "Use Silver Sulfadiazine as directed",
+      "severe": "Seek medical attention for third-degree burns"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use only under medical supervision",
+      "elderly": "Monitor for allergic reactions"
+    },
+    "availability": "Prescription",
+    "brand_names": ["Silvadene", "SSD Cream"]
+  },
+  "Sunburn": {
+    "medicine": "Aloe Vera Gel",
+    "dosage": "Apply generously on affected area",
+    "precautions": ["Test for allergic reaction before use", "Avoid direct sunlight exposure after application"],
+    "side_effects": ["Skin irritation", "Allergic reactions (rare)", "Increased sun sensitivity"],
+    "drug_interactions": ["Avoid with corticosteroids", "Caution with topical antibiotics"],
+    "alternative_treatments": ["Drink plenty of water", "Use cold compress", "Moisturize with fragrance-free lotion"],
+    "severity_levels": {
+      "mild": "Apply aloe vera gel and stay hydrated",
+      "moderate": "Use aloe vera and pain relievers",
+      "severe": "Consult a doctor for blistering sunburns"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Safe to use with parental supervision",
+      "elderly": "Use with caution on sensitive skin"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Banana Boat Aloe Vera Gel", "Fruit of the Earth Aloe Vera"]
+  },
+  "Motion Sickness": {
+    "medicine": "Dimenhydrinate",
+    "dosage": "50mg every 4-6 hours",
+    "precautions": ["May cause drowsiness", "Avoid alcohol"],
+    "side_effects": ["Dizziness", "Dry mouth", "Blurred vision"],
+    "drug_interactions": ["Avoid with sedatives", "Caution with antihistamines"],
+    "alternative_treatments": ["Look at a fixed point", "Take deep breaths", "Use ginger supplements"],
+    "severity_levels": {
+      "mild": "Try non-medicinal methods like ginger or deep breathing",
+      "moderate": "Take Dimenhydrinate as directed",
+      "severe": "Consult a doctor for persistent motion sickness"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use pediatric dosage",
+      "elderly": "Use with caution due to drowsiness"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Dramamine", "Gravol"]
+  },
+  "Cold Sores": {
+    "medicine": "Acyclovir Cream",
+    "dosage": "Apply 5 times daily",
+    "precautions": ["Avoid direct contact with others", "Not for use inside mouth"],
+    "side_effects": ["Mild burning sensation", "Skin irritation", "Dryness or flaking of the skin"],
+    "drug_interactions": ["Avoid with other topical antiviral medications", "Caution with immunosuppressants"],
+    "alternative_treatments": ["Apply ice packs", "Use lip balms with SPF", "Take Lysine supplements"],
+    "severity_levels": {
+      "mild": "Apply Acyclovir cream and keep lips moisturized",
+      "moderate": "Use Acyclovir along with pain relief creams",
+      "severe": "Consult a doctor for oral antiviral medications"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use only with doctor’s recommendation",
+      "elderly": "Monitor for skin reactions"
+    },
+    "availability": "Prescription",
+    "brand_names": ["Zovirax", "Sitavig"]
+  },
+  "PMS Symptoms": {
+    "medicine": "Magnesium Supplement",
+    "dosage": "200mg daily",
+    "precautions": ["Avoid if you have kidney disease", "Consult doctor if pregnant"],
+    "side_effects": ["Diarrhea", "Nausea", "Stomach cramps"],
+    "drug_interactions": ["Avoid with certain antibiotics", "Caution with diuretics"],
+    "alternative_treatments": ["Exercise regularly", "Reduce caffeine and salt intake", "Use heat therapy"],
+    "severity_levels": {
+      "mild": "Take magnesium and drink herbal teas",
+      "moderate": "Use pain relievers and relaxation techniques",
+      "severe": "Consult a doctor for hormonal therapy"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Not recommended",
+      "elderly": "Use with caution for bone health support"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Nature Made Magnesium", "Mag-Ox"]
+  },
+  "Fatigue": {
+    "medicine": "Vitamin B12",
+    "dosage": "1000mcg once daily",
+    "precautions": ["Avoid overdosing", "Consult doctor for prolonged use"],
+    "side_effects": ["Mild diarrhea", "Headache", "Nausea"],
+    "drug_interactions": ["Avoid with Metformin (diabetes medication)", "Caution with high doses of folic acid"],
+    "alternative_treatments": ["Get enough sleep", "Stay hydrated", "Exercise regularly"],
+    "severity_levels": {
+      "mild": "Take Vitamin B12 and adjust sleep schedule",
+      "moderate": "Increase iron intake and monitor stress levels",
+      "severe": "Consult a doctor for chronic fatigue diagnosis"
+    },
+    "age_specific_recommendations": {
+      "children under 12": "Use only under medical supervision",
+      "elderly": "Essential for preventing deficiency-related fatigue"
+    },
+    "availability": "Over-the-counter",
+    "brand_names": ["Nature’s Bounty B12", "Solgar Methylcobalamin"]
+  }
+}

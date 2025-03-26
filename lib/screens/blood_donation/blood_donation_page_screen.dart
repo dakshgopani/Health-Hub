@@ -1,16 +1,19 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'donation_screen.dart';
-import 'profile_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'donation_screen.dart';
+import '../emergency_services_screen.dart';
+import 'qr_code_scanner.dart';
 import 'qr_code_screen.dart';
+import '../store_screen.dart';
 
 class BloodDonationPage extends StatefulWidget {
   final String userId;
@@ -19,9 +22,9 @@ class BloodDonationPage extends StatefulWidget {
 
   const BloodDonationPage(
       {super.key,
-      required this.userId,
-      required this.userName,
-      required this.userEmail});
+        required this.userId,
+        required this.userName,
+        required this.userEmail});
 
   @override
   State<BloodDonationPage> createState() => _BloodDonationPageState();
@@ -29,13 +32,30 @@ class BloodDonationPage extends StatefulWidget {
 
 class _BloodDonationPageState extends State<BloodDonationPage> {
   @override
-  @override
   void initState() {
     super.initState();
 
     // Existing function calls
     storeBloodRequests(bloodRequests);
     _fetchBloodRequestsFromFirestore();
+
+    _pages = [
+      // StoreScreen(userId: widget.userId),
+
+      BloodDonationPage( // Replace `SelfScreen` with the actual name of your current screen
+        userId: widget.userId,
+        userName: widget.userName,
+        userEmail: widget.userEmail,
+      ),
+
+
+      ScanQRCodeScreen(userId: widget.userId, userName: widget.userName),
+      EmergencyServicesScreen(
+          userId: widget.userId,
+          userName: widget.userName,
+          userEmail: widget.userEmail),
+      StoreScreen(userId: widget.userId),
+    ];
 
     // Navigate to QR Code screen if data is available
     if (qrCodeData.isNotEmpty) {
@@ -53,11 +73,11 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
   Future<void> storeBloodRequests(
       List<Map<String, dynamic>> bloodRequests) async {
     CollectionReference donationRequestsRef =
-        FirebaseFirestore.instance.collection("donation_requests");
+    FirebaseFirestore.instance.collection("donation_requests");
 
     for (var request in bloodRequests) {
       String requestId =
-          request["requestId"]; // Use requestId as the document ID
+      request["requestId"]; // Use requestId as the document ID
       await donationRequestsRef.doc(requestId).set(request);
     }
 
@@ -66,7 +86,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
 
   Future<void> _fetchBloodRequestsFromFirestore() async {
     CollectionReference donationRequestsRef =
-        FirebaseFirestore.instance.collection("donation_requests");
+    FirebaseFirestore.instance.collection("donation_requests");
 
     try {
       QuerySnapshot snapshot = await donationRequestsRef.get();
@@ -86,6 +106,10 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
 
   // Class-level variable for requestId
   String? _currentRequestId;
+
+  int _page = 0;
+  late final List<Widget> _pages;
+
 
   List<Map<String, dynamic>> bloodRequests = [
     {
@@ -199,7 +223,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                         end: Alignment.bottomRight,
                       ),
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20)),
+                      BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                     child: const Center(
                       child: Text(
@@ -232,7 +256,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide:
-                              const BorderSide(color: Colors.deepPurple),
+                          const BorderSide(color: Colors.deepPurple),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -261,7 +285,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                         selectedBloodGroup = newValue!;
                       },
                       validator: (value) =>
-                          value == null ? "Please select a blood group" : null,
+                      value == null ? "Please select a blood group" : null,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -369,6 +393,56 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
     );
   }
 
+// Navigation methods for each page
+  void _navigateToBloodDonationPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BloodDonationPage(
+          userId: widget.userId,
+          userName: widget.userName,
+          userEmail: widget.userEmail,
+        ),
+      ),
+    );
+  }
+
+  void _navigateToScanQRCodePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ScanQRCodeScreen(
+          userId: widget.userId,
+          userName: widget.userName,
+        ),
+      ),
+    );
+  }
+
+  void _navigateToStorePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StoreScreen(
+          userId: widget.userId,
+        ),
+      ),
+    );
+  }
+
+  void _navigateToEmergencyServicesPage() {
+    // Go back one page in the navigation stack
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    } else {
+      // If there's no page to pop, you can show a message or do nothing
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No previous page to go back to')),
+      );
+    }
+  }
+
+
 // Updated Reusable Input Field with Validation
   Widget _buildInputField({
     required TextEditingController controller,
@@ -403,7 +477,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide:
-                const BorderSide(color: Colors.deepPurpleAccent, width: 2),
+            const BorderSide(color: Colors.deepPurpleAccent, width: 2),
           ),
         ),
       ),
@@ -414,26 +488,26 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEDECF4),
-      appBar: AppBar(
-        title: _buildUserNameStream(),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to Profile Screen
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(
-                    userId: widget.userId,
-                    userName: widget.userName,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: _buildUserNameStream(),
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.settings),
+      //       onPressed: () {
+      //         // Navigate to Profile Screen
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => ProfileScreen(
+      //               userId: widget.userId,
+      //               userName: widget.userName,
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -450,28 +524,55 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 8.0,
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  // Handle add button press
-                  _showAddRequestDialog(
-                      context); // Call the dialog when pressed
-                },
-                child: const Icon(Icons.add, size: 30),
-              ),
-            ],
-          ),
-        ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddRequestDialog(context);
+        },
+        child: const Icon(Icons.add, size: 30),
+        backgroundColor: const Color(0xFFFFFFFF), // Same as buttonBackgroundColor
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.white,
+        color: const Color(0xFF432C81),
+        buttonBackgroundColor: const Color(0xFF6B4EFF),
+        height: 60,
+        animationDuration: const Duration(milliseconds: 300),
+        index: _page, // Still needed for visual feedback
+        onTap: (index) {
+          setState(() {
+            _page = index; // Update selected index for visual feedback
+          });
+
+          // Navigate to the corresponding page
+          switch (index) {
+            case 0:
+              _navigateToBloodDonationPage();
+              break;
+            case 1:
+              _navigateToScanQRCodePage();
+              break;
+            case 2:
+              _navigateToEmergencyServicesPage();
+              break;
+            case 3:
+              _navigateToStorePage();
+              break;
+          }
+        },
+        items: const [
+          Icon(Icons.grid_view, color: Colors.white), // Blood Donation
+          Icon(Icons.qr_code_scanner_outlined, color: Colors.white), // Scan QR Code
+          Icon(Icons.emergency_outlined, color: Colors.white), // Emergency Services
+          Icon(Icons.local_grocery_store_outlined, color: Colors.white), // Store
+        ],
       ),
     );
   }
+
+
 
   /// Extracted StreamBuilder for User Name
   Widget _buildUserNameStream() {
@@ -639,7 +740,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
           backgroundColor: Colors.transparent,
           // No background to enhance the effect
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Stack(
             children: [
               // Glassmorphism Effect Container
@@ -739,7 +840,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                             if (qrCodeData.isNotEmpty)
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: [
                                   // Wrap Close Button in a Stack to Overlay the Lightbulb Icon
                                   Stack(
@@ -763,7 +864,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                             // Ensure it's white
 
                                             fontFamily:
-                                                'Raleway', // Custom font if available
+                                            'Raleway', // Custom font if available
                                           ),
                                         ),
                                         style: ElevatedButton.styleFrom(
@@ -771,7 +872,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                           backgroundColor: Colors.grey[600],
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(12),
+                                            BorderRadius.circular(12),
                                           ),
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 12, horizontal: 20),
@@ -806,7 +907,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                     child: Container(
                                                       color: Colors.black
                                                           .withAlpha((0.2 * 255)
-                                                              .toInt()), // ✅ Dark overlay
+                                                          .toInt()), // ✅ Dark overlay
                                                     ),
                                                   ),
 
@@ -814,34 +915,34 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                   Center(
                                                     child: AlertDialog(
                                                       shape:
-                                                          RoundedRectangleBorder(
+                                                      RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
+                                                        BorderRadius
+                                                            .circular(20),
                                                       ),
                                                       contentPadding:
-                                                          EdgeInsets.zero,
+                                                      EdgeInsets.zero,
                                                       // Remove default padding
                                                       content: Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.min,
+                                                        MainAxisSize.min,
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
+                                                        CrossAxisAlignment
+                                                            .center,
                                                         children: [
                                                           // 🎨 Header with Gradient Background
                                                           Container(
                                                             width:
-                                                                double.infinity,
+                                                            double.infinity,
                                                             padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                        16),
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical:
+                                                                16),
                                                             decoration:
-                                                                const BoxDecoration(
+                                                            const BoxDecoration(
                                                               gradient:
-                                                                  LinearGradient(
+                                                              LinearGradient(
                                                                 colors: [
                                                                   Color(
                                                                       0xFF432C81),
@@ -854,24 +955,24 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                                     .bottomRight,
                                                               ),
                                                               borderRadius:
-                                                                  BorderRadius.vertical(
-                                                                      top: Radius
-                                                                          .circular(
-                                                                              20)),
+                                                              BorderRadius.vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                      20)),
                                                             ),
                                                             child: const Center(
                                                               child: Text(
                                                                 "ℹ️ QR Code Info",
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize: 18,
                                                                   fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                                   fontFamily:
-                                                                      'Raleway',
+                                                                  'Raleway',
                                                                 ),
                                                               ),
                                                             ),
@@ -884,20 +985,20 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                           const Padding(
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                    horizontal:
-                                                                        20),
+                                                                horizontal:
+                                                                20),
                                                             child: Text(
                                                               "The QR code has already been generated.",
                                                               textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                              TextAlign
+                                                                  .center,
                                                               style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                FontWeight
+                                                                    .w600,
                                                                 fontFamily:
-                                                                    'Raleway',
+                                                                'Raleway',
                                                                 color: Colors
                                                                     .black87,
                                                               ),
@@ -910,10 +1011,10 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                           // 🆗 OK Button
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    vertical:
-                                                                        12),
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical:
+                                                                12),
                                                             child: TextButton(
                                                               onPressed: () {
                                                                 Navigator.pop(
@@ -922,35 +1023,35 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                                                               style: TextButton
                                                                   .styleFrom(
                                                                 foregroundColor:
-                                                                    Colors
-                                                                        .white,
+                                                                Colors
+                                                                    .white,
                                                                 backgroundColor:
-                                                                    const Color(
-                                                                        0xFF432C81),
+                                                                const Color(
+                                                                    0xFF432C81),
                                                                 padding: const EdgeInsets
                                                                     .symmetric(
                                                                     horizontal:
-                                                                        24,
+                                                                    24,
                                                                     vertical:
-                                                                        10),
+                                                                    10),
                                                                 shape:
-                                                                    RoundedRectangleBorder(
+                                                                RoundedRectangleBorder(
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              12),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                      12),
                                                                 ),
                                                               ),
                                                               child: const Text(
                                                                 "OK",
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize: 16,
                                                                   fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                                   fontFamily:
-                                                                      'Raleway',
+                                                                  'Raleway',
                                                                 ),
                                                               ),
                                                             ),
@@ -1234,7 +1335,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
         child: Card(
           elevation: 6,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           color: Colors.white, // Keeps the card background clean
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -1383,7 +1484,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                               color: Color(0xFF432C81),
                               // Border color (Deep Purple)
                               width:
-                                  2, // Border width (you can adjust this as needed)
+                              2, // Border width (you can adjust this as needed)
                             ),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -1432,7 +1533,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
                               color: Color(0xFF432C81),
                               // Border color (Deep Purple)
                               width:
-                                  2, // Border width (you can adjust this as needed)
+                              2, // Border width (you can adjust this as needed)
                             ),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 12),
@@ -1449,11 +1550,11 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
 
   String _generateQRData(
       {required String requestId,
-      required String bloodGroup,
-      required int requiredQuantity,
-      required String hospitalName,
-      required String hospitalLocation,
-      bool encryptData = true}) {
+        required String bloodGroup,
+        required int requiredQuantity,
+        required String hospitalName,
+        required String hospitalLocation,
+        bool encryptData = true}) {
     final requestData = [
       "Request ID: $requestId",
       // "Donor ID: ${widget.userId}",
@@ -1465,4 +1566,7 @@ class _BloodDonationPageState extends State<BloodDonationPage> {
     ];
     return requestData.join("\n");
   }
+
+
 }
+

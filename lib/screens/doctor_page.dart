@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:csv/csv.dart';
 import '../models/doctor_data_model.dart';
+import '../widgets/doctor_grid.dart';
 import 'doctor_profile_screen.dart';
 import 'home/home_page.dart';
 
@@ -76,15 +77,19 @@ Future<List<Doctor>> loadDoctors() async {
   return doctors;
 }
 
+// ... (Previous imports and DoctorPage, SplashScreen classes remain unchanged)
+
 class DoctorListScreen extends StatefulWidget {
   final List<Doctor> allDoctors;
   final String name;
   final double fee;
-  const DoctorListScreen(
-      {super.key,
-      required this.allDoctors,
-      required this.name,
-      required this.fee});
+
+  const DoctorListScreen({
+    super.key,
+    required this.allDoctors,
+    required this.name,
+    required this.fee,
+  });
 
   @override
   _DoctorListScreenState createState() => _DoctorListScreenState();
@@ -99,7 +104,9 @@ class _DoctorListScreenState extends State<DoctorListScreen>
   late Animation<double> _fadeAnimation;
   final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
   final String userName = FirebaseAuth.instance.currentUser?.displayName ?? '';
-  final String userEmail = FirebaseAuth.instance.currentUser!.email??"Email";
+  final String userEmail = FirebaseAuth.instance.currentUser!.email ?? "Email";
+  bool showSpecializations = true;
+  String selectedSpecialization = '';
 
   @override
   void initState() {
@@ -117,6 +124,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
 
   @override
   void dispose() {
+    _animationController.dispose();
     searchController.dispose();
     super.dispose();
   }
@@ -126,7 +134,9 @@ class _DoctorListScreenState extends State<DoctorListScreen>
       searchQuery = query.toLowerCase();
       if (query.isEmpty) {
         filteredDoctors = widget.allDoctors;
+        showSpecializations = true; // Show specializations when search is cleared
       } else {
+        showSpecializations = false; // Show doctor list when searching
         filteredDoctors = widget.allDoctors.where((doctor) {
           return doctor.name.toLowerCase().contains(searchQuery) ||
               doctor.specialization.toLowerCase().contains(searchQuery);
@@ -135,7 +145,6 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     });
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,8 +156,20 @@ class _DoctorListScreenState extends State<DoctorListScreen>
             Expanded(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 300),
-                child: filteredDoctors.isEmpty
-                    ? _buildEmptyState()
+                child: showSpecializations
+                    ? SpecializationGrid(
+                  onSpecializationSelected: (specialization) {
+                    setState(() {
+                      selectedSpecialization = specialization;
+                      filteredDoctors = widget.allDoctors
+                          .where((doctor) =>
+                      doctor.specialization.toLowerCase() ==
+                          specialization.toLowerCase())
+                          .toList();
+                      showSpecializations = false;
+                    });
+                  },
+                )
                     : _buildDoctorList(),
               ),
             ),
@@ -181,10 +202,15 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.black,
                   onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              HomePage(userId: userId, userName: userName,userEmail: userEmail,))),
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(
+                        userId: userId,
+                        userName: userName,
+                        userEmail: userEmail,
+                      ),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Column(
@@ -202,10 +228,11 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                       Text(
                         'Finding, Booking & Telemedicine',
                         style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                            fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w600),
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
@@ -228,21 +255,21 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                     fontFamily: 'Raleway',
                     fontWeight: FontWeight.w600,
                   ),
-                  prefixIcon:
-                      const Icon(Icons.search, color: Color(0xFF432C81)),
+                  prefixIcon: const Icon(Icons.search, color: Color(0xFF432C81)),
                   suffixIcon: searchController.text.isNotEmpty
                       ? IconButton(
-                          icon:
-                              const Icon(Icons.clear, color: Color(0xFF432C81)),
-                          onPressed: () {
-                            searchController.clear();
-                            filterDoctors('');
-                          },
-                        )
+                    icon: const Icon(Icons.clear, color: Color(0xFF432C81)),
+                    onPressed: () {
+                      searchController.clear();
+                      filterDoctors('');
+                    },
+                  )
                       : null,
                   border: InputBorder.none,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
                 ),
               ),
             ),
@@ -274,23 +301,31 @@ class _DoctorListScreenState extends State<DoctorListScreen>
   }
 
   Widget _buildDoctorList() {
-    return AnimationLimiter(
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: filteredDoctors.length,
-        itemBuilder: (context, index) {
-          return AnimationConfiguration.staggeredList(
-            position: index,
-            duration: const Duration(milliseconds: 375),
-            child: SlideAnimation(
-              verticalOffset: 50.0,
-              child: FadeInAnimation(
-                child: _buildDoctorCard(index),
-              ),
+    return Column(
+      children: [
+        Expanded(
+          child: filteredDoctors.isEmpty
+              ? _buildEmptyState()
+              : AnimationLimiter(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: filteredDoctors.length,
+              itemBuilder: (context, index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: _buildDoctorCard(index),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -316,10 +351,14 @@ class _DoctorListScreenState extends State<DoctorListScreen>
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => DoctorProfileScreen(doctor: doctor),
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => DoctorProfileScreen(doctor: doctor),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return FadeTransition(opacity: animation, child: child);
+                },
               ),
             );
+
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -329,13 +368,15 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Raleway'),
+                        fontSize: 16,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Raleway',
+                      ),
                       children: _highlightText(
-                          "${doctor.name} (${doctor.specialization})",
-                          searchQuery),
+                        "${doctor.name} (${doctor.specialization})",
+                        searchQuery,
+                      ),
                     ),
                   ),
                 ),

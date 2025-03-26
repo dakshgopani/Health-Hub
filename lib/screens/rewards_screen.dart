@@ -222,7 +222,8 @@ class _ScratchCardDialogState extends State<_ScratchCardDialog> {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => StoreScreen(userId: widget.userId)),
+                MaterialPageRoute(
+                    builder: (context) => StoreScreen(userId: widget.userId)),
               );
               // Navigator.pushNamed(context, '/store');
             },

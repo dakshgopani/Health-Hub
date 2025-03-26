@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import '../models/doctor_data_model.dart';
-import '../services/email.dart';
-import '../services/pdf.dart';
-import 'payment_gateway.dart';
+import '../../models/doctor_data_model.dart';
+import '../../services/email.dart';
+import '../../services/pdf.dart';
+import '../../services/payment_gateway.dart';
 
 class AppointmentBookingScreen extends StatefulWidget {
   final Doctor selectedDoctor;

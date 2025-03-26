@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // ✅ Add this
 import '../../services/notification_service.dart';
 import '../../widgets/menu_card.dart';
 import '../chatbot.dart';
 import '../disease_prediction.dart';
+import '../doctor_dashboard_screen.dart';
 import '../doctor_page.dart';
 import '../emergency_services_screen.dart';
 import '../medical_history.dart';
-import '../medication_page.dart';
-import '../stats_page.dart';
+import '../medicine_page.dart';
 import '../settings_page.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // ✅ Add this
-
 
 class HomePage extends StatefulWidget {
   final String userId;
   final String userName;
   final String userEmail;
 
-  const HomePage({super.key, required this.userId, required this.userName,    required this.userEmail,
+  const HomePage({
+    super.key,
+    required this.userId,
+    required this.userName,
+    required this.userEmail,
   });
 
   @override
@@ -35,14 +38,17 @@ class _HomePageState extends State<HomePage> {
 
     _pages = [
       HomeContent(userId: widget.userId, userName: widget.userName),
-      const StatsPage(),
-      EmergencyServicesScreen(userId: widget.userId, userName: widget.userName, userEmail: widget.userEmail),
-      const SettingsPage(),
+      MedicinePage(),
+      EmergencyServicesScreen(
+          userId: widget.userId,
+          userName: widget.userName,
+          userEmail: widget.userEmail),
+      SettingsPage(),
     ];
 
     _showNotificationOnce();
-
   }
+
   Future<void> _showNotificationOnce() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool hasShownNotification = prefs.getBool('notificationShown') ?? false;
@@ -71,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           Icon(Icons.grid_view, color: Colors.white),
-          Icon(Icons.bar_chart, color: Colors.white),
+          Icon(Icons.medical_services, color: Colors.white),
           Icon(Icons.emergency_outlined, color: Colors.white),
           Icon(Icons.settings, color: Colors.white),
         ],
@@ -83,6 +89,7 @@ class _HomePageState extends State<HomePage> {
 class HomeContent extends StatelessWidget {
   final String userId;
   final String userName;
+
   const HomeContent({super.key, required this.userId, required this.userName});
 
   @override
@@ -132,7 +139,8 @@ class HomeContent extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 children: [
                   MenuCard(
-                    title: 'Symptoms Analysis &\nDisease Prediction',
+                    title:
+                        'Symptoms Analysis & Early Stage\nDisease Prediction',
                     imagePath: 'assets/images/home_page/symptoms_analysis.png',
                     onTap: () => Navigator.push(
                       context,
@@ -158,20 +166,12 @@ class HomeContent extends StatelessWidget {
                     ),
                   ),
                   MenuCard(
-                    title: 'Medication Management &\nMed Scanner',
-                    imagePath: 'assets/images/home_page/medicine_reminder.png',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineScannerPage()),
-                    ),
-                  ),
-                  MenuCard(
-                    title: 'Wellness & Lifestyle',
+                    title: 'Doctor Dashboard',
                     imagePath: 'assets/images/home_page/wellness.png',
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const WellnessPage()),
+                          builder: (context) => DoctorDashboard()),
                     ),
                   ),
                 ],
@@ -179,23 +179,6 @@ class HomeContent extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class WellnessPage extends StatelessWidget {
-  const WellnessPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wellness & Lifestyle'),
-        backgroundColor: const Color(0xFF6B4EFF),
-      ),
-      body: const Center(
-        child: Text('Wellness & Lifestyle Page'),
       ),
     );
   }

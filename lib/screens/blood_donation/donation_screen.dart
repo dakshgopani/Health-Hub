@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../services/email_service.dart';
-import '../services/pdf_service.dart';
+import '../../services/email_service.dart';
+import '../../services/pdf_service.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart'; // Add this import for date formatting
 import 'package:confetti/confetti.dart';
-import 'rewards_screen.dart';
+import '../rewards_screen.dart';
 
 class DonationSuccessScreen extends StatefulWidget {
   final String userId;
@@ -133,7 +134,8 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
             setState(() {
               _scratchCardTriggered = true;
             });
-            RewardsSystem.showScratchCardPopup(context, widget.userId,widget.requestId??"unknow");
+            RewardsSystem.showScratchCardPopup(
+                context, widget.userId, widget.requestId ?? "unknow");
           }
         });
       } else {
@@ -243,7 +245,6 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
 
   Widget _buildCertificate() {
     if (_hasDonated) {
-// Check Firestore if the reward was already given
       FirebaseFirestore.instance
           .collection('users')
           .doc(widget.userId)
@@ -252,7 +253,6 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
           .get()
           .then((doc) {
         if (!doc.exists) {
-// If reward not given, mark as given and store in Firestore
           FirebaseFirestore.instance
               .collection('users')
               .doc(widget.userId)
@@ -260,7 +260,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
               .doc(widget.requestId)
               .set({'rewardGiven': true});
 
-          _rewardGiven = true; // Mark as given in UI
+          _rewardGiven = true;
           _confettiController.play();
           _sendDonationEmail();
           Future.delayed(const Duration(seconds: 10), () {
@@ -268,7 +268,8 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
               setState(() {
                 _scratchCardTriggered = true;
               });
-              RewardsSystem.showScratchCardPopup(context, widget.userId,widget.requestId??"unknown");
+              RewardsSystem.showScratchCardPopup(
+                  context, widget.userId, widget.requestId ?? "unknown");
             }
           });
         }
@@ -278,7 +279,6 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
     return Stack(
       alignment: Alignment.center,
       children: [
-// 🎖️ Your Improved Certificate UI (Card)
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
@@ -289,14 +289,12 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-// 🟢 Gradient Header for a Premium Look
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [Color(0xFF0D47A1), Color(0xFF1976D2)],
-// Deep Blue Gradient
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -306,7 +304,6 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                   child: const Column(
                     children: [
                       Icon(Icons.verified, color: Colors.white, size: 50),
-// Certificate Icon
                       SizedBox(height: 10),
                       Text(
                         "Donation Certificate",
@@ -320,15 +317,9 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-// 🏅 Certificate Badge (Authenticity Seal)
                 const Icon(Icons.emoji_events, color: Colors.amber, size: 60),
-
                 const SizedBox(height: 20),
-
-// 🎉 Congratulations Message
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
@@ -342,10 +333,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
-// 📜 Certificate Message
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
@@ -359,10 +347,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-// 🏥 Hospital & Location
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -401,10 +386,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-// 📅 Date of Donation
                 Text(
                   "Date: ${DateFormat('dd MMMM yyyy').format(DateTime.now())}",
                   style: const TextStyle(
@@ -413,42 +395,74 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     fontFamily: 'Raleway',
                   ),
                 ),
-
                 const SizedBox(height: 30),
 
-// ✅ Go Back Button
-                SizedBox(
-                  width: 160, // Fix button width
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context); // Navigate back instantly
-                    },
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    label: const Text(
-                      "Go Back",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Raleway',
+                /// 🚀 Buttons: "Go Back" & "Share"
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    /// 🔙 Go Back Button
+                    SizedBox(
+                      width: 140,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
+                        label: const Text(
+                          "Go Back",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Raleway',
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    const SizedBox(width: 20),
+
+                    /// 📤 Share Button
+                    SizedBox(
+                      width: 140,
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          await _shareCertificate();
+                        },
+                        icon: const Icon(Icons.share, color: Colors.white),
+                        label: const Text(
+                          "Share",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Raleway',
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
 
-                const SizedBox(height: 20), // Extra spacing
+                const SizedBox(height: 20),
               ],
             ),
           ),
         ),
 
-// 🎊 Confetti Animation
+        /// 🎊 Confetti Animation
         ConfettiWidget(
           confettiController: _confettiController,
           blastDirectionality: BlastDirectionality.explosive,
@@ -459,8 +473,37 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
       ],
     );
   }
+
+  Future<void> _shareCertificate() async {
+    try {
+      // Get today's date
+      String todayDate = DateFormat('dd MMMM yyyy').format(DateTime.now());
+
+      // Generate the PDF Certificate
+      final pdfFile = await PdfService.generateDonationCertificate(
+        userName: _userName,
+        hospitalName: widget.hospitalName,
+        hospitalAddress: widget.hospitalLocation,
+        donationDate: todayDate,
+      );
+
+      // Define a custom message
+      String message = """
+🎉 I just donated blood and received my Donation Certificate! 🩸🏥
+A small act can save a life. 💖
+Join the cause and make a difference! 💪🔥
+#BloodDonation #SaveLives #BeAHero
+    """;
+
+      // Share the file with the custom message
+      await Share.shareXFiles(
+        [XFile(pdfFile.path)],
+        text: message,
+      );
+
+      print("✅ Certificate shared successfully!");
+    } catch (e) {
+      print("❌ Error sharing certificate: $e");
+    }
+  }
 }
-//
-// HERE IN THIS FILE
-// THERE IS ONE LOGIC ISSUE THAT WHEN THE REQUEST ID IS PASSED FROM ONE PAGE THEN IT IS REDIRECTED HERE
-// BUT NOW IN MY APP IF THE USER DIRECTLY SCANS THE QR CODE WHICH WAS PREVIOUSLY SAVED OR WAS OF 2 3 days before and then completes the donation process then it does not show the certificate even though the user has donated the blood because the data that is being passed from home page is null so here it says null value is being passed to a null operator so you have to write the logic that even though the qr code is not generated and null value is passed but if the user completes the donation process then the certificate should be shown

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mad_practice_one/screens/video_call_index_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../models/doctor_data_model.dart';
-import 'appointment_booking.dart';
+import 'doctor_appointment_booking/appointment_booking.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final Doctor doctor;
@@ -154,10 +155,11 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
               icon: const Icon(Icons.video_call),
               color: const Color(0xFF432C81),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('Video call functionality coming soon!')),
-                );
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => VideoCallIndexPage(
+                     // Always Broadcaster
+                  ),
+                ),);
               },
             ),
           ],
@@ -176,9 +178,12 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
               radius: 50,
               backgroundColor: const Color(0xFF432C81),
               child: Text(
-                widget.doctor.name[0].toUpperCase(),
+                widget.doctor.name[4].toUpperCase(),
                 style: const TextStyle(
-                    fontSize: 50, color: Colors.white, fontFamily: 'Raleway'),
+                    fontSize: 50,
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ),

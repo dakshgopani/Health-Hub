@@ -15,7 +15,7 @@ Future<void> initializeBackgroundTask() async {
   Workmanager().registerPeriodicTask(
     "task-1",
     "showNotificationTask",
-    frequency: Duration(minutes: 15),
+    frequency: Duration(minutes: 60),
     existingWorkPolicy: ExistingWorkPolicy.replace,
   );
 }

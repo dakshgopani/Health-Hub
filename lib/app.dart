@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/blood_donation_page_screen.dart';
 import 'screens/initial/onboarding_screen.dart';
 import 'screens/auth/welcome_screen.dart';
 import 'screens/auth/login_screen.dart';

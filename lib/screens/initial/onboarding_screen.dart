@@ -131,7 +131,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           const Spacer(),
           Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.05, // Scales with screen height
+              bottom: MediaQuery.of(context).size.height *
+                  0.05, // Scales with screen height
             ),
             child: Image.asset(imagePath),
           ),
@@ -148,7 +149,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 width: _currentPage == index
                     ? MediaQuery.of(context).size.width * 0.04
                     : MediaQuery.of(context).size.width * 0.02,
-
                 decoration: BoxDecoration(
                   color: _currentPage == index
                       ? const Color(0xFF432C81)
@@ -163,7 +163,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.08, // Dynamic font size
+              fontSize:
+                  MediaQuery.of(context).size.width * 0.08, // Dynamic font size
               fontWeight: FontWeight.w900,
               color: Color(0xFF432C81),
               fontFamily: 'Raleway',
@@ -180,7 +181,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.045, // Scales dynamically
+                  fontSize: MediaQuery.of(context).size.width *
+                      0.045, // Scales dynamically
                   color: Colors.black87,
                   fontFamily: 'Raleway',
                   fontWeight: FontWeight.bold,

@@ -14,21 +14,35 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+
   @override
   void initState() {
     super.initState();
+
+    // Initialize animations
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
+    _animationController.forward();
     _navigateToNextScreen();
   }
 
   Future<void> _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 3)); // Simulate loading time
+    await Future.delayed(const Duration(seconds: 5)); // Simulate loading time
 
-    // Check Firebase Authentication
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // User is logged in
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -40,19 +54,16 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     } else {
-      // User is not logged in, check SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
       if (isFirstLaunch) {
-        // First-time user, show onboarding
-        prefs.setBool('isFirstLaunch', false); // Mark as completed
+        prefs.setBool('isFirstLaunch', false);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OnboardingScreen()),
         );
       } else {
-        // Show Welcome/Login Screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => WelcomeScreen()),
@@ -62,48 +73,76 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // Keep background white
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              'assets/logo/LOGO_HH.png',
-              width: screenWidth * 0.7, // Responsive Image
-              height: screenWidth * 0.7,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Health Hub',
-              style: TextStyle(
-                // fontSize: 42,
-                fontSize: MediaQuery.of(context).size.width *
-                    0.1, // Adjust based on screen width
-                fontWeight: FontWeight.bold,
-                color: AppColors.deepPurple,
-                fontFamily: 'Raleway',
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              // Logo without shadow
+              Image.asset(
+                'assets/logo/LOGO_HH.png',
+                width: screenWidth * 0.7,
+                height: screenWidth * 0.7,
               ),
-            ),
-            const SizedBox(height: 15),
-            const Text(
-              'Your Health, Your Way',
-              style: AppTextStyles.body,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 70),
-            SizedBox(
-              width: screenWidth * 0.5, // Responsive Progress Indicator
-              child: const LinearProgressIndicator(
-                backgroundColor: Color(0xFFD1C4E9),
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.deepPurple),
+              const SizedBox(height: 20),
+              // App Name in Deep Purple
+              Text(
+                'Health Hub',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.1,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.deepPurple,
+                  // Deep purple text
+                  fontFamily: 'Raleway',
+                  shadows: [
+                    Shadow(
+                      color: AppColors.deepPurple.withOpacity(0.3),
+                      blurRadius: 5,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 15),
+              // Tagline in lighter purple accent
+              Text(
+                'Your Health, Your Way',
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.deepPurple.withOpacity(0.8),
+                  // Lighter purple accent
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 70),
+              // Progress Indicator with purple accents
+              SizedBox(
+                width: screenWidth * 0.5,
+                child: LinearProgressIndicator(
+                  backgroundColor: AppColors.deepPurple.withOpacity(0.2),
+                  // Light purple background
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.deepPurple),
+                  // Solid deep purple
+                  minHeight: 6,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -23,8 +23,8 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   FlutterTts flutterTts = FlutterTts();
   bool _isListening = false;
   bool _isSpeaking = false;
-  bool _isPaused = false; // Tracks if speech is paused/stopped
-  String? _currentSpeechText; // Store the current text being spoken
+  bool _isPaused = false;
+  String? _currentSpeechText;
   List<List<ChatMessage>> _previousChats = [];
 
   @override
@@ -34,7 +34,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
     _loadPreviousChats();
     _typingController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 800),
     )..repeat(reverse: true);
     _speech = stt.SpeechToText();
     _initializeTts();
@@ -104,7 +104,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
     setState(() {
       _messages.add(ChatMessage(
         text:
-            "Hello! I'm MediBot, your health assistant. How can I help you today?",
+        "Hello! I'm MediBot, your health assistant. How can I help you today?",
         isUser: false,
         typingController: _typingController,
       ));
@@ -134,18 +134,18 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
 
     try {
       final response =
-          await _chat.sendMessage(Content('user', [TextPart(text)]));
+      await _chat.sendMessage(Content('user', [TextPart(text)]));
       final responseText =
-          _cleanText(response.text ?? "I'm unable to process that.");
+      _cleanText(response.text ?? "I'm unable to process that.");
 
       if (_isUnrelatedQuery(text)) {
         setState(() {
-          _messages.removeAt(0); // Remove typing indicator
+          _messages.removeAt(0);
           _messages.insert(
               0,
               ChatMessage(
                 text:
-                    "I can only discuss health-related topics. Please ask me something related to health.",
+                "I can only discuss health-related topics. Please ask me something related to health.",
                 isUser: false,
                 typingController: _typingController,
               ));
@@ -162,15 +162,14 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
               ));
           _speakResponse(responseText);
         });
-        _saveChatHistory();
       }
+      // Remove _saveCurrentChat() from here
     } catch (e) {
       _handleError("Error: ${e.toString()}");
     }
   }
 
   String _cleanText(String text) {
-    // Remove ** markers from the text
     return text.replaceAll('', '');
   }
 
@@ -240,20 +239,22 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
     if (_isSpeaking && !_isPaused) {
       await flutterTts.pause();
     } else if (_isPaused && _currentSpeechText != null) {
-      await flutterTts.stop(); // Stop current speech
-      await flutterTts.speak(_currentSpeechText!); // Restart from beginning
+      await flutterTts.stop();
+      await flutterTts.speak(_currentSpeechText!);
     }
     setState(() {
       _isPaused = !_isPaused;
     });
   }
 
-  Future<void> _saveChatHistory() async {
+  Future<void> _saveCurrentChat() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> chats = _previousChats.map((chat) {
-      return jsonEncode(chat.map((msg) => msg.toJson()).toList());
-    }).toList();
-    await prefs.setStringList('chat_history', chats);
+    if (_messages.isNotEmpty) {
+      List<String> chats = _previousChats.map((chat) {
+        return jsonEncode(chat.map((msg) => msg.toJson()).toList());
+      }).toList();
+      await prefs.setStringList('chat_history', chats);
+    }
   }
 
   Future<void> _loadPreviousChats() async {
@@ -267,6 +268,10 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
               .map((msg) => ChatMessage.fromJson(msg, _typingController))
               .toList();
         }).toList();
+        // Only load messages if there's no current chat
+        if (_messages.isEmpty && _previousChats.isNotEmpty) {
+          _messages.addAll(_previousChats[0]);
+        }
       });
     }
   }
@@ -274,14 +279,18 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   void _startNewChat() {
     setState(() {
       if (_messages.isNotEmpty) {
+        // Save current chat only when starting new chat
         _previousChats.insert(0, List.from(_messages));
-        _saveChatHistory();
+        if (_previousChats.length > 10) _previousChats.removeLast();
+        _saveCurrentChat();
       }
       _messages.clear();
       _addInitialMessage();
+      _chat = _model.startChat(history: []); // Reset chat context
     });
   }
 
+// Update _handleSubmitted to remove the save call
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -291,7 +300,8 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
           style: TextStyle(
             fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
-            fontSize: 22,
+            fontSize: 24,
+            color: Colors.white,
           ),
         ),
         flexibleSpace: Container(
@@ -303,11 +313,11 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
             ),
           ),
         ),
-        elevation: 4,
-        shadowColor: Colors.black.withOpacity(0.2),
+        elevation: 6,
+        shadowColor: Colors.black.withOpacity(0.3),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: _startNewChat,
             tooltip: 'Start New Chat',
           ),
@@ -358,13 +368,13 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.medical_services, size: 40, color: Colors.white),
-                  SizedBox(height: 8),
+                  Icon(Icons.medical_services, size: 48, color: Colors.white),
+                  SizedBox(height: 12),
                   Text(
                     "Chat History",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 26,
                       fontFamily: 'Raleway',
                       fontWeight: FontWeight.bold,
                     ),
@@ -376,20 +386,26 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
               return ListTile(
                 leading: const Icon(Icons.chat, color: Color(0xFF8E77FF)),
                 title: Text(
-                  "Chat ${i + 1}",
+                  "Chat ${i + 1} - ${_previousChats[i].first.text.length > 10 ? _previousChats[i].first.text.substring(0, 10) + '...' : _previousChats[i].first.text}",
                   style: const TextStyle(
-                      fontFamily: 'Raleway',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16),
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
                 ),
                 onTap: () {
                   setState(() {
                     _messages.clear();
                     _messages.addAll(_previousChats[i]);
+                    _chat = _model.startChat(
+                        history: _previousChats[i]
+                            .map((msg) => Content(msg.isUser ? 'user' : 'model',
+                            [TextPart(msg.text)]))
+                            .toList());
                   });
                   Navigator.pop(context);
                 },
-                hoverColor: Colors.grey[200],
+                hoverColor: Colors.grey[100],
               );
             }),
             ListTile(
@@ -399,14 +415,14 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
                 style: TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               onTap: () {
                 _startNewChat();
                 Navigator.pop(context);
               },
-              hoverColor: Colors.grey[200],
+              hoverColor: Colors.grey[100],
             ),
           ],
         ),
@@ -416,19 +432,20 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
 
   Widget _buildInputArea() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12.0),
       child: Card(
-        elevation: 6,
-        shadowColor: Colors.black.withOpacity(0.1),
+        elevation: 10,
+        shadowColor: Colors.black.withOpacity(0.2),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             children: [
               IconButton(
                 icon: Icon(
                   _isListening ? Icons.mic_off : Icons.mic,
                   color: const Color(0xFF8E77FF),
+                  size: 28,
                 ),
                 onPressed: _isListening ? _stopListening : _startListening,
                 tooltip: 'Voice Input',
@@ -442,14 +459,14 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
                       color: Colors.grey[500],
                       fontFamily: 'Raleway',
                       fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                     border: InputBorder.none,
                   ),
                   style: const TextStyle(
                     fontFamily: 'Raleway',
                     fontSize: 16,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -457,12 +474,14 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
                 icon: Icon(
                   _isPaused ? Icons.play_arrow : Icons.pause,
                   color: const Color(0xFF8E77FF),
+                  size: 28,
                 ),
                 onPressed: _toggleSpeech,
                 tooltip: _isPaused ? 'Restart Speech' : 'Pause Speech',
               ),
               IconButton(
-                icon: const Icon(Icons.send, color: Color(0xFF8E77FF)),
+                icon:
+                const Icon(Icons.send, color: Color(0xFF8E77FF), size: 28),
                 onPressed: () => _handleSubmitted(_textController.text),
                 tooltip: 'Send',
               ),
@@ -489,13 +508,13 @@ class ChatMessage extends StatelessWidget {
   final AnimationController typingController;
 
   Map<String, dynamic> toJson() => {
-        'text': text,
-        'isUser': isUser,
-        'isTyping': isTyping,
-      };
+    'text': text,
+    'isUser': isUser,
+    'isTyping': isTyping,
+  };
 
   factory ChatMessage.fromJson(
-          Map<String, dynamic> json, AnimationController controller) =>
+      Map<String, dynamic> json, AnimationController controller) =>
       ChatMessage(
         text: json['text'],
         isUser: json['isUser'],
@@ -506,26 +525,26 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[
             const CircleAvatar(
-              radius: 18,
+              radius: 20,
               backgroundColor: Color(0xFF8E77FF),
               child:
-                  Icon(Icons.medical_services, color: Colors.white, size: 20),
+              Icon(Icons.medical_services, color: Colors.white, size: 24),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 12),
           ],
           Flexible(
             child: Container(
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.75),
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: isUser
@@ -534,34 +553,34 @@ class ChatMessage extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(25),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: isTyping
                   ? _buildTypingIndicator()
                   : Text(
-                      text,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Raleway',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
           if (isUser) ...[
-            const SizedBox(width: 10),
+            const SizedBox(width: 12),
             const CircleAvatar(
-              radius: 18,
+              radius: 20,
               backgroundColor: Color(0xFFAA99FF),
-              child: Icon(Icons.person, color: Colors.white, size: 20),
+              child: Icon(Icons.person, color: Colors.white, size: 24),
             ),
           ],
         ],
@@ -574,10 +593,10 @@ class ChatMessage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         _buildDot(0),
-        const SizedBox(width: 6),
-        _buildDot(150),
-        const SizedBox(width: 6),
-        _buildDot(300),
+        const SizedBox(width: 8),
+        _buildDot(200),
+        const SizedBox(width: 8),
+        _buildDot(400),
       ],
     );
   }
@@ -587,11 +606,11 @@ class ChatMessage extends StatelessWidget {
       opacity: CurvedAnimation(
         parent: typingController,
         curve:
-            Interval(delay / 600, (delay + 300) / 600, curve: Curves.easeInOut),
+        Interval(delay / 800, (delay + 400) / 800, curve: Curves.easeInOut),
       ),
       child: Container(
-        width: 8,
-        height: 8,
+        width: 10,
+        height: 10,
         decoration: const BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,

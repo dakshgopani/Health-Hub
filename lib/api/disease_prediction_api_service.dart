@@ -55,7 +55,7 @@ class ApiService with ChangeNotifier {
               "parts": [
                 {
                   "text":
-                  "Explain the medical condition of $symptom in simple terms for a general audience in 1 line."
+                      "Explain the medical condition of $symptom in simple terms for a general audience in 1 line."
                 }
               ]
             }

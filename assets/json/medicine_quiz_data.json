@@ -1,0 +1,198 @@
+[
+  {
+    "question": "A telemedicine app allows users to consult doctors online. What is the key benefit of such an app?",
+    "options": ["Immediate access to doctors", "Higher medical costs", "No need for prescriptions", "Only available in hospitals"],
+    "answer": "Immediate access to doctors"
+  },
+  {
+    "question": "Which wearable device is commonly used to track heart rate and activity levels?",
+    "options": ["Smartwatch", "Glucometer", "Thermometer", "Sphygmomanometer"],
+    "answer": "Smartwatch"
+  },
+  {
+    "question": "In a hospital management system, what is the main advantage of Electronic Health Records (EHR)?",
+    "options": ["Faster access to patient history", "Increased paperwork", "Higher medical expenses", "Slower treatment processes"],
+    "answer": "Faster access to patient history"
+  },
+  {
+    "question": "Which of the following technologies is widely used for remote patient monitoring?",
+    "options": ["Blockchain", "IoT (Internet of Things)", "5G Gaming", "3D Printing"],
+    "answer": "IoT (Internet of Things)"
+  },
+  {
+    "question": "Which emergency number should be dialed in case of a severe accident in the United States?",
+    "options": ["112", "999", "911", "101"],
+    "answer": "911"
+  },
+  {
+    "question": "A pregnant woman uses a mobile health app to track her baby's development. What is the main benefit of such an app?",
+    "options": ["Better prenatal care", "Faster delivery", "Reduced need for hospitals", "Avoids the need for vaccinations"],
+    "answer": "Better prenatal care"
+  },
+  {
+    "question": "Which healthcare domain focuses on preventing diseases through vaccinations and health awareness campaigns?",
+    "options": ["Pediatrics", "Public Health", "Cardiology", "Dermatology"],
+    "answer": "Public Health"
+  },
+  {
+    "question": "A fitness app generates a personalized workout plan based on a user’s BMI and activity level. What is this an example of?",
+    "options": ["Predictive healthcare", "Virtual reality", "Medical negligence", "Biometric security"],
+    "answer": "Predictive healthcare"
+  },
+  {
+    "question": "In a hospital, an AI-based system is used to analyze patient symptoms and suggest possible diagnoses. What is this system called?",
+    "options": ["EHR System", "Clinical Decision Support System (CDSS)", "Health Insurance Portal", "Billing Management System"],
+    "answer": "Clinical Decision Support System (CDSS)"
+  },
+  {
+    "question": "Which mobile app feature is crucial for helping diabetic patients manage their blood sugar levels?",
+    "options": ["Step Counter", "Blood Glucose Tracker", "Diet Recipe Suggestions", "Water Reminder"],
+    "answer": "Blood Glucose Tracker"
+  },
+
+  {
+    "question": "What is the normal body temperature in Fahrenheit?",
+    "options": ["98.6°F", "101.2°F", "95.0°F", "100.0°F"],
+    "answer": "98.6°F"
+  },
+  {
+    "question": "Which vitamin is mainly obtained from sunlight?",
+    "options": ["Vitamin A", "Vitamin B12", "Vitamin D", "Vitamin C"],
+    "answer": "Vitamin D"
+  },
+  {
+    "question": "Which organ in the human body is responsible for filtering blood?",
+    "options": ["Liver", "Kidneys", "Lungs", "Heart"],
+    "answer": "Kidneys"
+  },
+  {
+    "question": "Which of the following is a common symptom of dehydration?",
+    "options": ["Blurred vision", "Excessive sweating", "Dry mouth", "Increased hunger"],
+    "answer": "Dry mouth"
+  },
+  {
+    "question": "Which disease is caused by a deficiency of iron in the body?",
+    "options": ["Diabetes", "Anemia", "Osteoporosis", "Hypertension"],
+    "answer": "Anemia"
+  },
+  {
+    "question": "Which type of diabetes requires insulin injections for survival?",
+    "options": ["Type 1 Diabetes", "Type 2 Diabetes", "Gestational Diabetes", "Prediabetes"],
+    "answer": "Type 1 Diabetes"
+  },
+  {
+    "question": "What does BMI stand for?",
+    "options": ["Body Mass Index", "Bone Mass Indicator", "Blood Measurement Index", "Body Muscle Indicator"],
+    "answer": "Body Mass Index"
+  },
+  {
+    "question": "Which part of the body is primarily affected by tuberculosis (TB)?",
+    "options": ["Liver", "Lungs", "Heart", "Kidneys"],
+    "answer": "Lungs"
+  },
+  {
+    "question": "Which nutrient is essential for muscle growth?",
+    "options": ["Protein", "Carbohydrates", "Fats", "Vitamins"],
+    "answer": "Protein"
+  },
+  {
+    "question": "Which medical imaging technique uses sound waves to create images of internal organs?",
+    "options": ["X-ray", "MRI", "CT scan", "Ultrasound"],
+    "answer": "Ultrasound"
+  },
+  {
+    "question": "Which wearable device is commonly used to track heart rate and activity levels?",
+    "options": ["Smartwatch", "Glucometer", "Thermometer", "Sphygmomanometer"],
+    "answer": "Smartwatch"
+  },
+  {
+    "question": "Which emergency number should be dialed in case of a severe accident in the United States?",
+    "options": ["112", "999", "911", "101"],
+    "answer": "911"
+  },
+  {
+    "question": "A telemedicine app allows users to consult doctors online. What is the key benefit of such an app?",
+    "options": ["Immediate access to doctors", "Higher medical costs", "No need for prescriptions", "Only available in hospitals"],
+    "answer": "Immediate access to doctors"
+  },
+  {
+    "question": "What is the primary function of red blood cells?",
+    "options": ["Transport oxygen", "Fight infections", "Digest food", "Regulate body temperature"],
+    "answer": "Transport oxygen"
+  },
+  {
+    "question": "Which mobile app feature is crucial for helping diabetic patients manage their blood sugar levels?",
+    "options": ["Step Counter", "Blood Glucose Tracker", "Diet Recipe Suggestions", "Water Reminder"],
+    "answer": "Blood Glucose Tracker"
+  },
+  {
+    "question": "What is the main function of the kidneys?",
+    "options": ["Pump blood", "Filter waste", "Produce oxygen", "Digest food"],
+    "answer": "Filter waste"
+  },
+  {
+    "question": "Which medical technology is used to assist paralyzed individuals in moving their limbs?",
+    "options": ["3D Printing", "Bionic Implants", "MRI", "Telemedicine"],
+    "answer": "Bionic Implants"
+  },
+  {
+    "question": "Which organ is responsible for detoxifying the blood?",
+    "options": ["Heart", "Lungs", "Liver", "Kidneys"],
+    "answer": "Liver"
+  },
+  {
+    "question": "Which healthcare domain focuses on preventing diseases through vaccinations and health awareness campaigns?",
+    "options": ["Pediatrics", "Public Health", "Cardiology", "Dermatology"],
+    "answer": "Public Health"
+  },
+  {
+    "question": "Which emergency service is responsible for transporting patients to hospitals?",
+    "options": ["Fire Department", "Ambulance Service", "Police", "Healthcare Administration"],
+    "answer": "Ambulance Service"
+  },
+  {
+    "question": "Which hormone regulates blood sugar levels?",
+    "options": ["Adrenaline", "Insulin", "Estrogen", "Testosterone"],
+    "answer": "Insulin"
+  },
+  {
+    "question": "Which of these symptoms might indicate a heart attack?",
+    "options": ["Sudden chest pain", "Nausea", "Shortness of breath", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "What is the recommended daily intake of water for an average adult?",
+    "options": ["1 liter", "2 liters", "3 liters", "4 liters"],
+    "answer": "2 liters"
+  },
+  {
+    "question": "Which of the following diseases is caused by a virus?",
+    "options": ["Tuberculosis", "Malaria", "Influenza", "Diabetes"],
+    "answer": "Influenza"
+  },
+  {
+    "question": "Which type of fat is considered healthy?",
+    "options": ["Trans fat", "Saturated fat", "Unsaturated fat", "Cholesterol"],
+    "answer": "Unsaturated fat"
+  },
+  {
+    "question": "Which of the following is a major risk factor for lung cancer?",
+    "options": ["Smoking", "High cholesterol", "Low blood pressure", "Too much exercise"],
+    "answer": "Smoking"
+  },
+  {
+    "question": "A fitness app generates a personalized workout plan based on a user’s BMI and activity level. What is this an example of?",
+    "options": ["Predictive healthcare", "Virtual reality", "Medical negligence", "Biometric security"],
+    "answer": "Predictive healthcare"
+  },
+  {
+    "question": "Which of these technologies is widely used for remote patient monitoring?",
+    "options": ["Blockchain", "IoT (Internet of Things)", "5G Gaming", "3D Printing"],
+    "answer": "IoT (Internet of Things)"
+  },
+  {
+    "question": "What is the most common cause of hypertension?",
+    "options": ["Excessive salt intake", "Lack of sleep", "Drinking too much water", "Wearing tight clothes"],
+    "answer": "Excessive salt intake"
+  }
+]

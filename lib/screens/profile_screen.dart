@@ -5,7 +5,7 @@ import 'package:flutter_map/flutter_map.dart'; // Flutter Map for OpenStreetMap
 import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
 import 'package:geocoding/geocoding.dart'; // Geocoding for location name
 import 'auth/welcome_screen.dart';
-import 'qr_code_scanner.dart';
+import 'blood_donation/qr_code_scanner.dart';
 import 'store_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
