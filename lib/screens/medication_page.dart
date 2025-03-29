@@ -294,11 +294,14 @@ class _MedicineScannerState extends State<MedicineScanner>
 }
 */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../theme/colors.dart';
 
 class MedicineScannerPage extends StatefulWidget {
   @override
@@ -339,60 +342,40 @@ class _MainPageState extends State<MedicineScannerPage> {
   }
 
   Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
+    // Set the status bar color to match AppBar
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.deepPurple, // Make status bar color deep purple
+      statusBarIconBrightness: Brightness.light, // White icons
+    ));
+    return AppBar(
+      elevation: 0,
+      iconTheme: const IconThemeData(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+        weight: 900,
+        size: 26,
+      ),
+      title: const Text(
+        'Medicine Scanner',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          fontFamily: 'Raleway',
         ),
       ),
-      child: Row(
-        children: [
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => Navigator.pop(context),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF0EAFA),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: Color(0xFF6B4EFF),
-                  size: 20,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Text(
-              'Medicine Scanner',
-              style: TextStyle(
-                color: Color(0xFF432C81),
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                fontFamily: 'Raleway',
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ),
-        ],
+      backgroundColor: AppColors.deepPurple,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
+
 }
 
 class MedicineScanner extends StatefulWidget {
@@ -704,7 +687,11 @@ class _MedicineScannerState extends State<MedicineScanner>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 20),
+              Icon(
+                icon,
+                size: 20,
+                color: isPrimary ? Colors.white : const Color(0xFF6B4EFF), // FIXED: Explicit color
+              ),
               const SizedBox(width: 8),
               Text(
                 label,
@@ -720,6 +707,7 @@ class _MedicineScannerState extends State<MedicineScanner>
       ),
     );
   }
+
 
   Widget _buildLoadingIndicator() {
     return Center(
@@ -1059,22 +1047,27 @@ class _MedicineScannerState extends State<MedicineScanner>
 
   IconData _getIconForTitle(String title) {
     title = title.toLowerCase();
-    if (title.contains("name") || title.contains("medicine")) {
-      return Icons.medication_rounded;
-    } else if (title.contains("use") || title.contains("indication")) {
-      return Icons.healing_rounded;
+
+    if (title.contains("symptom")) {
+      return Icons.coronavirus_rounded; // Represents health issues/symptoms
+    } else if (title.contains("primary") || title.contains("diagnosis")) {
+      return Icons.medical_services_rounded; // Medical diagnosis
+    } else if (title.contains("usage") || title.contains("use")) {
+      return Icons.healing_rounded; // Treatment/Usage
+    } else if (title.contains("name") || title.contains("medicine")) {
+      return Icons.medication_rounded; // Medicine
     } else if (title.contains("side") || title.contains("effect")) {
-      return Icons.warning_rounded;
+      return Icons.warning_rounded; // Warning for side effects
     } else if (title.contains("dose") || title.contains("dosage")) {
-      return Icons.timer_rounded;
+      return Icons.timer_rounded; // Timer for dosage schedule
     } else if (title.contains("precaution") || title.contains("warning")) {
-      return Icons.shield_rounded;
+      return Icons.shield_rounded; // Protection/Precaution
     } else if (title.contains("storage") || title.contains("keep")) {
-      return Icons.inventory_2_rounded;
+      return Icons.inventory_2_rounded; // Storage
     } else if (title.contains("ingredient") || title.contains("composition")) {
-      return Icons.science_rounded;
+      return Icons.science_rounded; // Scientific composition
     } else {
-      return Icons.info_outline_rounded;
+      return Icons.info_outline_rounded; // Default information icon
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../../models/doctor_data_model.dart';
 import '../../services/email.dart';
@@ -38,6 +39,17 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
     _fadeAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animationController.forward();
+    // Fetch logged-in user's email
+    _fetchUserEmail();
+  }
+
+  void _fetchUserEmail() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _userEmail = user.email;
+      });
+    }
   }
 
   @override
@@ -191,6 +203,13 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
   }
 
   void _confirmAppointment(String date, String time) async {
+    if (_userEmail == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error: User email not found!')),
+      );
+      return;
+    }
+
     final pdfFile = await PdfService.generateAppointmentPdf(
       email: _userEmail!,
       doctorName: widget.selectedDoctor.name,
@@ -213,7 +232,6 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
     setState(() {
       _selectedDate = null;
       _selectedTime = null;
-      _userEmail = null;
       _selectedPaymentMethod = null;
     });
 
@@ -288,8 +306,6 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                         ),
                         children: [
                           _buildDoctorInfo(),
-                          const SizedBox(height: 24),
-                          _buildEmailField(),
                           const SizedBox(height: 24),
                           _buildDateTimePicker(
                               'Date',
@@ -410,34 +426,6 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
     );
   }
 
-  Widget _buildEmailField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'Enter Your Email',
-        labelStyle: TextStyle(
-            color: Colors.grey[600],
-            fontFamily: 'Raleway',
-            fontWeight: FontWeight.w600),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        prefixIcon: const Icon(Icons.email, color: Color(0xFF432C81)),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Color(0xFF432C81)),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        filled: true,
-        fillColor: Colors.white,
-      ),
-      style: TextStyle(
-          fontSize: 16, color: Colors.grey[600], fontWeight: FontWeight.w700),
-      onChanged: (value) => _userEmail = value,
-      validator: (value) {
-        if (value == null || value.isEmpty) return 'Please enter your email';
-        if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value))
-          return 'Please enter a valid email address';
-        return null;
-      },
-    );
-  }
 
   Widget _buildDateTimePicker(String label, String value, VoidCallback onTap) {
     return InkWell(

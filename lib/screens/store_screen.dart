@@ -1,576 +1,7 @@
-/*
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class StoreScreen extends StatefulWidget {
-  final String userId;
-
-  const StoreScreen({super.key, required this.userId});
-
-  @override
-  _StoreScreenState createState() => _StoreScreenState();
-}
-
-class _StoreScreenState extends State<StoreScreen> {
-  int _userPoints = 0; // Stores total user points
-
-  List<Map<String, dynamic>> medicines = [
-    {
-      'name': 'Paracetamol',
-      'points': 10,
-      'image': 'assets/images/medicine_img/paracetamol_medicine.jpg'
-    },
-    {
-      'name': 'Ibuprofen',
-      'points': 20,
-      'image': 'assets/images/medicine_img/ibuprofen_medicine.jpg'
-    },
-    {
-      'name': 'Amoxicillin',
-      'points': 30,
-      'image': 'assets/images/medicine_img/Amoxicillin_medicine.png'
-    },
-    {
-      'name': 'Ciprofloxacin',
-      'points': 40,
-      'image': 'assets/images/medicine_img/Ciprofloxacin_medicine.jpeg'
-    },
-    {
-      'name': 'Azithromycin',
-      'points': 50,
-      'image': 'assets/images/medicine_img/azithromycin_medicine.jpg'
-    },
-    {
-      'name': 'Cetirizine',
-      'points': 60,
-      'image': 'assets/images/medicine_img/cetirizine_medicine.jpg'
-    },
-    {
-      'name': 'Metformin',
-      'points': 70,
-      'image': 'assets/images/medicine_img/metformin_medicine.png'
-    },
-    {
-      'name': 'Losartan',
-      'points': 80,
-      'image': 'assets/images/medicine_img/losartan_medicine.jpg'
-    },
-    {
-      'name': 'Amlodipine',
-      'points': 90,
-      'image': 'assets/images/medicine_img/Amlodipine_medicine.jpg'
-    },
-    {
-      'name': 'Omeprazole',
-      'points': 100,
-      'image': 'assets/images/medicine_img/Omeprazole_medicine.jpg'
-    }
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserPoints();
-  }
-
-  Future<void> _fetchUserPoints() async {
-    try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.userId)
-          .get();
-
-      if (userDoc.exists) {
-        setState(() {
-          _userPoints = (userDoc.data() as Map<String, dynamic>)['points'] ?? 0;
-        });
-      }
-    } catch (e) {
-      print("❌ Error fetching points: $e");
-    }
-  }
-
-  Future<void> _redeemReward(int cost, String medicineName) async {
-    if (_userPoints >= cost) {
-      _showLoadingDialog(); // ✅ Show loader first
-
-      setState(() {
-        _userPoints -= cost;
-      });
-
-      // ✅ Perform Firestore update in the background
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.userId)
-          .update({'points': _userPoints});
-
-      Navigator.pop(context); // ✅ Close the loader
-      Navigator.pop(context); // ✅ Close bottom sheet immediately
-
-      _showSuccessDialog(medicineName); // ✅ Show success pop-up
-    } else {
-      Navigator.pop(
-          context); // ✅ Close the bottom sheet BEFORE showing Snackbar
-
-      Future.delayed(const Duration(milliseconds: 200), () {
-        // ✅ Ensure UI update before showing
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              "Not enough points!",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            backgroundColor: Colors.redAccent,
-            behavior: SnackBarBehavior.floating,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      });
-    }
-  }
-
-// ✅ Loader Dialog
-  void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent closing while loading
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        contentPadding: const EdgeInsets.all(20),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircularProgressIndicator(color: Color(0xFF432C81)),
-            // Loader
-            SizedBox(height: 16),
-            Text(
-              "Processing your request...",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Raleway',
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-// ✅ Success Dialog
-  void _showSuccessDialog(String medicineName) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withAlpha((0.2 * 255).toInt()),
-      // Background dimming
-      builder: (context) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // ✅ Blur Effect
-        child: AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          contentPadding: EdgeInsets.zero,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // 🎉 Header with Gradient Background
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF432C81), Colors.deepPurpleAccent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                ),
-                child: const Center(
-                  child: Text(
-                    "🎉 Success!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Raleway',
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // ✅ Success Icon
-              const Icon(Icons.check_circle, color: Colors.green, size: 60),
-              const SizedBox(height: 12),
-
-              // 💊 Success Message
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  "You have successfully purchased $medicineName",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Raleway',
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // 🆗 OK Button
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                // Add spacing around the button
-                child: TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: const Color(0xFF432C81),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(12), // Rounded corners
-                    ),
-                  ),
-                  child: const Text(
-                    "OK",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Raleway',
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showMedicineDetails(Map<String, dynamic> medicine) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      // Transparent for Glassmorphism effect
-      builder: (context) => Stack(
-        children: [
-          // Blurred Background Effect
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Container(
-              color: Colors.black.withAlpha((0.2 * 255).toInt()), // 🔹 Fixed
-            ),
-          ),
-
-          // Draggable Bottom Sheet
-          DraggableScrollableSheet(
-            initialChildSize: 0.5,
-            maxChildSize: 0.85,
-            minChildSize: 0.3,
-            builder: (_, controller) => Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-              ),
-              padding: const EdgeInsets.all(16),
-              child: ListView(
-                controller: controller,
-                children: [
-                  Hero(
-                    tag: 'medicine-${medicine['name']}',
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(
-                        medicine['image'],
-                        height: 200,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    medicine['name'],
-                    style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Raleway'),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "⭐ ${medicine['points']} Points",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Raleway'),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () =>
-                        _redeemReward(medicine['points'], medicine['name']),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: const Text(
-                      "Redeem Now",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontFamily: 'Raleway'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showPointsPopup() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (context) => FractionallySizedBox(
-        heightFactor: 0.4, // 40% of screen height
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                offset: Offset(0, -3),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // 🌟 Animated Star Icon
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeOut,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.amber.shade100,
-                ),
-                child: const Icon(Icons.star, color: Colors.amber, size: 60),
-              ),
-
-              const SizedBox(height: 20),
-
-              // 🎉 Points Message
-              Text(
-                "⭐ You have $_userPoints points!",
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Raleway',
-                  color: Colors.black87,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // 💡 Encouraging Message
-              const Text(
-                "Keep earning and redeem exciting rewards!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Raleway',
-                  color: Colors.black,
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // 🚀 Close Button
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                ),
-                child: const Text(
-                  "Got it!",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Raleway',
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFEDECF4),
-      appBar: AppBar(
-        title: const Text(
-          "🎁 Rewards Shop",
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Raleway',
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        // 🟡 Add GestureDetector to make the points clickable
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GestureDetector(
-              onTap: _showPointsPopup,
-              // 👈 Calls the popup function when tapped
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 4,
-                      offset: Offset(2, 2),
-                    ),
-                  ],
-                ),
-                child: Text(
-                  "⭐ $_userPoints Points",
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black,
-                      fontFamily: 'Raleway'),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemCount: medicines.length,
-          itemBuilder: (context, index) {
-            var medicine = medicines[index];
-            return _buildMedicineCard(medicine);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMedicineCard(Map<String, dynamic> medicine) {
-    return GestureDetector(
-      onTap: () => _showMedicineDetails(medicine),
-      child: Card(
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15)),
-              child: Image.asset(medicine['image'],
-                  height: 100, width: double.infinity, fit: BoxFit.cover),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(medicine['name'],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Raleway')),
-                  const SizedBox(height: 6),
-                  Text("⭐ ${medicine['points']} Points",
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Raleway')),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () => _showMedicineDetails(medicine),
-                    // Open bottom sheet
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
-                    ),
-                    child: const Text(
-                      "Buy",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Raleway',
-                          color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-//import 'package:lottie/lottie.dart';
 
 class StoreScreen extends StatefulWidget {
   final String userId;
@@ -581,7 +12,8 @@ class StoreScreen extends StatefulWidget {
   _StoreScreenState createState() => _StoreScreenState();
 }
 
-class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStateMixin {
+class _StoreScreenState extends State<StoreScreen>
+    with SingleTickerProviderStateMixin {
   int _userPoints = 0; // Stores total user points
   bool _isLoading = true;
   late AnimationController _animationController;
@@ -594,14 +26,16 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
       'name': 'Paracetamol',
       'points': 10,
       'image': 'assets/images/medicine_img/paracetamol_medicine.jpg',
-      'description': 'Pain reliever and fever reducer for mild to moderate pain.',
+      'description':
+          'Pain reliever and fever reducer for mild to moderate pain.',
       'category': 'Pain Relief'
     },
     {
       'name': 'Ibuprofen',
       'points': 20,
       'image': 'assets/images/medicine_img/ibuprofen_medicine.jpg',
-      'description': 'Non-steroidal anti-inflammatory drug (NSAID) for pain and inflammation.',
+      'description':
+          'Non-steroidal anti-inflammatory drug (NSAID) for pain and inflammation.',
       'category': 'Pain Relief'
     },
     {
@@ -615,49 +49,56 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
       'name': 'Ciprofloxacin',
       'points': 40,
       'image': 'assets/images/medicine_img/Ciprofloxacin_medicine.jpeg',
-      'description': 'Broad-spectrum antibiotic for various bacterial infections.',
+      'description':
+          'Broad-spectrum antibiotic for various bacterial infections.',
       'category': 'Antibiotics'
     },
     {
       'name': 'Azithromycin',
       'points': 50,
       'image': 'assets/images/medicine_img/azithromycin_medicine.jpg',
-      'description': 'Macrolide antibiotic used to treat respiratory infections.',
+      'description':
+          'Macrolide antibiotic used to treat respiratory infections.',
       'category': 'Antibiotics'
     },
     {
       'name': 'Cetirizine',
       'points': 60,
       'image': 'assets/images/medicine_img/cetirizine_medicine.jpg',
-      'description': 'Antihistamine for allergy symptoms like sneezing and itching.',
+      'description':
+          'Antihistamine for allergy symptoms like sneezing and itching.',
       'category': 'Allergy'
     },
     {
       'name': 'Metformin',
       'points': 70,
       'image': 'assets/images/medicine_img/metformin_medicine.png',
-      'description': 'Oral medication to control blood sugar levels in type 2 diabetes.',
+      'description':
+          'Oral medication to control blood sugar levels in type 2 diabetes.',
       'category': 'Diabetes'
     },
     {
       'name': 'Losartan',
       'points': 80,
       'image': 'assets/images/medicine_img/losartan_medicine.jpg',
-      'description': 'Angiotensin II receptor blocker (ARB) for high blood pressure.',
+      'description':
+          'Angiotensin II receptor blocker (ARB) for high blood pressure.',
       'category': 'Blood Pressure'
     },
     {
       'name': 'Amlodipine',
       'points': 90,
       'image': 'assets/images/medicine_img/Amlodipine_medicine.jpg',
-      'description': 'Calcium channel blocker for high blood pressure and chest pain.',
+      'description':
+          'Calcium channel blocker for high blood pressure and chest pain.',
       'category': 'Blood Pressure'
     },
     {
       'name': 'Omeprazole',
       'points': 100,
       'image': 'assets/images/medicine_img/Omeprazole_medicine.jpg',
-      'description': 'Proton pump inhibitor (PPI) for acid reflux and stomach ulcers.',
+      'description':
+          'Proton pump inhibitor (PPI) for acid reflux and stomach ulcers.',
       'category': 'Digestive'
     }
   ];
@@ -711,8 +152,14 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
       } else {
         _filteredMedicines = medicines
             .where((medicine) =>
-        medicine['name'].toString().toLowerCase().contains(query.toLowerCase()) ||
-            medicine['category'].toString().toLowerCase().contains(query.toLowerCase()))
+                medicine['name']
+                    .toString()
+                    .toLowerCase()
+                    .contains(query.toLowerCase()) ||
+                medicine['category']
+                    .toString()
+                    .toLowerCase()
+                    .contains(query.toLowerCase()))
             .toList();
       }
     });
@@ -757,7 +204,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
             backgroundColor: Colors.redAccent,
             behavior: SnackBarBehavior.floating,
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             duration: const Duration(seconds: 2),
             margin: const EdgeInsets.all(16),
           ),
@@ -810,7 +257,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // ✅ Blur Effect
         child: AlertDialog(
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           contentPadding: EdgeInsets.zero,
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -878,7 +325,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
 
               // 🆗 OK Button
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                 // Add spacing around the button
                 child: ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -889,7 +337,7 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                         horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius:
-                      BorderRadius.circular(12), // Rounded corners
+                          BorderRadius.circular(12), // Rounded corners
                     ),
                     elevation: 5,
                     shadowColor: const Color(0xFF432C81).withOpacity(0.5),
@@ -935,7 +383,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
             builder: (_, controller) => Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(20)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -1028,7 +477,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
 
                         // Category Badge
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
                             color: const Color(0xFFF0EAFA),
                             borderRadius: BorderRadius.circular(20),
@@ -1093,7 +543,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                             color: Colors.grey[800],
                             height: 1.5,
                             fontWeight: FontWeight.w700,
-
                             fontFamily: 'Raleway',
                           ),
                         ),
@@ -1126,7 +575,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                       color: Colors.grey[700],
                                       fontFamily: 'Raleway',
                                       fontWeight: FontWeight.w700,
-
                                     ),
                                   ),
                                   const SizedBox(height: 4),
@@ -1158,7 +606,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
-
                                       color: Colors.grey[700],
                                       fontFamily: 'Raleway',
                                     ),
@@ -1182,7 +629,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
 
                         // Redeem Button
                         ElevatedButton(
-                          onPressed: () => _redeemReward(medicine['points'], medicine['name']),
+                          onPressed: () => _redeemReward(
+                              medicine['points'], medicine['name']),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF6B4EFF),
                             foregroundColor: Colors.white,
@@ -1191,7 +639,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                               borderRadius: BorderRadius.circular(16),
                             ),
                             elevation: 5,
-                            shadowColor: const Color(0xFF6B4EFF).withOpacity(0.5),
+                            shadowColor:
+                                const Color(0xFF6B4EFF).withOpacity(0.5),
                           ),
                           child: const Text(
                             "Redeem Now",
@@ -1363,7 +812,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: const Color(0xFF432C81),
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -1427,7 +877,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
               children: categories.map((category) {
                 return FilterChip(
                   label: Text(category),
-                  selected: _searchQuery == (category == 'All' ? '' : category.toLowerCase()),
+                  selected: _searchQuery ==
+                      (category == 'All' ? '' : category.toLowerCase()),
                   onSelected: (selected) {
                     Navigator.pop(context);
                     _filterMedicines(category == 'All' ? '' : category);
@@ -1436,7 +887,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                   selectedColor: const Color(0xFF6B4EFF).withOpacity(0.2),
                   checkmarkColor: const Color(0xFF6B4EFF),
                   labelStyle: TextStyle(
-                    color: _searchQuery == (category == 'All' ? '' : category.toLowerCase())
+                    color: _searchQuery ==
+                            (category == 'All' ? '' : category.toLowerCase())
                         ? const Color(0xFF6B4EFF)
                         : Colors.black,
                     fontWeight: FontWeight.w700,
@@ -1445,12 +897,14 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: BorderSide(
-                      color: _searchQuery == (category == 'All' ? '' : category.toLowerCase())
+                      color: _searchQuery ==
+                              (category == 'All' ? '' : category.toLowerCase())
                           ? const Color(0xFF6B4EFF)
                           : Colors.transparent,
                     ),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 );
               }).toList(),
             ),
@@ -1477,12 +931,14 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
-                  _filteredMedicines.sort((a, b) => a['points'].compareTo(b['points']));
+                  _filteredMedicines
+                      .sort((a, b) => a['points'].compareTo(b['points']));
                 });
               },
             ),
             ListTile(
-              leading: const Icon(Icons.arrow_downward, color: Color(0xFF6B4EFF)),
+              leading:
+                  const Icon(Icons.arrow_downward, color: Color(0xFF6B4EFF)),
               title: const Text(
                 "Price: High to Low",
                 style: TextStyle(
@@ -1493,7 +949,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
-                  _filteredMedicines.sort((a, b) => b['points'].compareTo(a['points']));
+                  _filteredMedicines
+                      .sort((a, b) => b['points'].compareTo(a['points']));
                 });
               },
             ),
@@ -1551,10 +1008,11 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
               Expanded(
                 child: _isLoading
                     ? const Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6B4EFF)),
-                  ),
-                )
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Color(0xFF6B4EFF)),
+                        ),
+                      )
                     : _buildMedicineGrid(),
               ),
             ],
@@ -1579,16 +1037,19 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0EAFA),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Color(0xFF6B4EFF),
-              size: 20,
+          GestureDetector(
+            onTap: () => Navigator.pop(context), // ✅ Navigate back
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF0EAFA),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Color(0xFF6B4EFF),
+                size: 20,
+              ),
             ),
           ),
           const SizedBox(width: 16),
@@ -1610,7 +1071,6 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                   fontSize: 14,
                   color: Colors.grey[600],
                   fontWeight: FontWeight.w700,
-
                   fontFamily: 'Raleway',
                 ),
               ),
@@ -1715,63 +1175,63 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
   Widget _buildMedicineGrid() {
     return _filteredMedicines.isEmpty
         ? Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.search_off,
-            size: 80,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            "No medicines found",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-              fontFamily: 'Raleway',
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            "Try a different search term",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-              fontFamily: 'Raleway',
-            ),
-          ),
-        ],
-      ),
-    )
-        : AnimationLimiter(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemCount: _filteredMedicines.length,
-          itemBuilder: (context, index) {
-            var medicine = _filteredMedicines[index];
-            return AnimationConfiguration.staggeredGrid(
-              position: index,
-              duration: const Duration(milliseconds: 500),
-              columnCount: 2,
-              child: ScaleAnimation(
-                child: FadeInAnimation(
-                  child: _buildMedicineCard(medicine),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.search_off,
+                  size: 80,
+                  color: Colors.grey[400],
                 ),
+                const SizedBox(height: 16),
+                Text(
+                  "No medicines found",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
+                    fontFamily: 'Raleway',
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Try a different search term",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                    fontFamily: 'Raleway',
+                  ),
+                ),
+              ],
+            ),
+          )
+        : AnimationLimiter(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                ),
+                itemCount: _filteredMedicines.length,
+                itemBuilder: (context, index) {
+                  var medicine = _filteredMedicines[index];
+                  return AnimationConfiguration.staggeredGrid(
+                    position: index,
+                    duration: const Duration(milliseconds: 500),
+                    columnCount: 2,
+                    child: ScaleAnimation(
+                      child: FadeInAnimation(
+                        child: _buildMedicineCard(medicine),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
-    );
+            ),
+          );
   }
 
   Widget _buildMedicineCard(Map<String, dynamic> medicine) {
@@ -1791,10 +1251,12 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
             ),
           ],
         ),
-        child: IntrinsicHeight( // Prevents overflow
+        child: IntrinsicHeight(
+          // Prevents overflow
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min, // Ensures column takes minimal space
+            mainAxisSize: MainAxisSize.min,
+            // Ensures column takes minimal space
             children: [
               // Medicine Image with Category Badge
               Stack(
@@ -1804,7 +1266,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                     child: Container(
                       height: 120,
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(20)),
                         image: DecorationImage(
                           image: AssetImage(medicine['image']),
                           fit: BoxFit.cover,
@@ -1816,7 +1279,8 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
                     top: 8,
                     left: 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: const Color(0xFF6B4EFF).withOpacity(0.8),
                         borderRadius: BorderRadius.circular(10),
@@ -1881,20 +1345,27 @@ class _StoreScreenState extends State<StoreScreen> with SingleTickerProviderStat
 
                       // Buy Now Button
                       SizedBox(
-                        width: double.infinity, // Ensures button takes full width
-                        height: 36, // Fixes height issue
+                        width: double.infinity,
+                        // Ensures button takes full width
+                        height: 36,
+                        // Fixes height issue
                         child: ElevatedButton(
                           onPressed: () => _showMedicineDetails(medicine),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: canAfford ? const Color(0xFF6B4EFF) : Colors.grey[400],
+                            backgroundColor: canAfford
+                                ? const Color(0xFF6B4EFF)
+                                : Colors.grey[400],
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             elevation: canAfford ? 3 : 0,
-                            shadowColor: canAfford ? const Color(0xFF6B4EFF).withOpacity(0.3) : Colors.transparent,
+                            shadowColor: canAfford
+                                ? const Color(0xFF6B4EFF).withOpacity(0.3)
+                                : Colors.transparent,
                           ),
-                          child: FittedBox( // Prevents text overflow
+                          child: FittedBox(
+                            // Prevents text overflow
                             child: Text(
                               canAfford ? "Buy Now" : "Not Enough",
                               style: const TextStyle(

@@ -3,12 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
-
 import '../theme/colors.dart';
 import '../theme/text_styles.dart';
 import 'doctor_code_entry_screen.dart';
-
-// Import theme files
 
 class DoctorDashboard extends StatefulWidget {
   @override
@@ -40,13 +37,18 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
+        // centerTitle: true,
         elevation: 0,
-        // 🔹 Set the back button color here
         iconTheme: const IconThemeData(
-          color: Colors.white, // Change this to any color
+          color: Colors.white,
+          weight: 900,
+          size: 26,
         ),
-        title:
-            const Text('Doctor Dashboard', style: AppTextStyles.whiteHeading),
+        title: Text(
+          'Doctor Dashboard',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
         backgroundColor: AppColors.deepPurple,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -74,9 +76,10 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            child: const Text(
+            child: Text(
               'Patient Records',
-              style: AppTextStyles.heading,
+              style:
+                  AppTextStyles.heading.copyWith(fontWeight: FontWeight.w900),
             ),
           ),
           Expanded(
@@ -563,7 +566,6 @@ class DoctorHistoryPage extends StatelessWidget {
                                       style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
-
                                         color: AppColors.deepPurple,
                                         fontFamily: 'Raleway',
                                       ),

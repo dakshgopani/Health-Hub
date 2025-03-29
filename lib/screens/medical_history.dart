@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter/services.dart'; // Import this for SystemUiOverlayStyle
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +12,9 @@ import 'package:url_launcher/url_launcher.dart'; // Added for URL launching
 import 'package:uuid/uuid.dart'; // Add this import
 import 'dart:convert';
 import 'dart:io';
+
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
 
 class MedicalHistoryPage extends StatefulWidget {
   @override
@@ -224,46 +227,55 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
   }
 
   Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+    // Set the status bar color for the mobile app bar
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.deepPurple, // Make status bar color deep purple
+      statusBarIconBrightness: Brightness.light, // White icons
+    ));
+
+    return Container( // `return` is correctly used here
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: const BoxDecoration(
+        color: AppColors.deepPurple,
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
       ),
       child: Row(
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context),
+            iconSize: 26,
+            color: Colors.white,
           ),
-          Flexible(
-            // Added to prevent overflow
-            child: const Text(
+          const SizedBox(width: 10), // Avoids crowding
+
+          Expanded( // Ensures text takes available space without overflow
+            child: Text(
               'Medical History',
-              style: TextStyle(
-                fontSize: 24,
+              style: AppTextStyles.whiteHeading.copyWith(
                 fontWeight: FontWeight.w900,
-                fontFamily: 'Raleway',
-                color: Color(0xFF432C81),
               ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const Spacer(),
+
+          const SizedBox(width: 10), // Ensures spacing before icons
+
           IconButton(
             icon: const Icon(Icons.upload_file),
             onPressed: _pickFile,
             tooltip: 'Upload File',
+            iconSize: 26,
+            color: Colors.white,
           ),
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: _shareWithDoctor,
             tooltip: 'Share with Doctor',
+            iconSize: 26,
+            color: Colors.white,
           ),
         ],
       ),
@@ -457,10 +469,10 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
           Icon(Icons.history, size: 64, color: Colors.grey),
           SizedBox(height: 16),
           Text('No Medical History',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900)),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900,fontFamily: 'Raleway')),
           SizedBox(height: 8),
           Text('Your medical history will appear here',
-              style: TextStyle(fontSize: 16)),
+              style: TextStyle(fontSize: 16,fontFamily: 'Raleway',fontWeight: FontWeight.w700)),
         ],
       ),
     );

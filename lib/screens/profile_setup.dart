@@ -260,7 +260,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
           builder: (context) => HomePage(
             // userId: widget.userId, // Pass userId to HomePage
             userId: FirebaseAuth.instance.currentUser!.uid,
-            userName: FirebaseAuth.instance.currentUser!.displayName ?? "User",
+            userName: _nameController.text,
+            // userName: FirebaseAuth.instance.currentUser!.displayName ?? "User",
             userEmail: FirebaseAuth.instance.currentUser!.email ?? "Email",
           ),
         ),
@@ -279,6 +280,13 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
   @override
   void initState() {
     super.initState();
+
+    // Fetch user's name from Firebase Auth and set it in the controller
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.displayName != null && user.displayName!.isNotEmpty) {
+      _nameController.text = user.displayName!;
+    }
+
     _getCurrentLocation(); // Fetch user's location on page load
   }
 

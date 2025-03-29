@@ -286,28 +286,10 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
                 fontSize: 16,
                 color: Colors.white,
                 fontFamily: 'Raleway',
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w900),
           ),
         ),
-        const SizedBox(height: 12),
-        OutlinedButton(
-          onPressed: () {},
-          style: OutlinedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50),
-            side: const BorderSide(color: Color(0xFF432C81)),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: const Text(
-            'Consult Online',
-            style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF432C81),
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.w700),
-          ),
-        ),
+
       ],
     );
   }

@@ -8,6 +8,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
+
 class HospitalLocator extends StatefulWidget {
   const HospitalLocator({super.key});
 
@@ -194,16 +197,22 @@ class _HospitalLocatorState extends State<HospitalLocator>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Find Nearest Hospitals",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        backgroundColor: AppColors.deepPurple,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
           ),
         ),
-        backgroundColor: const Color(0xFFEDECF4),
-        // backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 0,
         centerTitle: true,
       ),
@@ -283,15 +292,18 @@ class _HospitalLocatorState extends State<HospitalLocator>
                   right: 20,
                   child: FloatingActionButton(
                     onPressed: _togglePanicMode,
-                    backgroundColor: _panicMode ? Colors.red : Colors.blue,
-                    child: Icon(_panicMode
-                        ? Icons.emergency
-                        : Icons.emergency_outlined),
+                    backgroundColor:
+                        _panicMode ? Colors.red : Colors.deepPurple,
+                    child: Icon(
+                      _panicMode ? Icons.emergency : Icons.emergency_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
             ),
       floatingActionButton: AnimatedFloatingActionButton(
+
         fabButtons: [
           FloatingActionButton(
             heroTag: "location",
@@ -307,6 +319,7 @@ class _HospitalLocatorState extends State<HospitalLocator>
         colorStartAnimation: Colors.blue,
         colorEndAnimation: Colors.red,
         animatedIconData: AnimatedIcons.menu_close,
+
       ),
     );
   }

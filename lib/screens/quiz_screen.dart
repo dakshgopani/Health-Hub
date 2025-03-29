@@ -27,6 +27,9 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   late AnimationController _questionAnimationController;
   late Animation<double> _questionAnimation;
 
+  String? selectedAnswer;
+  bool isCorrect = false;
+
   final List<String> rewards = [
     'Gift Voucher ₹100',
     'Gift Voucher ₹50',
@@ -35,7 +38,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     'Gift Voucher ₹500'
   ];
 
-  // Using the deepPurple color from AppColors for the wheel
   final List<Color> wheelColors = [
     AppColors.deepPurple,
     AppColors.deepPurple.withOpacity(0.8),
@@ -98,32 +100,34 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   void checkAnswer(String selectedAnswer) {
-    bool isCorrect =
-        selectedAnswer == currentQuestions[currentQuestionIndex].answer;
+    setState(() {
+      this.selectedAnswer = selectedAnswer;
+      isCorrect = selectedAnswer == currentQuestions[currentQuestionIndex].answer;
 
-    if (isCorrect) {
-      score++;
-    }
+      if (isCorrect) {
+        score++;
+      }
 
-    // Animate out current question
-    _questionAnimationController.reverse().then((_) => null).whenComplete(() {
-      setState(() {
-        if (currentQuestionIndex < currentQuestions.length - 1) {
-          currentQuestionIndex++;
-        } else {
-          quizCompleted = true;
-          if (score > 5) {
-            showSpinWheel = true;
-            Future.delayed(const Duration(seconds: 1), () {
-              autoSpinWheel();
-            });
+      // Animate out current question
+      _questionAnimationController.reverse().then((_) => null).whenComplete(() {
+        setState(() {
+          if (currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+          } else {
+            quizCompleted = true;
+            if (score > 5) {
+              showSpinWheel = true;
+              Future.delayed(Duration(seconds: 1), () {
+                autoSpinWheel();
+              });
+            }
           }
+        });
+
+        if (!quizCompleted) {
+          _questionAnimationController.forward();
         }
       });
-
-      if (!quizCompleted) {
-        _questionAnimationController.forward();
-      }
     });
   }
 
@@ -136,6 +140,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       showSpinWheel = false;
       hasSpun = false;
       lastSpinResult = null;
+      selectedAnswer = null;
     });
     loadQuestions();
   }
@@ -258,7 +263,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       body: SafeArea(
         child: Column(
           children: [
-            _buildAppBar(),
+            _buildAppBar(context),
             Expanded(
               child: quizCompleted
                   ? (showSpinWheel ? _buildSpinWheel() : _buildResultScreen())
@@ -270,45 +275,27 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildAppBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
+  Widget _buildAppBar(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.deepPurple, // Make status bar color deep purple
+      statusBarIconBrightness: Brightness.light, // White icons
+    ));
+    return AppBar(
+      elevation: 0,
+      iconTheme: const IconThemeData(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        weight: 900,
+        size: 26,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Healthcare Quiz',
-            style: AppTextStyles.heading.copyWith(
-              color: AppColors.deepPurple,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.deepPurple.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Text(
-              'Day 1',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Raleway',
-                color: AppColors.deepPurple,
-              ),
-            ),
-          ),
-        ],
+      title: Text(
+        'Healthcare Quiz', // Updated title
+        style: AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+      ),
+      backgroundColor: AppColors.deepPurple,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
       ),
     );
   }
@@ -325,8 +312,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              _buildProgressIndicator(),
-              const SizedBox(height: 10),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -334,7 +320,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     'Question ${currentQuestionIndex + 1}/${currentQuestions.length}',
                     style: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                       fontFamily: 'Raleway',
                       color: AppColors.deepPurple,
                     ),
@@ -363,41 +349,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildProgressIndicator() {
-    // Fixed progress indicator to avoid infinite width constraint
-    if (currentQuestions.isEmpty) {
-      return Container(
-        height: 8,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppColors.deepPurple.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(10),
-        ),
-      );
-    }
-
-    double progress = (currentQuestionIndex + 1) / currentQuestions.length;
-
-    return Container(
-      height: 8,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.deepPurple.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return Container(
-            width: constraints.maxWidth * progress,
-            decoration: BoxDecoration(
-              color: AppColors.deepPurple,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   Widget _buildQuestionCard() {
     return Card(
@@ -465,13 +416,23 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildOptionCard(String option, int index) {
+    bool isSelected = selectedAnswer == option;
+    bool isCorrectAnswer = option == currentQuestions[currentQuestionIndex].answer;
+
+    Color cardColor;
+    if (isSelected) {
+      cardColor = isCorrect ? Colors.green : Colors.red;
+    } else {
+      cardColor = Colors.white;
+    }
+
     return InkWell(
       onTap: () => checkAnswer(option),
       borderRadius: BorderRadius.circular(15),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -532,6 +493,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             style: TextStyle(
               fontSize: 18,
               fontFamily: 'Raleway',
+              fontWeight: FontWeight.w700,
               color: AppColors.deepPurple.withOpacity(0.8),
             ),
           ),
@@ -574,7 +536,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           const SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: resetQuiz,
-            icon: const Icon(Icons.refresh_rounded),
+            icon: const Icon(Icons.refresh_rounded,color: Colors.white,),
             label: Text('Restart Quiz', style: AppTextStyles.whiteHeading.copyWith(fontSize: 18)),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.deepPurple,

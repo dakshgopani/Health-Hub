@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:google_mlkit_barcode_scanning/google_mlkit_barcode_scanning.dart'
     as ml_kit;
 import 'dart:ui';
+import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
 import 'waiting_room.dart';
 
 class ScanQRCodeScreen extends StatefulWidget {
@@ -30,15 +32,23 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEDECF4),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Scan QR Code for Donation",
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway', // Applying Raleway font
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        title: Text(
+          'Scan QR Code for Donation',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+        backgroundColor: AppColors.deepPurple,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
           ),
         ),
       ),
@@ -631,7 +641,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 20),
                                   ),
-                                  child: const Text("Confirm Donation"),
+                                  child: const Text("Confirm Donation",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
                                 ),
 
                               // Only allow users to join the waiting room if scannedCount >= requiredQuantity AND they haven’t donated yet
@@ -696,7 +706,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 20),
                                   ),
-                                  child: const Text("Join Waiting Room"),
+                                  child: const Text("Join Waiting Room",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
                                 ),
 
                               // Cancel Button
@@ -713,7 +723,7 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 20),
                                 ),
-                                child: const Text("Cancel"),
+                                child: const Text("Cancel",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
                               ),
                             ],
                           ),

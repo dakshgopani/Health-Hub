@@ -202,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               const SizedBox(height: 30),
               const Text(
-                'Heyy there 👋',
+                'Hey there 👋',
                 style: TextStyle(
                   fontSize: 24,
                   fontFamily: 'Raleway',
@@ -315,8 +315,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: const Text(
                       'Login',
                       style: TextStyle(
-                        color: Color(0xFF6B4CE6),
+                        color: Color(0xFF432C81),
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Raleway',
                       ),
                     ),
                   ),

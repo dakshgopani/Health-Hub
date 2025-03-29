@@ -28,17 +28,21 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   List<List<ChatMessage>> _previousChats = [];
 
   @override
+  @override
   void initState() {
     super.initState();
     _initializeGemini();
-    _loadPreviousChats();
     _typingController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
     )..repeat(reverse: true);
     _speech = stt.SpeechToText();
     _initializeTts();
-    _addInitialMessage();
+    _loadPreviousChats().then((_) {
+      if (_messages.isEmpty) {
+        _addInitialMessage(); // Add greeting only if no messages exist
+      }
+    });
   }
 
   @override
@@ -163,7 +167,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
           _speakResponse(responseText);
         });
       }
-      // Remove _saveCurrentChat() from here
+      _saveCurrentChat(); // Save current chat after every message
     } catch (e) {
       _handleError("Error: ${e.toString()}");
     }
@@ -250,6 +254,12 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   Future<void> _saveCurrentChat() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (_messages.isNotEmpty) {
+      if (_previousChats.isEmpty || _previousChats[0] != _messages) {
+        _previousChats.insert(0, List.from(_messages));
+        if (_previousChats.length > 10) _previousChats.removeLast();
+      } else {
+        _previousChats[0] = List.from(_messages);
+      }
       List<String> chats = _previousChats.map((chat) {
         return jsonEncode(chat.map((msg) => msg.toJson()).toList());
       }).toList();
@@ -268,8 +278,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
               .map((msg) => ChatMessage.fromJson(msg, _typingController))
               .toList();
         }).toList();
-        // Only load messages if there's no current chat
-        if (_messages.isEmpty && _previousChats.isNotEmpty) {
+        if (_previousChats.isNotEmpty) {
           _messages.addAll(_previousChats[0]);
         }
       });
@@ -279,18 +288,15 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   void _startNewChat() {
     setState(() {
       if (_messages.isNotEmpty) {
-        // Save current chat only when starting new chat
         _previousChats.insert(0, List.from(_messages));
-        if (_previousChats.length > 10) _previousChats.removeLast();
         _saveCurrentChat();
       }
       _messages.clear();
       _addInitialMessage();
-      _chat = _model.startChat(history: []); // Reset chat context
+      _chat = _model.startChat(history: []);
     });
   }
 
-// Update _handleSubmitted to remove the save call
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -323,7 +329,6 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
           ),
         ],
       ),
-      drawer: _buildDrawer(),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -343,87 +348,6 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
               ),
             ),
             _buildInputArea(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDrawer() {
-    return Drawer(
-      child: Container(
-        color: Colors.white,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFF8E77FF), Color(0xFFAA99FF)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.medical_services, size: 48, color: Colors.white),
-                  SizedBox(height: 12),
-                  Text(
-                    "Chat History",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ...List.generate(_previousChats.length, (i) {
-              return ListTile(
-                leading: const Icon(Icons.chat, color: Color(0xFF8E77FF)),
-                title: Text(
-                  "Chat ${i + 1} - ${_previousChats[i].first.text.length > 10 ? _previousChats[i].first.text.substring(0, 10) + '...' : _previousChats[i].first.text}",
-                  style: const TextStyle(
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                ),
-                onTap: () {
-                  setState(() {
-                    _messages.clear();
-                    _messages.addAll(_previousChats[i]);
-                    _chat = _model.startChat(
-                        history: _previousChats[i]
-                            .map((msg) => Content(msg.isUser ? 'user' : 'model',
-                            [TextPart(msg.text)]))
-                            .toList());
-                  });
-                  Navigator.pop(context);
-                },
-                hoverColor: Colors.grey[100],
-              );
-            }),
-            ListTile(
-              leading: const Icon(Icons.add, color: Color(0xFF8E77FF)),
-              title: const Text(
-                "Start New Chat",
-                style: TextStyle(
-                  fontFamily: 'Raleway',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              onTap: () {
-                _startNewChat();
-                Navigator.pop(context);
-              },
-              hoverColor: Colors.grey[100],
-            ),
           ],
         ),
       ),

@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       "Sign Up",
                       style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
                         fontFamily: 'Raleway',
                       ),
@@ -95,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       "Login",
                       style: TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                           color: Color(0xFF432C81),
                           fontFamily: 'Raleway'),
                     ),

@@ -73,18 +73,28 @@ class CategoryScreen extends StatelessWidget {
     };
 
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
-        title: const Text(
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        title: Text(
           'Select Category',
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Raleway',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+
+        backgroundColor: AppColors.deepPurple,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
           ),
         ),
-        backgroundColor: AppColors.deepPurple,
-        elevation: 0,
+
       ),
       body: FutureBuilder<CategoryResponse>(
         future: apiService.getCategories(),
@@ -263,19 +273,25 @@ class _SymptomScreenState extends State<SymptomScreen>
     ApiService apiService = Provider.of<ApiService>(context);
 
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
-        title: const Text('Answer Symptoms',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
-              fontFamily: 'Raleway',
-            )),
-        backgroundColor: AppColors.deepPurple,
+        centerTitle: true,
         elevation: 0,
-        // 🔹 Set the back button color here
+        title: Text(
+          'Answer Symptoms',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+        backgroundColor: AppColors.deepPurple,
         iconTheme: const IconThemeData(
-          color: Colors.white, // Change this to any color
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
         ),
       ),
       body: FutureBuilder<SymptomResponse>(
@@ -566,12 +582,14 @@ class PredictionResult extends StatelessWidget {
                         ),
                       )),
                   const SizedBox(height: 16),
-                  Text('Questions Remaining: ${response.questionsRemaining}',style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Raleway',
-
-                  ),),
+                  Text(
+                    'Questions Remaining: ${response.questionsRemaining}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Raleway',
+                    ),
+                  ),
                   if (response.shouldStop)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
@@ -586,9 +604,10 @@ class PredictionResult extends StatelessWidget {
             const SizedBox(height: 24),
             const Text(
               'Prediction Breakdown',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
                 fontFamily: 'Raleway',
-
               ),
             ),
             const SizedBox(height: 16),
@@ -628,7 +647,8 @@ class PredictionResult extends StatelessWidget {
                           return Text(
                             '${value.toInt()}%',
                             style: TextStyle(
-                                fontSize: 12, color: Colors.grey[700],
+                              fontSize: 12,
+                              color: Colors.grey[700],
                               fontFamily: 'Raleway',
                               fontWeight: FontWeight.w700,
                             ),
@@ -650,10 +670,10 @@ class PredictionResult extends StatelessWidget {
                               child: Text(
                                 capitalize(title),
                                 style: TextStyle(
-                                    fontSize: 12, color: Colors.grey[800],
+                                  fontSize: 12,
+                                  color: Colors.grey[800],
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Raleway',
-
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -688,7 +708,8 @@ class PredictionResult extends StatelessWidget {
                         return BarTooltipItem(
                           '${(rod.toY).toStringAsFixed(1)}%',
                           const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                             fontFamily: 'Raleway',
                           ),
                         );
