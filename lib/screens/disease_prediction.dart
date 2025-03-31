@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:fl_chart/fl_chart.dart'; // For bar chart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import '../api/disease_prediction_api_service.dart';
 import '../models/category_response.dart';
 import '../models/symptom_response.dart';
@@ -49,6 +50,9 @@ class DiseasePredictionPage extends StatelessWidget {
 }
 
 class CategoryScreen extends StatelessWidget {
+  final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+  final String userName = FirebaseAuth.instance.currentUser?.displayName ?? '';
+  final String userEmail = FirebaseAuth.instance.currentUser!.email ?? "Email";
   @override
   Widget build(BuildContext context) {
     ApiService apiService = Provider.of<ApiService>(context);
@@ -73,28 +77,9 @@ class CategoryScreen extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-          weight: 900,
-          size: 26,
-        ),
-        title: Text(
-          'Select Category',
-          style:
-              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
-        ),
-
-        backgroundColor: AppColors.deepPurple,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
-
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: _buildHeader(context),
       ),
       body: FutureBuilder<CategoryResponse>(
         future: apiService.getCategories(),
@@ -151,7 +136,7 @@ class CategoryScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 35,
                           backgroundColor:
-                              AppColors.deepPurple.withOpacity(0.1),
+                          AppColors.deepPurple.withOpacity(0.1),
                           child: Icon(
                             diseaseIcons[category] ?? FontAwesomeIcons.question,
                             size: 32,
@@ -162,7 +147,10 @@ class CategoryScreen extends StatelessWidget {
                         Text(
                           category,
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.body.copyWith(fontSize: 14),
+                          style: AppTextStyles.body.copyWith(
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -173,6 +161,39 @@ class CategoryScreen extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    // Set the status bar color to match AppBar
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: AppColors.deepPurple, // Make status bar color deep purple
+      statusBarIconBrightness: Brightness.light, // White icons
+    ));
+    return AppBar(
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+        weight: 900,
+        size: 26,
+      ),
+      title: const Text(
+        'Select Category',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          fontFamily: 'Raleway',
+        ),
+      ),
+      backgroundColor: AppColors.deepPurple,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+        ),
+      ),
+
     );
   }
 }
@@ -198,13 +219,19 @@ class _SymptomScreenState extends State<SymptomScreen>
   Map<String, Map<String, String>> symptomDetails = {};
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+        vsync: this, duration: const Duration(milliseconds: 600));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
     _controller.forward();
   }
 
@@ -219,13 +246,22 @@ class _SymptomScreenState extends State<SymptomScreen>
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 8,
           child: Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                ),
+              ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -233,30 +269,45 @@ class _SymptomScreenState extends State<SymptomScreen>
                 Text(
                   'Meaning of $symptom',
                   style: const TextStyle(
-                    fontFamily: 'Raleway',
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
+                    fontFamily: 'Raleway',
+                    color: AppColors.textPurple,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 Text(
                   meaning ?? 'No meaning available.',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey[700],
                     fontFamily: 'Raleway',
+                    height: 1.5,
                     fontWeight: FontWeight.w700,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.deepPurple,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    elevation: 3,
+                  ),
                   child: const Text(
                     'Close',
                     style: TextStyle(
+                      fontSize: 16,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -273,37 +324,85 @@ class _SymptomScreenState extends State<SymptomScreen>
     ApiService apiService = Provider.of<ApiService>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          'Answer Symptoms',
-          style:
-              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
-        ),
-        backgroundColor: AppColors.deepPurple,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-          weight: 900,
-          size: 26,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
+      backgroundColor: AppColors.backgroundPurple,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: _buildHeader(context),
       ),
       body: FutureBuilder<SymptomResponse>(
         future: apiService.getInitialSymptoms(widget.category),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: CircularProgressIndicator(color: Color(0xFF8b5cf6)));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(
+                    color: AppColors.deepPurple,
+                    strokeWidth: 3,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Loading symptoms...',
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ],
+              ),
+            );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 60,
+                      color: Colors.red[400],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Error: ${snapshot.error}',
+                      style: const TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
           } else if (!snapshot.hasData || snapshot.data!.symptoms.isEmpty) {
-            return const Center(child: Text('No symptoms found.'));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.healing_outlined,
+                    size: 60,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'No symptoms found for this category.',
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            );
           } else {
             if (symptoms.isEmpty) {
               symptoms = snapshot.data!.symptoms;
@@ -324,13 +423,63 @@ class _SymptomScreenState extends State<SymptomScreen>
                 future: apiService.predictDisease(input),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                            color: Color(0xFF8b5cf6)));
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircularProgressIndicator(
+                            color: AppColors.deepPurple,
+                            strokeWidth: 3,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Analyzing your symptoms...',
+                            style: TextStyle(
+                              fontFamily: 'Raleway',
+                              fontSize: 16,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              size: 60,
+                              color: Colors.red[400],
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Error: ${snapshot.error}',
+                              style: const TextStyle(
+                                fontFamily: 'Raleway',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
                   } else if (!snapshot.hasData) {
-                    return const Center(child: Text('No prediction result.'));
+                    return const Center(
+                      child: Text(
+                        'No prediction result.',
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
                   } else {
                     PredictionResponse response = snapshot.data!;
                     return PredictionResult(response: response);
@@ -342,108 +491,235 @@ class _SymptomScreenState extends State<SymptomScreen>
             String currentSymptom = capitalize(symptoms[currentSymptomIndex]);
             return FadeTransition(
               opacity: _fadeAnimation,
-              child: FutureBuilder<Map<String, String>>(
-                future: apiService.fetchSymptomDetails(currentSymptom),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: FutureBuilder<Map<String, String>>(
+                  future: apiService.fetchSymptomDetails(currentSymptom),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
                         child: CircularProgressIndicator(
-                            color: Color(0xFF8b5cf6)));
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData) {
-                    return Center(
-                        child: Text('No details found for $currentSymptom.'));
-                  } else {
-                    symptomDetails[currentSymptom] = snapshot.data!;
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _showMeaningDialog(
-                                  currentSymptom,
-                                  symptomDetails[currentSymptom]!['meaning'],
-                                );
-                              },
-                              child: Text.rich(
-                                TextSpan(
-                                  text: 'Do you have ', // Regular text
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Raleway',
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: currentSymptom,
-                                      // Underlined text (Dynamic variable)
-                                      style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Raleway',
-                                        decoration: TextDecoration
-                                            .underline, // Underline applied
-                                      ),
+                          color: AppColors.deepPurple,
+                          strokeWidth: 3,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: const TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return Center(
+                        child: Text(
+                          'No details found for $currentSymptom.',
+                          style: const TextStyle(
+                            fontFamily: 'Raleway',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      );
+                    } else {
+                      symptomDetails[currentSymptom] = snapshot.data!;
+                      return SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(32),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(24),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                      AppColors.deepPurple.withOpacity(0.1),
+                                      blurRadius: 20,
+                                      spreadRadius: 1,
+                                      offset: const Offset(0, 4),
                                     ),
-                                    const TextSpan(text: '?'),
-                                    // Regular text again
                                   ],
                                 ),
-                                textAlign: TextAlign.center,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Question ${20 - remainingQuestions + 1} of 20',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Raleway',
+                                        color: Colors.grey[600],
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    GestureDetector(
+                                      onTap: () {
+                                        _showMeaningDialog(
+                                          currentSymptom,
+                                          symptomDetails[currentSymptom]![
+                                          'meaning'],
+                                        );
+                                      },
+                                      child: Text.rich(
+                                        TextSpan(
+                                          text: 'Do you have ',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            fontFamily: 'Raleway',
+                                            color: Colors.grey[700],
+                                            fontWeight: FontWeight.bold,
+                                            height: 1.4,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: currentSymptom,
+                                              style: const TextStyle(
+                                                fontSize: 24,
+                                                fontFamily: 'Raleway',
+                                                color: AppColors.deepPurple,
+                                                fontWeight: FontWeight.bold,
+                                                decoration:
+                                                TextDecoration.underline,
+                                              ),
+                                            ),
+                                            const TextSpan(text: '?'),
+                                          ],
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '(Tap the symptom for more information)',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontFamily: 'Raleway',
+                                          color: Colors.grey[500],
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    const SizedBox(height: 40),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        _buildResponseButton(
+                                          text: 'Yes',
+                                          isPositive: true,
+                                          onPressed: () async {
+                                            await handleSymptomResponse(
+                                                apiService, true);
+                                            _controller.reset();
+                                            _controller.forward();
+                                          },
+                                        ),
+                                        const SizedBox(width: 24),
+                                        _buildResponseButton(
+                                          text: 'No',
+                                          isPositive: false,
+                                          onPressed: () async {
+                                            await handleSymptomResponse(
+                                                apiService, false);
+                                            _controller.reset();
+                                            _controller.forward();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 32),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    await handleSymptomResponse(
-                                        apiService, true);
-                                    _controller.reset();
-                                    _controller.forward();
-                                  },
-                                  child: const Text('Yes',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Raleway',
-                                      )),
-                                ),
-                                const SizedBox(width: 16),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    await handleSymptomResponse(
-                                        apiService, false);
-                                    _controller.reset();
-                                    _controller.forward();
-                                  },
-                                  child: const Text('No',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Raleway',
-                                      )),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 32),
-                            if (predictionResponse != null)
-                              PredictionResult(response: predictionResponse!),
-                          ],
+                              const SizedBox(height: 32),
+                              if (predictionResponse != null)
+                                PredictionResult(response: predictionResponse!),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                },
+                      );
+                    }
+                  },
+                ),
               ),
             );
           }
         },
+      ),
+    );
+  }
+
+  Widget _buildResponseButton({
+    required String text,
+    required bool isPositive,
+    required VoidCallback onPressed,
+  }) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isPositive ? AppColors.deepPurple : Colors.white,
+        foregroundColor: isPositive ? Colors.white : AppColors.deepPurple,
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+          side: isPositive
+              ? BorderSide.none
+              : const BorderSide(color: AppColors.deepPurple, width: 2),
+        ),
+        elevation: isPositive ? 4 : 0,
+        shadowColor: isPositive
+            ? AppColors.deepPurple.withOpacity(0.5)
+            : Colors.transparent,
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 18,
+          fontFamily: 'Raleway',
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    // Set the status bar color to match AppBar
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: AppColors.deepPurple,
+      statusBarIconBrightness: Brightness.light,
+    ));
+    return AppBar(
+      elevation: 0,
+      centerTitle: true,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+        weight: 900,
+        size: 26,
+      ),
+      title: const Text(
+        'Answer Symptoms',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          fontFamily: 'Raleway',
+        ),
+      ),
+      backgroundColor: AppColors.deepPurple,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(30),
+        ),
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
@@ -459,7 +735,7 @@ class _SymptomScreenState extends State<SymptomScreen>
         .map((e) => SymptomAnswer(symptom: e.key, answer: e.value))
         .toList();
     PredictionInput input =
-        PredictionInput(category: widget.category, currentSymptoms: answers);
+    PredictionInput(category: widget.category, currentSymptoms: answers);
 
     PredictionResponse response = await apiService.predictDisease(input);
     setState(() {
@@ -518,108 +794,264 @@ class _SymptomScreenState extends State<SymptomScreen>
   }
 }
 
-class PredictionResult extends StatelessWidget {
+class PredictionResult extends StatefulWidget {
   final PredictionResponse response;
 
   PredictionResult({required this.response});
 
   @override
+  _PredictionResultState createState() => _PredictionResultState();
+}
+
+class _PredictionResultState extends State<PredictionResult>
+    with SingleTickerProviderStateMixin {
+  Map<String, String>? diseaseDetails;
+  bool isLoadingDetails = true;
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+    _slideAnimation = Tween<double>(begin: 50.0, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+    );
+    _fetchDiseaseDetails();
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _fetchDiseaseDetails() async {
+    ApiService apiService = Provider.of<ApiService>(context, listen: false);
+    try {
+      final details = await apiService
+          .generateDiseaseDetails(widget.response.predictedDisease);
+      setState(() {
+        diseaseDetails = details;
+        isLoadingDetails = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoadingDetails = false;
+      });
+      print('Error fetching disease details: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _fadeAnimation.value,
+          child: Transform.translate(
+            offset: Offset(0, _slideAnimation.value),
+            child: child,
+          ),
+        );
+      },
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              padding: const EdgeInsets.all(16),
+            Container(
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(color: Colors.grey[300]!, blurRadius: 8)],
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.deepPurple.withOpacity(0.1),
+                    blurRadius: 20,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Predicted Disease: ${response.predictedDisease}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Raleway',
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.veryLightPurple,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Icon(
+                          Icons.medical_information_outlined,
+                          color: AppColors.deepPurple,
+                          size: 28,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Predicted Disease',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Raleway',
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              capitalize(widget.response.predictedDisease),
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontFamily: 'Raleway',
+                                color: AppColors.textPurple,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Confidence: ${(response.confidence * 100).toStringAsFixed(2)}%',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF8b5cf6),
-                      fontFamily: 'Raleway',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
+                  _buildConfidenceIndicator(widget.response.confidence),
+                  const SizedBox(height: 24),
                   const Text(
                     'Top Predictions:',
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                       fontFamily: 'Raleway',
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPurple,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  ...response.topPredictions.map((prediction) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Text(
-                          '${capitalize(prediction.keys.first)}: ${(prediction.values.first * 100).toStringAsFixed(2)}%',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                  const SizedBox(height: 16),
+                  ...widget.response.topPredictions.map((prediction) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: _buildPredictionItem(
+                      disease: prediction.keys.first,
+                      confidence: prediction.values.first,
+                    ),
+                  )),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: AppColors.veryLightPurple,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Questions Remaining:',
+                          style: TextStyle(
+                            fontSize: 14,
                             fontFamily: 'Raleway',
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey[700],
                           ),
                         ),
-                      )),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Questions Remaining: ${response.questionsRemaining}',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Raleway',
+                        Text(
+                          '${widget.response.questionsRemaining}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Raleway',
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.deepPurple,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  if (response.shouldStop)
+                  if (widget.response.shouldStop)
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        'Reason to Stop: ${response.reasonToStop}',
-                        style: const TextStyle(fontSize: 16, color: Colors.red),
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.red[50],
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.red[200]!,
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              color: Colors.red[400],
+                              size: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Reason to Stop: ${widget.response.reasonToStop}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Raleway',
+                                  color: Colors.red[700],
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             const Text(
               'Prediction Breakdown',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
                 fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPurple,
               ),
             ),
             const SizedBox(height: 16),
             Container(
-              height: 300, // Increased height for better visibility
+              height: 350,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.deepPurple.withOpacity(0.1),
+                    blurRadius: 20,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
                   maxY: 100,
-                  // Set max Y to 100 for percentage clarity
-                  barGroups:
-                      response.topPredictions.asMap().entries.map((entry) {
+                  barGroups: widget.response.topPredictions
+                      .asMap()
+                      .entries
+                      .map((entry) {
                     int index = entry.key;
                     var prediction = entry.value;
                     String disease = prediction.keys.first;
@@ -629,10 +1061,18 @@ class PredictionResult extends StatelessWidget {
                       barRods: [
                         BarChartRodData(
                           toY: confidence,
-                          color: const Color(0xFF8b5cf6).withOpacity(
-                              0.8 + (index * 0.1)), // Gradient effect
-                          width: 20, // Wider bars
-                          borderRadius: BorderRadius.circular(6),
+                          color: index == 0
+                              ? AppColors.deepPurple
+                              : AppColors.lightPurple.withOpacity(
+                            1.0 - (index * 0.2),
+                          ),
+                          width: 22,
+                          borderRadius: BorderRadius.circular(8),
+                          backDrawRodData: BackgroundBarChartRodData(
+                            show: true,
+                            toY: 100,
+                            color: Colors.grey[200],
+                          ),
                         ),
                       ],
                       showingTooltipIndicators: [0],
@@ -644,13 +1084,16 @@ class PredictionResult extends StatelessWidget {
                         showTitles: true,
                         reservedSize: 40,
                         getTitlesWidget: (value, meta) {
-                          return Text(
-                            '${value.toInt()}%',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[700],
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.w700,
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text(
+                              '${value.toInt()}%',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Raleway',
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           );
                         },
@@ -659,23 +1102,25 @@ class PredictionResult extends StatelessWidget {
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 60, // Increased for rotated text
+                        reservedSize: 70,
                         getTitlesWidget: (value, meta) {
-                          String title =
-                              response.topPredictions[value.toInt()].keys.first;
+                          String title = widget.response
+                              .topPredictions[value.toInt()].keys.first;
                           return Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
+                            padding: const EdgeInsets.only(top: 12.0),
                             child: Transform.rotate(
-                              angle: -45 * 3.14159 / 180, // Rotate 45 degrees
+                              angle: -45 * 3.14159 / 180,
                               child: Text(
                                 capitalize(title),
                                 style: TextStyle(
                                   fontSize: 12,
+                                  fontFamily: 'Raleway',
                                   color: Colors.grey[800],
                                   fontWeight: FontWeight.w700,
-                                  fontFamily: 'Raleway',
                                 ),
                                 textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           );
@@ -689,21 +1134,22 @@ class PredictionResult extends StatelessWidget {
                   ),
                   borderData: FlBorderData(
                     show: true,
-                    border: Border.all(color: Colors.grey[300]!, width: 1),
+                    border: Border.all(color: Colors.grey[200]!, width: 1),
                   ),
                   gridData: FlGridData(
                     show: true,
                     drawHorizontalLine: true,
                     getDrawingHorizontalLine: (value) => FlLine(
-                      color: Colors.grey[300],
+                      color: Colors.grey[200],
                       strokeWidth: 1,
+                      dashArray: [5, 5],
                     ),
                   ),
                   barTouchData: BarTouchData(
                     enabled: true,
                     touchTooltipData: BarTouchTooltipData(
-                      getTooltipColor: (_) => Colors.black.withOpacity(0.8),
-                      // Function returning color
+                      getTooltipColor: (_) =>
+                          AppColors.deepPurple.withOpacity(0.8),
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
                         return BarTooltipItem(
                           '${(rod.toY).toStringAsFixed(1)}%',
@@ -719,8 +1165,233 @@ class PredictionResult extends StatelessWidget {
                 ),
               ),
             ),
+            if (widget.response.shouldStop) ...[
+              const SizedBox(height: 32),
+              const Text(
+                'Disease Details',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPurple,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.deepPurple.withOpacity(0.1),
+                      blurRadius: 20,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: isLoadingDetails
+                    ? Center(
+                  child: Column(
+                    children: [
+                      const CircularProgressIndicator(
+                        color: AppColors.deepPurple,
+                        strokeWidth: 3,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Loading disease details...',
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                    : diseaseDetails != null
+                    ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: diseaseDetails!.entries.map((entry) {
+                    return Padding(
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.veryLightPurple,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              entry.key,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textPurple,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            entry.value,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              color: Colors.grey[800],
+                              fontWeight: FontWeight.w700,
+                              height: 1.6,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                )
+                    : Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: Colors.red[300],
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Failed to load disease details.',
+                        style: TextStyle(
+                          fontFamily: 'Raleway',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildConfidenceIndicator(double confidence) {
+    final percentage = (confidence * 100).toStringAsFixed(1);
+    final color = confidence > 0.7
+        ? Colors.green[700]
+        : confidence > 0.4
+        ? Colors.orange[700]
+        : Colors.red[700];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Confidence Level',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              '$percentage%',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Stack(
+          children: [
+            Container(
+              height: 10,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            Container(
+              height: 10,
+              width: MediaQuery.of(context).size.width * confidence * 0.7,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: color!.withOpacity(0.3),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPredictionItem(
+      {required String disease, required double confidence}) {
+    final percentage = (confidence * 100).toStringAsFixed(1);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              capitalize(disease),
+              style: const TextStyle(
+                fontSize: 14,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.w700,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.veryLightPurple,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              '$percentage%',
+              style: const TextStyle(
+                fontSize: 14,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+                color: AppColors.deepPurple,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -728,7 +1399,8 @@ class PredictionResult extends StatelessWidget {
   String capitalize(String symptom) {
     return symptom
         .split('_')
-        .map((word) => word[0].toUpperCase() + word.substring(1))
+        .map((word) =>
+    word.isNotEmpty ? word[0].toUpperCase() + word.substring(1) : '')
         .join(' ');
   }
 }

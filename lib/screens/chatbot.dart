@@ -301,6 +301,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF432C81), // Deep purple background
         title: const Text(
           "MediBot",
           style: TextStyle(
@@ -310,17 +311,18 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
             color: Colors.white,
           ),
         ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF8E77FF), Color(0xFFAA99FF)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+        centerTitle: true, // Centers the title
+
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white), // White back arrow
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
+
         elevation: 6,
         shadowColor: Colors.black.withOpacity(0.3),
+
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white),
@@ -328,8 +330,7 @@ class _HealthChatbotScreenState extends State<HealthChatbotScreen>
             tooltip: 'Start New Chat',
           ),
         ],
-      ),
-      body: Container(
+      ),      body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFFF5F7FA), Color(0xFFE2E7FF)],

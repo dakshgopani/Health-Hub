@@ -76,12 +76,19 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         // 🔹 Set the back button color here
         iconTheme: const IconThemeData(
-          color: Colors.white, // Change this to any color
+          color: Colors.white,
+          weight: 900,
+          size: 26,
         ),
-        title: Text('Enter Share Code', style: AppTextStyles.whiteHeading),
+        title: Text(
+          'Enter Share Code',
+          style: AppTextStyles.whiteHeading
+              .copyWith(fontWeight: FontWeight.w900, fontSize: 22),
+        ),
         backgroundColor: AppColors.deepPurple,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -104,14 +111,14 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                   color: AppColors.deepPurple.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.vpn_key,
                   size: 50,
                   color: AppColors.deepPurple,
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
+              const Text(
                 'Access Patient Records',
                 style: AppTextStyles.heading,
                 textAlign: TextAlign.center,
@@ -146,7 +153,7 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Share Code',
                       style: TextStyle(
                         fontSize: 16,
@@ -164,7 +171,7 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                           color: Colors.grey[400],
                           fontFamily: 'Raleway',
                         ),
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.qr_code,
                           color: AppColors.deepPurple,
                         ),
@@ -176,13 +183,13 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: AppColors.deepPurple,
                             width: 2,
                           ),
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Raleway',
@@ -204,7 +211,7 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                         ),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.error_outline,
                               color: Colors.red,
                               size: 20,
@@ -213,7 +220,7 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                             Expanded(
                               child: Text(
                                 _errorMessage!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.red,
                                   fontFamily: 'Raleway',
                                 ),
@@ -238,22 +245,22 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                           elevation: 0,
                         ),
                         child: _isLoading
-                            ? SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                            : Text(
-                          'Access Records',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Raleway',
-                          ),
-                        ),
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Access Records',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Raleway',
+                                ),
+                              ),
                       ),
                     ),
                   ],
@@ -270,7 +277,7 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline,
                       color: Colors.blue,
                     ),
@@ -282,7 +289,6 @@ class _DoctorCodeEntryScreenState extends State<DoctorCodeEntryScreen> {
                           color: Colors.blue[800],
                           fontFamily: 'Raleway',
                           fontWeight: FontWeight.w700,
-
                         ),
                       ),
                     ),

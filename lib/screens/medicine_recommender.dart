@@ -159,31 +159,38 @@ class _MedicineRecommenderState extends State<MedicineRecommender> {
       data: theme,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+            weight: 900,
+            size: 26,
+          ),
           title: const Text(
             "Medicine Recommender",
             style: TextStyle(
               fontSize: 22,
               fontFamily: 'Raleway',
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w900,
               color: Colors.white, // Ensures good contrast
             ),
           ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
           backgroundColor: effectiveDarkMode ? Colors.black : Colors.deepPurple,
-          elevation: 4, // Adds a slight shadow for better depth
           shadowColor: Colors.deepPurpleAccent.withOpacity(0.4),
           actions: [
             IconButton(
               icon: const Icon(Icons.bookmark, color: Colors.amber),
               onPressed: () => showBookmarkedSymptoms(),
               tooltip: "Bookmarked Symptoms",
-            ),
-            IconButton(
-              icon: Icon(
-                effectiveDarkMode ? Icons.light_mode : Icons.dark_mode,
-                color: Colors.white, // Ensures it matches the theme
-              ),
-              onPressed: toggleDarkMode,
-              tooltip: "Toggle Dark Mode",
             ),
           ],
         ),
@@ -921,7 +928,6 @@ class _MedicineRecommenderState extends State<MedicineRecommender> {
 
   Widget _buildBrandNames(dynamic brands, bool darkMode) {
     if (brands == null || brands.isEmpty) return const SizedBox();
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),

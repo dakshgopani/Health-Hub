@@ -61,6 +61,46 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
     }
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.info_outline, // Icon indicating info
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8), // Space between the icon and text
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold, // Make text bold for emphasis
+                  fontSize: 16, // Slightly larger font size
+                  fontFamily: 'Raleway',
+                ),
+                overflow: TextOverflow.ellipsis, // Prevent text overflow
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF432C81),
+        // Deep purple background
+        behavior: SnackBarBehavior.floating,
+        // Change to floating behavior
+        duration: const Duration(seconds: 3),
+        // Duration for the SnackBar
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+        margin: const EdgeInsets.all(16),
+        // Margin around the SnackBar
+        elevation: 6, // Slight elevation for a 3D effect
+      ),
+    );
+  }
+
+
   // Upload file to Pinata and save metadata to Firestore
   Future<void> _uploadFileToPinata() async {
     if (_selectedFile == null) return;
@@ -109,9 +149,8 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
           .collection('med_history')
           .add(metadata);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('File uploaded successfully')),
-      );
+      _showSnackBar("File uploaded Successfully!");
+
       setState(() {
         _selectedFile = null;
       });
@@ -233,8 +272,10 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
       statusBarIconBrightness: Brightness.light, // White icons
     ));
 
-    return Container( // `return` is correctly used here
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    return Container(
+
+      // `return` is correctly used here
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       decoration: const BoxDecoration(
         color: AppColors.deepPurple,
         borderRadius: BorderRadius.vertical(
@@ -251,11 +292,13 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
           ),
           const SizedBox(width: 10), // Avoids crowding
 
-          Expanded( // Ensures text takes available space without overflow
+          Expanded(
+            // Ensures text takes available space without overflow
             child: Text(
-              'Medical History',
+              '   Medical History',
               style: AppTextStyles.whiteHeading.copyWith(
                 fontWeight: FontWeight.w900,
+                fontSize: 22,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -288,14 +331,16 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
 
     for (int i = 0; i < fileName.length; i += maxCharsPerLine) {
       formatted += fileName.substring(
-        i,
-        i + maxCharsPerLine > fileName.length ? fileName.length : i + maxCharsPerLine,
-      ) + '\n';  // Add line break
+            i,
+            i + maxCharsPerLine > fileName.length
+                ? fileName.length
+                : i + maxCharsPerLine,
+          ) +
+          '\n'; // Add line break
     }
 
-    return formatted.trim();  // Remove extra new line at the end
+    return formatted.trim(); // Remove extra new line at the end
   }
-
 
   Widget _buildHistoryList(List<Map<String, dynamic>> history) {
     return ListView.builder(
@@ -363,7 +408,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                               color: Colors.grey,
                               fontSize: 14,
                               fontFamily: 'Raleway',
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
@@ -376,7 +421,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                             color: Colors.grey,
                             fontSize: 14,
                             fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       const SizedBox(height: 16),
@@ -387,7 +432,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                             color: Colors.grey,
                             fontSize: 14,
                             fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -396,22 +441,22 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                           runSpacing: 8,
                           children: (entry['symptoms'] as List)
                               .map((symptom) => Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              symptom,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontFamily: 'Raleway',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ))
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      symptom,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                        fontFamily: 'Raleway',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ))
                               .toList(),
                         ),
                       ] else ...[
@@ -434,7 +479,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                               color: Colors.blue,
                               fontSize: 14,
                               fontFamily: 'Raleway',
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
                               decoration: TextDecoration.underline,
                             ),
                           ),
@@ -469,10 +514,16 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
           Icon(Icons.history, size: 64, color: Colors.grey),
           SizedBox(height: 16),
           Text('No Medical History',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900,fontFamily: 'Raleway')),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Raleway')),
           SizedBox(height: 8),
           Text('Your medical history will appear here',
-              style: TextStyle(fontSize: 16,fontFamily: 'Raleway',fontWeight: FontWeight.w700)),
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.w700)),
         ],
       ),
     );
@@ -548,7 +599,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                   color: Colors.grey,
                   fontSize: 16,
                   fontFamily: 'Raleway',
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 8),
@@ -559,7 +610,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                     color: Colors.grey,
                     fontSize: 16,
                     fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               const SizedBox(height: 20),
@@ -579,21 +630,21 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                   runSpacing: 8,
                   children: (entry['symptoms'] as List)
                       .map((symptom) => Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF6B4EFF).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      symptom,
-                      style: const TextStyle(
-                        color: Color(0xFF6B4EFF),
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Raleway',
-                      ),
-                    ),
-                  ))
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF6B4EFF).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              symptom,
+                              style: const TextStyle(
+                                color: Color(0xFF6B4EFF),
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Raleway',
+                              ),
+                            ),
+                          ))
                       .toList(),
                 ),
               ] else ...[
@@ -615,7 +666,7 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
                       color: Colors.blue,
                       fontSize: 16,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                       decoration: TextDecoration.underline,
                     ),
                   ),

@@ -71,6 +71,7 @@ Future<List<Doctor>> loadDoctors() async {
       experience: int.parse(data[11].toString()),
       languages: data[12].toString(),
       appointmentLink: data[13].toString(),
+      gender: data[14].toString()
     );
   }).toList();
 
@@ -231,7 +232,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                           fontSize: 16,
                           color: Colors.grey[600],
                           fontFamily: 'Raleway',
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -253,7 +254,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
                   hintStyle: TextStyle(
                     color: Colors.grey[600],
                     fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                   prefixIcon: const Icon(Icons.search, color: Color(0xFF432C81)),
                   suffixIcon: searchController.text.isNotEmpty
@@ -291,7 +292,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[600],
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
               fontFamily: 'Raleway',
             ),
           ),
@@ -331,15 +332,23 @@ class _DoctorListScreenState extends State<DoctorListScreen>
 
   Widget _buildDoctorCard(int index) {
     final doctor = filteredDoctors[index];
+
+    // Determine gender-based image category
+    final String gender = (doctor.gender == "M") ? "men" : "women";
+
+    // Generate a random seed based on doctor's name for consistent image
+    final int imageSeed = doctor.name.hashCode.abs() % 100; // Limit to 0-99
+    final String randomImageUrl = "https://randomuser.me/api/portraits/$gender/$imageSeed.jpg";
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16), // Note: 'custom' seems like a typo; should be 'bottom' or another valid property
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 8,
             offset: const Offset(0, 2),
           ),
         ],
@@ -352,38 +361,150 @@ class _DoctorListScreenState extends State<DoctorListScreen>
             Navigator.push(
               context,
               PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => DoctorProfileScreen(doctor: doctor),
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    DoctorProfileScreen(
+                      doctor: doctor,
+                      imageUrl: randomImageUrl, // Pass the image URL
+                    ),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return FadeTransition(opacity: animation, child: child);
                 },
               ),
             );
-
           },
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Raleway',
-                      ),
-                      children: _highlightText(
-                        "${doctor.name} (${doctor.specialization})",
-                        searchQuery,
+                // Doctor Avatar with gender-specific random image
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(28),
+                  child: Container(
+                    width: 56,
+                    height: 56,
+                    child: Hero(
+                      tag: 'doctor_avatar_${doctor.doctorId}', // Unique tag
+                      child: Image.network(
+                        randomImageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Color(doctor.name.hashCode).withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(28),
+                            ),
+                            child: Center(
+                              child: Text(
+                                _getInitials(doctor.name),
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  fontFamily: 'Raleway',
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(28),
+                            ),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                    : null,
+                                strokeWidth: 2,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.black,
-                  size: 16,
+                const SizedBox(width: 16),
+                // Rest of the code remains unchanged
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Raleway',
+                          ),
+                          children: _highlightText(doctor.name, searchQuery),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                            fontFamily: 'Raleway',
+                            fontWeight: FontWeight.w700,
+                          ),
+                          children: _highlightText(doctor.specialization, searchQuery),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          _buildRatingStars(doctor.rating),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: _isAvailable(doctor)
+                                  ? Colors.green.withOpacity(0.1)
+                                  : Colors.orange.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              _isAvailable(doctor) ? 'Available Today' : 'Next Slot: Tomorrow',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: _isAvailable(doctor) ? Colors.green : Colors.orange,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'Raleway',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Theme.of(context).primaryColor,
+                      size: 16,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'View',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Raleway',
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -393,6 +514,62 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     );
   }
 
+// Helper function to get initials from name
+  String _getInitials(String name) {
+    List<String> nameParts = name.split(' ');
+    String initials = '';
+    if (nameParts.isNotEmpty) {
+      initials += nameParts[0][0];
+      if (nameParts.length > 1) {
+        initials += nameParts[1][0];
+      }
+    }
+    return initials.toUpperCase();
+  }
+
+// Helper function to build rating stars
+  Widget _buildRatingStars(double rating) {
+    int fullStars = rating.floor();
+    bool hasHalfStar = (rating - fullStars) >= 0.5;
+
+    return Row(
+      children: List.generate(5, (index) {
+        if (index < fullStars) {
+          return const Icon(Icons.star, color: Colors.amber, size: 16);
+        } else if (index == fullStars && hasHalfStar) {
+          return const Icon(Icons.star_half, color: Colors.amber, size: 16);
+        } else {
+          return const Icon(Icons.star_border, color: Colors.grey, size: 16);
+        }
+      }),
+    );
+  }
+
+// Generate a random but consistent rating based on doctor's name
+  double _generateRandomRating(String name) {
+    // Use the hash code of the name to generate a consistent random rating
+    final int hash = name.hashCode.abs();
+    // Generate a rating between 3.5 and 5.0
+    return 3.5 + (hash % 15) / 10;
+  }
+
+// Determine if doctor is available (if not specified in model)
+  bool _isAvailable(Doctor doctor) {
+    final DateTime now = DateTime.now();
+    final List<String> weekdays = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    final String currentDay = weekdays[now.weekday - 1];
+
+    final List<String> availableDays = doctor.daysAvailable.split(',').map((day) => day.trim()).toList();
+    return availableDays.contains(currentDay);
+  }
   List<TextSpan> _highlightText(String text, String query) {
     if (query.isEmpty) {
       return [TextSpan(text: text)];
@@ -431,3 +608,5 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     return spans;
   }
 }
+
+

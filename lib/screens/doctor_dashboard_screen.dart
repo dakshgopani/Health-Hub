@@ -47,7 +47,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         title: Text(
           'Doctor Dashboard',
           style:
-              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900,fontSize: 22),
         ),
         backgroundColor: AppColors.deepPurple,
         shape: const RoundedRectangleBorder(
@@ -348,13 +348,17 @@ class DoctorHistoryPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         // 🔹 Set the back button color here
         iconTheme: const IconThemeData(
           color: Colors.white, // Change this to any color
         ),
-        title: const Text('Patient Medical History',
-            style: AppTextStyles.whiteHeading),
+        title: Text('Patient Medical History',
+          style: AppTextStyles.whiteHeading.copyWith(
+            fontWeight: FontWeight.w900,
+            fontSize: 22,
+          ),),
         backgroundColor: AppColors.deepPurple,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(

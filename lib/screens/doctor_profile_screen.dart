@@ -8,8 +8,9 @@ import 'doctor_appointment_booking/appointment_booking.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final Doctor doctor;
+  final String imageUrl; // Add this to receive the image URL
 
-  const DoctorProfileScreen({Key? key, required this.doctor}) : super(key: key);
+  const DoctorProfileScreen({Key? key, required this.doctor, required this.imageUrl}) : super(key: key);
 
   @override
   _DoctorProfileScreenState createState() => _DoctorProfileScreenState();
@@ -173,17 +174,43 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
       children: [
         Center(
           child: Hero(
-            tag: 'doctor_avatar_${widget.doctor.doctorId}',
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: const Color(0xFF432C81),
-              child: Text(
-                widget.doctor.name[4].toUpperCase(),
-                style: const TextStyle(
-                    fontSize: 50,
-                    color: Colors.white,
-                    fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w700),
+            tag: 'doctor_avatar_${widget.doctor.doctorId}', // Unique tag matching _buildDoctorCard
+            child: ClipOval(
+              child: Container(
+                width: 100, // Adjusted size for profile page
+                height: 100,
+                child: Image.network(
+                  widget.imageUrl, // Use the passed imageUrl
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return CircleAvatar(
+                      radius: 50,
+                      backgroundColor: const Color(0xFF432C81),
+                      child: Text(
+                        widget.doctor.name[4].toUpperCase(), // Fallback to initial
+                        style: const TextStyle(
+                          fontSize: 50,
+                          color: Colors.white,
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[200],
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -205,7 +232,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
             fontSize: 18,
             color: Colors.grey[600],
             fontFamily: 'Raleway',
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
           textAlign: TextAlign.center,
         ),
@@ -249,7 +276,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
                   fontSize: 16,
                   color: Colors.grey[600],
                   fontFamily: 'Raleway',
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),

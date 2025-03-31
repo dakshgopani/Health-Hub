@@ -13,6 +13,7 @@ class Doctor {
   final int experience;
   final String languages;
   final String appointmentLink;
+  final String gender;
 
   Doctor({
     required this.doctorId,
@@ -29,5 +30,6 @@ class Doctor {
     required this.experience,
     required this.languages,
     required this.appointmentLink,
+    required this.gender,
   });
 }

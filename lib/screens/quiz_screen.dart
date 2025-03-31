@@ -16,6 +16,7 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   List<Question> allQuestions = [];
   List<Question> currentQuestions = [];
+  List<int> usedQuestionIndices = [];
   int currentQuestionIndex = 0;
   int score = 0;
   bool quizCompleted = false;
@@ -50,7 +51,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _selected = StreamController<int>.broadcast();
-    _confettiController = ConfettiController(duration: const Duration(seconds: 5));
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 5));
 
     _questionAnimationController = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -75,16 +77,41 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Future<void> loadQuestions() async {
     try {
-      String data = await rootBundle.loadString('assets/json/medicine_quiz_data.json');
+      String data =
+      await rootBundle.loadString('assets/json/medicine_quiz_data.json');
       List<dynamic> jsonResult = json.decode(data);
       allQuestions = jsonResult.map((q) => Question.fromJson(q)).toList();
-      allQuestions.shuffle(Random());
-      currentQuestions = allQuestions.take(10).toList();
+
+      // Filter out used questions
+      List<Question> availableQuestions = allQuestions
+          .asMap()
+          .entries
+          .where((entry) => !usedQuestionIndices.contains(entry.key))
+          .map((entry) => entry.value)
+          .toList();
+
+      // If all questions have been used, reset the used list
+      if (availableQuestions.isEmpty) {
+        usedQuestionIndices.clear();
+        availableQuestions = allQuestions;
+      }
+
+      // Shuffle and take 10 questions
+      availableQuestions.shuffle(Random());
+      currentQuestions = availableQuestions.take(10).toList();
+
+      // Add indices of selected questions to used list
+      currentQuestions.forEach((question) {
+        int index = allQuestions.indexOf(question);
+        if (!usedQuestionIndices.contains(index)) {
+          usedQuestionIndices.add(index);
+        }
+      });
+
       setState(() {});
       _questionAnimationController.forward();
     } catch (e) {
       print('Error loading questions: $e');
-      // For demo purposes, create some sample questions if loading fails
       allQuestions = List.generate(
         10,
             (index) => Question(
@@ -93,7 +120,30 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           answer: "Option A",
         ),
       );
-      currentQuestions = allQuestions;
+
+      // Handle sample questions similarly
+      List<Question> availableQuestions = allQuestions
+          .asMap()
+          .entries
+          .where((entry) => !usedQuestionIndices.contains(entry.key))
+          .map((entry) => entry.value)
+          .toList();
+
+      if (availableQuestions.isEmpty) {
+        usedQuestionIndices.clear();
+        availableQuestions = allQuestions;
+      }
+
+      availableQuestions.shuffle(Random());
+      currentQuestions = availableQuestions.take(10).toList();
+
+      currentQuestions.forEach((question) {
+        int index = allQuestions.indexOf(question);
+        if (!usedQuestionIndices.contains(index)) {
+          usedQuestionIndices.add(index);
+        }
+      });
+
       setState(() {});
       _questionAnimationController.forward();
     }
@@ -102,7 +152,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   void checkAnswer(String selectedAnswer) {
     setState(() {
       this.selectedAnswer = selectedAnswer;
-      isCorrect = selectedAnswer == currentQuestions[currentQuestionIndex].answer;
+      isCorrect =
+          selectedAnswer == currentQuestions[currentQuestionIndex].answer;
 
       if (isCorrect) {
         score++;
@@ -164,7 +215,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       _confettiController.play();
     }
 
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -178,7 +229,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   alignment: Alignment.center,
                   child: ConfettiWidget(
                     confettiController: _confettiController,
-                    blastDirectionality: BlastDirectionality.explosive, // Explode from center
+                    blastDirectionality: BlastDirectionality.explosive,
+                    // Explode from center
                     emissionFrequency: 0.08,
                     numberOfParticles: 50,
                     maxBlastForce: 20,
@@ -196,13 +248,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
               // Popup Dialog
               AlertDialog(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
                 backgroundColor: isWinner ? Colors.indigo[50] : Colors.red[50],
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      isWinner ? Icons.celebration_rounded : Icons.error_outline_rounded,
+                      isWinner
+                          ? Icons.celebration_rounded
+                          : Icons.error_outline_rounded,
                       color: isWinner ? Colors.indigo : Colors.red[800],
                       size: 32,
                     ),
@@ -211,7 +266,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                       isWinner ? 'Congratulations!' : 'Try Again',
                       style: TextStyle(
                         fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Raleway',
                         color: isWinner ? Colors.indigo : Colors.red[800],
                       ),
                     ),
@@ -222,28 +278,39 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      isWinner ? 'You won: ${rewards[index]}' : 'Please try again for another chance!',
+                      isWinner
+                          ? 'You won: ${rewards[index]}'
+                          : 'Please try again for another chance!',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black87,
+                        fontFamily: 'Raleway'
                       ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isWinner ? Colors.indigo : Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 24),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
-                        resetQuiz();
+                        Navigator.pop(context);
+
+
+                        // resetQuiz();
                       },
                       child: const Text(
                         'OK',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                     ),
                   ],
@@ -281,6 +348,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       statusBarIconBrightness: Brightness.light, // White icons
     ));
     return AppBar(
+      centerTitle: true,
       elevation: 0,
       iconTheme: const IconThemeData(
         color: Colors.white,
@@ -289,7 +357,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ),
       title: Text(
         'Healthcare Quiz', // Updated title
-        style: AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        style: AppTextStyles.whiteHeading
+            .copyWith(fontWeight: FontWeight.w900, fontSize: 22),
       ),
       backgroundColor: AppColors.deepPurple,
       shape: const RoundedRectangleBorder(
@@ -312,7 +381,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -326,7 +394,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: AppColors.deepPurple,
                       borderRadius: BorderRadius.circular(20),
@@ -348,7 +417,6 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       ),
     );
   }
-
 
   Widget _buildQuestionCard() {
     return Card(
@@ -398,9 +466,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
     List<String> options = currentQuestions[currentQuestionIndex].options;
 
-    return Expanded(
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(), // Disable GridView scrolling
+        shrinkWrap: true, // Allow GridView to size itself
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1.5,
@@ -417,7 +487,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
 
   Widget _buildOptionCard(String option, int index) {
     bool isSelected = selectedAnswer == option;
-    bool isCorrectAnswer = option == currentQuestions[currentQuestionIndex].answer;
+    bool isCorrectAnswer =
+        option == currentQuestions[currentQuestionIndex].answer;
 
     Color cardColor;
     if (isSelected) {
@@ -448,10 +519,11 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         ),
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 2.0),
             child: Text(
               option,
               textAlign: TextAlign.center,
+              softWrap: true,
               style: AppTextStyles.body.copyWith(
                 color: AppColors.deepPurple,
               ),
@@ -536,8 +608,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           const SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: resetQuiz,
-            icon: const Icon(Icons.refresh_rounded,color: Colors.white,),
-            label: Text('Restart Quiz', style: AppTextStyles.whiteHeading.copyWith(fontSize: 18)),
+            icon: const Icon(
+              Icons.refresh_rounded,
+              color: Colors.white,
+            ),
+            label: Text('Restart Quiz',
+                style: AppTextStyles.whiteHeading.copyWith(fontSize: 18)),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.deepPurple,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -569,6 +645,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           style: TextStyle(
             fontSize: 16,
             fontFamily: 'Raleway',
+            fontWeight: FontWeight.w700,
             color: AppColors.deepPurple.withOpacity(0.8),
           ),
         ),
@@ -600,7 +677,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             },
             items: List.generate(
               rewards.length,
-                  (index) => FortuneItem(
+              (index) => FortuneItem(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 40.0),
                   child: Text(
@@ -623,7 +700,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           ElevatedButton.icon(
             onPressed: autoSpinWheel,
             icon: const Icon(Icons.touch_app_rounded),
-            label: Text('Spin Now!', style: AppTextStyles.whiteHeading.copyWith(fontSize: 18)),
+            label: Text('Spin Now!',
+                style: AppTextStyles.whiteHeading.copyWith(fontSize: 18)),
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               backgroundColor: AppColors.deepPurple,

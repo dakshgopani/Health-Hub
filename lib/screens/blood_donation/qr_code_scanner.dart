@@ -641,7 +641,12 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 20),
                                   ),
-                                  child: const Text("Confirm Donation",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
+                                  child: const Text(
+                                    "Confirm Donation",
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontWeight: FontWeight.w700),
+                                  ),
                                 ),
 
                               // Only allow users to join the waiting room if scannedCount >= requiredQuantity AND they haven’t donated yet
@@ -706,7 +711,12 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 20),
                                   ),
-                                  child: const Text("Join Waiting Room",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
+                                  child: const Text(
+                                    "Join Waiting Room",
+                                    style: TextStyle(
+                                        fontFamily: 'Raleway',
+                                        fontWeight: FontWeight.w700),
+                                  ),
                                 ),
 
                               // Cancel Button
@@ -723,7 +733,12 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 20),
                                 ),
-                                child: const Text("Cancel",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700),),
+                                child: const Text(
+                                  "Cancel",
+                                  style: TextStyle(
+                                      fontFamily: 'Raleway',
+                                      fontWeight: FontWeight.w700),
+                                ),
                               ),
                             ],
                           ),
