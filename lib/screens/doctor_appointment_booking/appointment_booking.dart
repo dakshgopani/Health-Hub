@@ -9,9 +9,10 @@ import '../../services/payment_gateway.dart';
 class AppointmentBookingScreen extends StatefulWidget {
   final Doctor selectedDoctor;
   final double fee;
+  final String imageUrl;
 
   const AppointmentBookingScreen(
-      {Key? key, required this.selectedDoctor, required this.fee})
+      {Key? key, required this.selectedDoctor, required this.fee,required this.imageUrl})
       : super(key: key);
 
   @override
@@ -131,7 +132,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                     fontFamily: 'Raleway',
                     color: Color(0xFF432C81),
                     fontSize: 16,
-                    fontWeight: FontWeight.w600),
+                    fontWeight: FontWeight.w700),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -151,7 +152,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                       style: TextStyle(
                           fontFamily: 'Raleway',
                           fontSize: 16,
-                          fontWeight: FontWeight.w600)),
+                          fontWeight: FontWeight.w700)),
                 ),
                 TextButton(
                   onPressed: () {
@@ -165,11 +166,13 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                       );
                     }
                   },
-                  child: const Text('Confirm',
-                      style: TextStyle(
-                          fontFamily: 'Raleway',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600)),
+                  child: const Text(
+                    'Confirm',
+                    style: TextStyle(
+                        fontFamily: 'Raleway',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             );
@@ -180,13 +183,22 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
   }
 
   void _bookAppointment() async {
+    if (_selectedDate == null || _selectedTime == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a date and time before booking.'),
+        ),
+      );
+      return; // Stop execution if date or time is not selected
+    }
+
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       final String formattedDate =
-          "${_selectedDate?.day}/${_selectedDate?.month}/${_selectedDate?.year}";
+          "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}";
       final String formattedTime =
-          "${_selectedTime?.hour.toString().padLeft(2, '0')}:${_selectedTime?.minute.toString().padLeft(2, '0')}";
+          "${_selectedTime!.hour.toString().padLeft(2, '0')}:${_selectedTime!.minute.toString().padLeft(2, '0')}";
 
       if (_selectedPaymentMethod == 'Cash') {
         _confirmAppointment(formattedDate, formattedTime);
@@ -196,17 +208,56 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content:
-                Text('Please fill all fields and select a payment method.')),
+          content: Text('Please fill all fields and select a payment method.'),
+        ),
       );
     }
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.info_outline, // Icon indicating info
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8), // Space between the icon and text
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold, // Make text bold for emphasis
+                  fontSize: 16, // Slightly larger font size
+                  fontFamily: 'Raleway',
+                ),
+                maxLines: null, // Allow unlimited lines
+                softWrap: true, // Ensure wrapping of text
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF432C81),
+        // Deep purple background
+        behavior: SnackBarBehavior.floating,
+        // Change to floating behavior
+        duration: const Duration(seconds: 3),
+        // Duration for the SnackBar
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+        margin: const EdgeInsets.all(16),
+        // Margin around the SnackBar
+        elevation: 6, // Slight elevation for a 3D effect
+      ),
+    );
+  }
+
   void _confirmAppointment(String date, String time) async {
     if (_userEmail == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error: User email not found!')),
-      );
+      _showSnackBar('Error: User email not found!');
+
       return;
     }
 
@@ -219,10 +270,11 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
 
     try {
       await EmailService.sendEmail(_userEmail!, pdfFile);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Appointment confirmation sent to $_userEmail!')),
-      );
+      _showSnackBar('Appointment confirmation sent to $_userEmail!');
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //       content: Text('Appointment confirmation sent to $_userEmail!')),
+      // );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to send email: $e')),
@@ -266,7 +318,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
               style: const TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 16,
-                  fontWeight: FontWeight.w600)),
+                  fontWeight: FontWeight.w700)),
         ],
       ),
       value: method,
@@ -389,10 +441,15 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
           CircleAvatar(
             radius: 30,
             backgroundColor: const Color(0xFF432C81),
-            child: Text(
+            backgroundImage: widget.imageUrl != null && widget.imageUrl.isNotEmpty
+                ? NetworkImage(widget.imageUrl)
+                : null,
+            child: widget.imageUrl == null || widget.imageUrl.isEmpty
+                ? Text(
               widget.selectedDoctor.name[0].toUpperCase(),
               style: const TextStyle(fontSize: 24, color: Colors.white),
-            ),
+            )
+                : null,
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -403,7 +460,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                   widget.selectedDoctor.name,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w900,
                     fontFamily: 'Raleway',
                     color: Color(0xFF432C81),
                   ),
@@ -414,7 +471,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: 'Raleway',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w900,
                     color: Colors.grey[600],
                   ),
                 ),
@@ -425,7 +482,6 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen>
       ),
     );
   }
-
 
   Widget _buildDateTimePicker(String label, String value, VoidCallback onTap) {
     return InkWell(

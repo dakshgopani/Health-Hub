@@ -412,7 +412,6 @@ class _MedicineScannerState extends State<MedicineScanner>
     );
   }
 
-
   Widget _buildLoadingIndicator() {
     return Center(
       child: Column(
@@ -747,7 +746,6 @@ class _MedicineScannerState extends State<MedicineScanner>
       ],
     );
   }
-
 
   IconData _getIconForTitle(String title) {
     title = title.toLowerCase();

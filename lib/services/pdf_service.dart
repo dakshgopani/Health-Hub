@@ -56,7 +56,7 @@ class PdfService {
     pw.ImageProvider? signatureImage;
     try {
       final ByteData signatureData =
-      await rootBundle.load("assets/images/certificate_img/cert_signature.jpg");
+      await rootBundle.load("assets/images/certificate_img/cert_signature.png");
       final Uint8List signatureBytes = signatureData.buffer.asUint8List();
       signatureImage = pw.MemoryImage(signatureBytes);
     } catch (e) {

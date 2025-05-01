@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../theme/colors.dart';
-import '../theme/text_styles.dart';
+import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
 import 'video_call_page.dart';
 
 class VideoCallIndexPage extends StatefulWidget {

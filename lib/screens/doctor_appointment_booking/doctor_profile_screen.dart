@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mad_practice_one/screens/video_call_index_page.dart';
+import 'package:mad_practice_one/screens/doctor_appointment_booking/video_call_index_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import '../models/doctor_data_model.dart';
-import 'doctor_appointment_booking/appointment_booking.dart';
+import '../../models/doctor_data_model.dart';
+import 'appointment_booking.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final Doctor doctor;
@@ -296,6 +296,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen>
                   selectedDoctor: widget.doctor,
                   fee: double.parse(
                       widget.doctor.fee.replaceAll(RegExp(r'[^\d.]'), '')),
+                  imageUrl: widget.imageUrl,
                 ),
               ),
             );

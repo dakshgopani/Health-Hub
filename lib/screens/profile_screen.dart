@@ -6,7 +6,7 @@ import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
 import 'package:geocoding/geocoding.dart'; // Geocoding for location name
 import 'auth/welcome_screen.dart';
 import 'blood_donation/qr_code_scanner.dart';
-import 'store_screen.dart';
+import 'blood_donation/store_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userId; // Pass the user's ID for Firestore operations
@@ -125,9 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _locationName = 'Location not found';
         });
       }
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Location updated successfully')),
-      // );
+
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error fetching location: $error')),
@@ -186,9 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
       }
 
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(content: Text('Location updated successfully')),
-      // );
+
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error saving location: $error')),

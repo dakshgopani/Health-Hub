@@ -31,6 +31,20 @@ class _StoreScreenState extends State<StoreScreen>
       'category': 'Pain Relief'
     },
     {
+      'name': 'Aspirin',
+      'points': 20,
+      'image': 'assets/images/medicine_img/aspirin_medicine.png',
+      'description': 'Used to reduce pain, fever, or inflammation.',
+      'category': 'Pain Relief'
+    },
+    {
+      'name': 'Diclofenac',
+      'points': 20,
+      'image': 'assets/images/medicine_img/diclofenac_medicine.jpg',
+      'description': 'NSAID used for joint pain and inflammation.',
+      'category': 'Pain Relief'
+    },
+    {
       'name': 'Ibuprofen',
       'points': 20,
       'image': 'assets/images/medicine_img/ibuprofen_medicine.jpg',
@@ -39,10 +53,26 @@ class _StoreScreenState extends State<StoreScreen>
       'category': 'Pain Relief'
     },
     {
+      'name': 'Penicillin',
+      'points': 20,
+      'image': 'assets/images/medicine_img/penicillin_medicine.jpg',
+      'description':
+          'Classic antibiotic for a wide range of bacterial infections.',
+      'category': 'Antibiotics'
+    },
+    {
       'name': 'Amoxicillin',
       'points': 30,
       'image': 'assets/images/medicine_img/Amoxicillin_medicine.png',
       'description': 'Antibiotic used to treat bacterial infections.',
+      'category': 'Antibiotics'
+    },
+    {
+      'name': 'Erythromycin',
+      'points': 30,
+      'image': 'assets/images/medicine_img/erythromycin_medicine.jpg',
+      'description':
+          'Macrolide antibiotic for skin and respiratory infections.',
       'category': 'Antibiotics'
     },
     {
@@ -54,11 +84,54 @@ class _StoreScreenState extends State<StoreScreen>
       'category': 'Antibiotics'
     },
     {
+      'name': 'Doxycycline',
+      'points': 40,
+      'image': 'assets/images/medicine_img/doxycycline_medicine.png',
+      'description': 'Antibiotic used for bacterial infections and acne.',
+      'category': 'Antibiotics'
+    },
+    {
+      'name': 'Levofloxacin',
+      'points': 40,
+      'image': 'assets/images/medicine_img/levofloxacin_medicine.png',
+      'description':
+          'Fluoroquinolone antibiotic used for respiratory and urinary infections.',
+      'category': 'Antibiotics'
+    },
+    {
+      'name': 'Naproxen',
+      'points': 40,
+      'image': 'assets/images/medicine_img/naproxen_medicine.png',
+      'description': 'NSAID for treating pain and arthritis symptoms.',
+      'category': 'Pain Relief'
+    },
+    {
+      'name': 'Tramadol',
+      'points': 40,
+      'image': 'assets/images/medicine_img/tramadol_medicine.png',
+      'description': 'Opioid pain medication for moderate to severe pain.',
+      'category': 'Pain Relief'
+    },
+    {
       'name': 'Azithromycin',
       'points': 50,
       'image': 'assets/images/medicine_img/azithromycin_medicine.jpg',
       'description':
           'Macrolide antibiotic used to treat respiratory infections.',
+      'category': 'Antibiotics'
+    },
+    {
+      'name': 'Codeine',
+      'points': 50,
+      'image': 'assets/images/medicine_img/codeine_medicine.png',
+      'description': 'Opioid for treating mild to moderately severe pain.',
+      'category': 'Pain Relief'
+    },
+    {
+      'name': 'Clindamycin',
+      'points': 50,
+      'image': 'assets/images/medicine_img/clindamycin_medicine.png',
+      'description': 'Lincosamide antibiotic used for serious infections.',
       'category': 'Antibiotics'
     },
     {
@@ -70,12 +143,85 @@ class _StoreScreenState extends State<StoreScreen>
       'category': 'Allergy'
     },
     {
+      'name': 'Diphenhydramine',
+      'points': 60,
+      'image': 'assets/images/medicine_img/diphenhydramine_medicine.png',
+      'description': 'Sedating antihistamine for allergy and sleep aid.',
+      'category': 'Allergy'
+    },
+    {
+      'name': 'Loratadine',
+      'points': 60,
+      'image': 'assets/images/medicine_img/loratadine_medicine.png',
+      'description': 'Non-drowsy antihistamine for seasonal allergies.',
+      'category': 'Allergy'
+    },
+    {
+      'name': 'Glipizide',
+      'points': 70,
+      'image': 'assets/images/medicine_img/glipizide_medicine.png',
+      'description':
+          'Oral medication that lowers blood sugar by increasing insulin release.',
+      'category': 'Diabetes'
+    },
+    {
+      'name': 'Glyburide',
+      'points': 70,
+      'image': 'assets/images/medicine_img/glyburide_medicine.jpg',
+      'description': 'Sulfonylurea used to treat type 2 diabetes.',
+      'category': 'Diabetes'
+    },
+    {
+      'name': 'Fexofenadine',
+      'points': 70,
+      'image': 'assets/images/medicine_img/fexofenadine_medicine.jpg',
+      'description': 'Relieves allergy symptoms without causing drowsiness.',
+      'category': 'Allergy'
+    },
+    {
+      'name': 'Hydroxyzine',
+      'points': 70,
+      'image': 'assets/images/medicine_img/hydroxyzine_medicine.jpeg',
+      'description':
+          'Used to treat anxiety, nausea, and allergic skin reactions.',
+      'category': 'Allergy'
+    },
+    {
+      'name': 'Levocetirizine',
+      'points': 70,
+      'image': 'assets/images/medicine_img/levocetirizine_medicine.jpg',
+      'description': 'Effective antihistamine with minimal drowsiness.',
+      'category': 'Allergy'
+    },
+    {
       'name': 'Metformin',
       'points': 70,
       'image': 'assets/images/medicine_img/metformin_medicine.png',
       'description':
           'Oral medication to control blood sugar levels in type 2 diabetes.',
       'category': 'Diabetes'
+    },
+    {
+      'name': 'Atenolol',
+      'points': 80,
+      'image': 'assets/images/medicine_img/atenolol_medicine.jpg',
+      'description': 'Beta-blocker that reduces heart rate and blood pressure.',
+      'category': 'Blood Pressure'
+    },
+    {
+      'name': 'Enalapril',
+      'points': 80,
+      'image': 'assets/images/medicine_img/enalapril_medicine.jpg',
+      'description':
+          'ACE inhibitor for treating high blood pressure and heart failure.',
+      'category': 'Blood Pressure'
+    },
+    {
+      'name': 'Hydrochlorothiazide',
+      'points': 80,
+      'image': 'assets/images/medicine_img/hctz_medicine.jpg',
+      'description': 'Diuretic used to treat high blood pressure and swelling.',
+      'category': 'Blood Pressure'
     },
     {
       'name': 'Losartan',
@@ -86,11 +232,48 @@ class _StoreScreenState extends State<StoreScreen>
       'category': 'Blood Pressure'
     },
     {
+      'name': 'Pioglitazone',
+      'points': 80,
+      'image': 'assets/images/medicine_img/pioglitazone_medicine.jpg',
+      'description': 'Improves insulin sensitivity for better glucose control.',
+      'category': 'Diabetes'
+    },
+    {
+      'name': 'Sitagliptin',
+      'points': 80,
+      'image': 'assets/images/medicine_img/sitagliptin_medicine.png',
+      'description':
+          'DPP-4 inhibitor to lower blood sugar in adults with type 2 diabetes.',
+      'category': 'Diabetes'
+    },
+    {
       'name': 'Amlodipine',
       'points': 90,
       'image': 'assets/images/medicine_img/Amlodipine_medicine.jpg',
       'description':
           'Calcium channel blocker for high blood pressure and chest pain.',
+      'category': 'Blood Pressure'
+    },
+    {
+      'name': 'Insulin Glargine',
+      'points': 90,
+      'image': 'assets/images/medicine_img/insulin_glargine_medicine.jpg',
+      'description': 'Long-acting insulin for blood sugar control.',
+      'category': 'Diabetes'
+    },
+    {
+      'name': 'Ramipril',
+      'points': 90,
+      'image': 'assets/images/medicine_img/ramipril_medicine.png',
+      'description':
+          'ACE inhibitor that lowers the risk of heart attack and stroke.',
+      'category': 'Blood Pressure'
+    },
+    {
+      'name': 'Valsartan',
+      'points': 90,
+      'image': 'assets/images/medicine_img/valsartan_medicine.jpg',
+      'description': 'ARB used to treat high blood pressure and heart failure.',
       'category': 'Blood Pressure'
     },
     {
@@ -100,7 +283,42 @@ class _StoreScreenState extends State<StoreScreen>
       'description':
           'Proton pump inhibitor (PPI) for acid reflux and stomach ulcers.',
       'category': 'Digestive'
-    }
+    },
+    {
+      'name': 'Ranitidine',
+      'points': 100,
+      'image': 'assets/images/medicine_img/ranitidine_medicine.jpg',
+      'description': 'Used to reduce stomach acid and treat ulcers.',
+      'category': 'Digestive'
+    },
+    {
+      'name': 'Domperidone',
+      'points': 110,
+      'image': 'assets/images/medicine_img/domperidone_medicine.jpg',
+      'description': 'Relieves nausea, vomiting, and bloating.',
+      'category': 'Digestive'
+    },
+    {
+      'name': 'Lansoprazole',
+      'points': 110,
+      'image': 'assets/images/medicine_img/lansoprazole_medicine.jpg',
+      'description': 'PPI for heartburn, GERD, and stomach ulcers.',
+      'category': 'Digestive'
+    },
+    {
+      'name': 'Esomeprazole',
+      'points': 120,
+      'image': 'assets/images/medicine_img/esomeprazole_medicine.jpeg',
+      'description': 'Reduces acid production in GERD and ulcers.',
+      'category': 'Digestive'
+    },
+    {
+      'name': 'Pantoprazole',
+      'points': 120,
+      'image': 'assets/images/medicine_img/pantoprazole_medicine.jpg',
+      'description': 'PPI used for acid reflux and gastritis treatment.',
+      'category': 'Digestive'
+    },
   ];
 
   @override
@@ -689,7 +907,8 @@ class _StoreScreenState extends State<StoreScreen>
       builder: (context) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height *
+              0.6, // Increased from 0.5 to 0.6
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -720,117 +939,118 @@ class _StoreScreenState extends State<StoreScreen>
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Points Animation
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.amber.withOpacity(0.5),
-                                blurRadius: 20,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                              size: 60,
-                            ),
-                          ),
+
+              const Spacer(), // Pushes content to center
+
+              // Points Animation
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.amber.withOpacity(0.5),
+                          blurRadius: 20,
+                          spreadRadius: 5,
                         ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 60,
                       ),
                     ),
-
-                    const SizedBox(height: 30),
-
-                    // Points Display
-                    Text(
-                      "$_userPoints",
-                      style: const TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        fontFamily: 'Raleway',
-                      ),
-                    ),
-                    Text(
-                      "REWARD POINTS",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white.withOpacity(0.7),
-                        letterSpacing: 2,
-                        fontFamily: 'Raleway',
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Encouraging Message
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 40),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Text(
-                        "Keep earning points by scanning medicines and completing health tasks!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          height: 1.5,
-                          fontFamily: 'Raleway',
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    // Close Button
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF432C81),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 5,
-                      ),
-                      child: const Text(
-                        "Continue Shopping",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Raleway',
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
+
+              const SizedBox(height: 30),
+
+              // Points Display
+              Text(
+                "$_userPoints",
+                style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                ),
+              ),
+              Text(
+                "REWARD POINTS",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white.withOpacity(0.7),
+                  letterSpacing: 2,
+                  fontFamily: 'Raleway',
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Encouraging Message
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Text(
+                  "Keep earning points by scanning medicines and completing health tasks!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                    height: 1.5,
+                    fontFamily: 'Raleway',
+                  ),
+                ),
+              ),
+
+              const Spacer(), // Pushes button to bottom
+
+              // Close Button
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF432C81),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    elevation: 5,
+                  ),
+                  child: const Text(
+                    "Continue Shopping",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Raleway',
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10), // Ensures button is not clipped
             ],
           ),
         ),
@@ -852,135 +1072,157 @@ class _StoreScreenState extends State<StoreScreen>
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isScrollControlled: true,
+      // Allow it to expand if needed
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Filter by Category",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF432C81),
-                fontFamily: 'Raleway',
-              ),
-            ),
-            const SizedBox(height: 20),
-            Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: categories.map((category) {
-                return FilterChip(
-                  label: Text(category),
-                  selected: _searchQuery ==
-                      (category == 'All' ? '' : category.toLowerCase()),
-                  onSelected: (selected) {
-                    Navigator.pop(context);
-                    _filterMedicines(category == 'All' ? '' : category);
-                  },
-                  backgroundColor: Colors.grey[200],
-                  selectedColor: const Color(0xFF6B4EFF).withOpacity(0.2),
-                  checkmarkColor: const Color(0xFF6B4EFF),
-                  labelStyle: TextStyle(
-                    color: _searchQuery ==
-                            (category == 'All' ? '' : category.toLowerCase())
-                        ? const Color(0xFF6B4EFF)
-                        : Colors.black,
-                    fontWeight: FontWeight.w700,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context)
+              .viewInsets
+              .bottom, // Avoid keyboard overlap
+        ),
+        child: SingleChildScrollView(
+          // Prevents overflow
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Filter by Category",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF432C81),
                     fontFamily: 'Raleway',
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: _searchQuery ==
-                              (category == 'All' ? '' : category.toLowerCase())
-                          ? const Color(0xFF6B4EFF)
-                          : Colors.transparent,
+                ),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: categories.map((category) {
+                    return FilterChip(
+                      label: Text(category),
+                      selected: _searchQuery ==
+                          (category == 'All' ? '' : category.toLowerCase()),
+                      onSelected: (selected) {
+                        Navigator.pop(context);
+                        _filterMedicines(category == 'All' ? '' : category);
+                      },
+                      backgroundColor: Colors.grey[200],
+                      selectedColor: const Color(0xFF6B4EFF).withOpacity(0.2),
+                      checkmarkColor: const Color(0xFF6B4EFF),
+                      labelStyle: TextStyle(
+                        color: _searchQuery ==
+                                (category == 'All'
+                                    ? ''
+                                    : category.toLowerCase())
+                            ? const Color(0xFF6B4EFF)
+                            : Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Raleway',
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: _searchQuery ==
+                                  (category == 'All'
+                                      ? ''
+                                      : category.toLowerCase())
+                              ? const Color(0xFF6B4EFF)
+                              : Colors.transparent,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Sort by",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF432C81),
+                    fontFamily: 'Raleway',
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ListTile(
+                  leading:
+                      const Icon(Icons.arrow_upward, color: Color(0xFF6B4EFF)),
+                  title: const Text(
+                    "Price: Low to High",
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Sort by",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF432C81),
-                fontFamily: 'Raleway',
-              ),
-            ),
-            const SizedBox(height: 10),
-            ListTile(
-              leading: const Icon(Icons.arrow_upward, color: Color(0xFF6B4EFF)),
-              title: const Text(
-                "Price: Low to High",
-                style: TextStyle(
-                  fontFamily: 'Raleway',
-                  fontWeight: FontWeight.w700,
+                  onTap: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      _filteredMedicines
+                          .sort((a, b) => a['points'].compareTo(b['points']));
+                    });
+                  },
                 ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  _filteredMedicines
-                      .sort((a, b) => a['points'].compareTo(b['points']));
-                });
-              },
-            ),
-            ListTile(
-              leading:
-                  const Icon(Icons.arrow_downward, color: Color(0xFF6B4EFF)),
-              title: const Text(
-                "Price: High to Low",
-                style: TextStyle(
-                  fontFamily: 'Raleway',
-                  fontWeight: FontWeight.w700,
+                ListTile(
+                  leading: const Icon(Icons.arrow_downward,
+                      color: Color(0xFF6B4EFF)),
+                  title: const Text(
+                    "Price: High to Low",
+                    style: TextStyle(
+                      fontFamily: 'Raleway',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      _filteredMedicines
+                          .sort((a, b) => b['points'].compareTo(a['points']));
+                    });
+                  },
                 ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                setState(() {
-                  _filteredMedicines
-                      .sort((a, b) => b['points'].compareTo(a['points']));
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                setState(() {
-                  _searchQuery = '';
-                  _filteredMedicines = List.from(medicines);
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6B4EFF),
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                const SizedBox(height: 20),
+
+                // Reset Button with extra padding to prevent bottom overflow
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _searchQuery = '';
+                        _filteredMedicines = List.from(medicines);
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6B4EFF),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: const Text(
+                      "Reset All Filters",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Raleway',
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              child: const Text(
-                "Reset All Filters",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Raleway',
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -1053,34 +1295,36 @@ class _StoreScreenState extends State<StoreScreen>
             ),
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "🎁 Rewards Shop",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
-                  fontFamily: 'Raleway',
-                  color: Color(0xFF432C81),
+          Expanded( // ✅ ADDED to avoid overflow
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "🎁 Rewards Shop",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Raleway',
+                    color: Color(0xFF432C81),
+                  ),
                 ),
-              ),
-              Text(
-                "Redeem your points for medicines",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Raleway',
+                Text(
+                  "Redeem your points for medicines",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Raleway',
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
+          const SizedBox(width: 8), // optional spacing
           GestureDetector(
             onTap: _showPointsPopup,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [Colors.amber, Colors.orange],
@@ -1097,6 +1341,7 @@ class _StoreScreenState extends State<StoreScreen>
                 ],
               ),
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.star, color: Colors.white, size: 18),
                   const SizedBox(width: 4),
@@ -1147,6 +1392,7 @@ class _StoreScreenState extends State<StoreScreen>
                 style: const TextStyle(
                   fontFamily: 'Raleway',
                   fontSize: 16,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -1187,8 +1433,8 @@ class _StoreScreenState extends State<StoreScreen>
                 Text(
                   "No medicines found",
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
                     color: Colors.grey[700],
                     fontFamily: 'Raleway',
                   ),
@@ -1200,6 +1446,7 @@ class _StoreScreenState extends State<StoreScreen>
                     fontSize: 16,
                     color: Colors.grey[600],
                     fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // ✅ Add this
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/notification_service.dart';
 import '../../widgets/menu_card.dart';
 import '../chatbot.dart';
 import '../disease_prediction.dart';
 import '../doctor_dashboard_screen.dart';
-import '../doctor_page.dart';
+import '../doctor_appointment_booking/doctor_page.dart';
 import '../emergency_services_screen.dart';
 import '../medical_history.dart';
 import '../medicine_page.dart';
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
 
     if (!hasShownNotification) {
       await NotificationService.showNotification();
-      await prefs.setBool('notificationShown', true); // ✅ Save status
+      await prefs.setBool('notificationShown', true); // Save status
     }
   }
 
@@ -105,7 +105,7 @@ class HomeContent extends StatelessWidget {
         backgroundColor: const Color(0xFF432C81),
         child: Image.asset(
           "assets/images/home_page/robot.png",
-          width: 30, // Adjust as needed
+          width: 30,
           height: 30,
           color: Colors.white,
         ),
@@ -122,7 +122,7 @@ class HomeContent extends StatelessWidget {
                     style: const TextStyle(
                         fontFamily: 'Raleway',
                         fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                         color: Color(0xFF432C81)),
                   ),
                   const Spacer(),

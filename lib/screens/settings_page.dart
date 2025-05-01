@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'auth/welcome_screen.dart'; // Ensure correct import
+import '../services/manage_permissions_page.dart';
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
+import 'auth/welcome_screen.dart';
+import 'edit_profile_page.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -9,15 +13,13 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool _notificationsEnabled = true;
-  bool _biometricLogin = false;
 
-  // Logout Function
   Future<void> _logout(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => WelcomeScreen()),
-        (Route<dynamic> route) => false,
+            (Route<dynamic> route) => false,
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -29,10 +31,25 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEDECF4), // Matching theme
+      backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
-        title: const Text("Settings"),
-        backgroundColor: const Color(0xFF432C81), // Theme color
+        title: Text(
+          "Settings",
+          style: AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+        backgroundColor: AppColors.deepPurple,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        elevation: 0,
+        centerTitle: true,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -41,8 +58,14 @@ class _SettingsPageState extends State<SettingsPage> {
           _buildSettingsTile(
             icon: Icons.person,
             title: "Edit Profile",
-            subtitle: "Update your name, email, and profile picture",
-            onTap: () {},
+            subtitle: "Update your name and email",
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) => EditProfilePage(userId: FirebaseAuth.instance.currentUser!.uid),
+              ));
+            },
           ),
           _buildSettingsTile(
             icon: Icons.lock,
@@ -61,25 +84,18 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             },
           ),
-          _buildSwitchTile(
-            icon: Icons.fingerprint,
-            title: "Biometric Login",
-            subtitle: "Enable fingerprint/Face ID login",
-            value: _biometricLogin,
-            onChanged: (value) {
-              setState(() {
-                _biometricLogin = value;
-              });
-            },
-          ),
-
           const SizedBox(height: 20),
           _buildSectionTitle("Privacy & Permissions"),
           _buildSettingsTile(
             icon: Icons.security,
             title: "Manage Permissions",
             subtitle: "Control location, camera & storage access",
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ManagePermissionsPage()),
+              );
+            },
           ),
           _buildSettingsTile(
             icon: Icons.delete_forever,
@@ -89,51 +105,30 @@ class _SettingsPageState extends State<SettingsPage> {
               _confirmDeleteAccount(context);
             },
           ),
-
-          const SizedBox(height: 20),
-          _buildSectionTitle("Health Preferences"),
-          _buildSettingsTile(
-            icon: Icons.medical_services,
-            title: "Medical History",
-            subtitle: "Manage your past diagnoses & reports",
-            onTap: () {},
-          ),
-          _buildSettingsTile(
-            icon: Icons.local_hospital,
-            title: "Preferred Doctors",
-            subtitle: "Set preferred healthcare providers",
-            onTap: () {},
-          ),
-
-          const SizedBox(height: 20),
-          _buildSectionTitle("Emergency"),
-          _buildSettingsTile(
-            icon: Icons.contact_phone,
-            title: "Emergency Contacts",
-            subtitle: "Set up contacts for medical emergencies",
-            onTap: () {},
-          ),
-
           const SizedBox(height: 30),
           Center(
             child: Text(
               "HealthHub v1.0.0",
-              style: TextStyle(color: Colors.grey[700]),
+              style: AppTextStyles.body.copyWith(color: Colors.grey[700], fontSize: 16),
             ),
           ),
-
           const SizedBox(height: 20),
-
-          // 🚀 Logout Button
           Center(
             child: ElevatedButton(
               onPressed: () => _logout(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
               ),
-              child: const Text("Logout", style: TextStyle(fontSize: 18)),
+              child: const Text(
+                "Logout",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Raleway',
+                ),
+              ),
             ),
           ),
         ],
@@ -146,11 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
       padding: const EdgeInsets.only(top: 20, bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF432C81),
-        ),
+        style: AppTextStyles.heading.copyWith(color: AppColors.deepPurple),
       ),
     );
   }
@@ -162,11 +153,12 @@ class _SettingsPageState extends State<SettingsPage> {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: const Color(0xFF6B4EFF)),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle),
-      trailing:
-          const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
+      leading: Icon(icon, color: AppColors.textPurple),
+      title: Text(title, style: AppTextStyles.body),
+      subtitle: Text(subtitle,style: TextStyle(fontWeight: FontWeight.w700,
+        fontFamily: 'Raleway',    fontSize: 14,
+      ),),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey),
       onTap: onTap,
     );
   }
@@ -179,34 +171,142 @@ class _SettingsPageState extends State<SettingsPage> {
     required ValueChanged<bool> onChanged,
   }) {
     return SwitchListTile(
-      secondary: Icon(icon, color: const Color(0xFF6B4EFF)),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle),
-      value: value,
+      secondary: Icon(icon, color: AppColors.textPurple),
+      title: Text(title, style: AppTextStyles.body),
+      subtitle: Text(subtitle,style: TextStyle(fontWeight: FontWeight.w700,
+        fontFamily: 'Raleway',    fontSize: 14,
+      ),),      value: value,
       onChanged: onChanged,
     );
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.info_outline, // Icon indicating info
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8), // Space between the icon and text
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold, // Make text bold for emphasis
+                  fontSize: 16, // Slightly larger font size
+                  fontFamily: 'Raleway',
+                ),
+                overflow: TextOverflow.ellipsis, // Prevent text overflow
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF432C81),
+        // Deep purple background
+        behavior: SnackBarBehavior.floating,
+        // Change to floating behavior
+        duration: const Duration(seconds: 3),
+        // Duration for the SnackBar
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+        margin: const EdgeInsets.all(16),
+        // Margin around the SnackBar
+        elevation: 6, // Slight elevation for a 3D effect
+      ),
+    );
+  }
+
+
   void _confirmDeleteAccount(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Delete Account?"),
-        content: const Text("This action is irreversible. Are you sure?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
           ),
-          TextButton(
-            onPressed: () {
-              // Perform delete operation
-              Navigator.pop(context);
-            },
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+          backgroundColor: AppColors.scaffoldBackground,
+          title: const Text(
+            'Delete Account',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Raleway',
+              color: AppColors.deepPurple,
+            ),
           ),
-        ],
-      ),
+          content: const Text(
+            'This action is irreversible. Are you sure you want to delete your account and all associated data?',
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'Raleway',
+              color: Colors.black87,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                User? user = FirebaseAuth.instance.currentUser;
+
+                if (user != null) {
+                  try {
+                    await user.delete();
+
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                          (route) => false,
+                    );
+
+                    _showSnackBar("Account deleted successfully.");
+
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'requires-recent-login') {
+                      _showSnackBar('Please log in again and try deleting your account.');
+                    } else {
+                      _showSnackBar("Error: ${e.message}");
+                    }
+                  } catch (e) {
+                    _showSnackBar("Failed to delete account.");
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+              child: const Text(
+                'Delete',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

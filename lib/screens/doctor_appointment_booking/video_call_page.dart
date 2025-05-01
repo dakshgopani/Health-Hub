@@ -5,8 +5,8 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../theme/colors.dart';
-import '../utils/video_call_settings.dart';
+import '../../theme/colors.dart';
+import '../../services/video_call_settings.dart';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page

@@ -202,7 +202,7 @@ class _ScratchCardDialogState extends State<_ScratchCardDialog> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 22,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       color: Colors.deepPurple),
                 ),
                 const SizedBox(height: 15),
@@ -254,7 +254,7 @@ class _ScratchCardDialogState extends State<_ScratchCardDialog> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 24),
                   ),
-                  child: const Text("🛍 Go to Store"),
+                  child: const Text("🛍 Go to Store",style: TextStyle(fontFamily: 'Raleway',fontWeight: FontWeight.w700,fontSize: 16,color: Colors.white),),
                 ),
               ],
             ),

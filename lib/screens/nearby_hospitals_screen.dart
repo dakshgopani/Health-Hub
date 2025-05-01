@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_floating_buttons/animated_floating_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../theme/colors.dart';
 import '../theme/text_styles.dart';
 
@@ -302,24 +301,50 @@ class _HospitalLocatorState extends State<HospitalLocator>
                 ),
               ],
             ),
-      floatingActionButton: AnimatedFloatingActionButton(
-
-        fabButtons: [
-          FloatingActionButton(
-            heroTag: "location",
-            onPressed: _fetchNearbyHospitals,
-            child: const Icon(Icons.my_location),
+      floatingActionButton: Theme(
+        data: Theme.of(context).copyWith(
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            foregroundColor: Colors.white, // Icon color for the main button
+            backgroundColor: Colors.deepPurple, // Ensures consistency
           ),
-          FloatingActionButton(
-            heroTag: "refresh",
-            onPressed: _getCurrentLocation,
-            child: const Icon(Icons.refresh),
-          ),
-        ],
-        colorStartAnimation: Colors.blue,
-        colorEndAnimation: Colors.red,
-        animatedIconData: AnimatedIcons.menu_close,
-
+        ),
+        child: AnimatedFloatingActionButton(
+          fabButtons: [
+            FloatingActionButton(
+              heroTag: "location",
+              onPressed: () async {
+                if (_currentLocation != null) {
+                  // Move the map to the current location
+                  _mapController.move(_currentLocation!, 15.0);
+                  // Optionally refresh nearby hospitals
+                  await _fetchNearbyHospitals();
+                } else {
+                  // If _currentLocation is null, fetch it again
+                  await _getCurrentLocation();
+                }
+              },
+              backgroundColor: Colors.deepPurple, // Purple background
+              child: const Icon(
+                Icons.my_location,
+                color: Colors.yellow, // Custom icon color
+              ),
+            ),
+            FloatingActionButton(
+              heroTag: "refresh",
+              onPressed: _getCurrentLocation,
+              backgroundColor: Colors.deepPurple, // Purple background
+              child: const Icon(
+                Icons.refresh,
+                color: Colors.green, // Custom icon color
+              ),
+            ),
+          ],
+          colorStartAnimation: Colors.deepPurple,
+          // Main button background when closed
+          colorEndAnimation: Colors.red,
+          // Main button background when open
+          animatedIconData: AnimatedIcons.menu_close,
+        ),
       ),
     );
   }
@@ -466,7 +491,7 @@ class HospitalInfoCard extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton.icon(
               onPressed: onDirectionsPressed,
-              icon: const Icon(Icons.directions),
+              icon: const Icon(Icons.directions, color: Colors.white),
               label: const Text(
                 'Get Directions',
                 style: TextStyle(
@@ -476,7 +501,7 @@ class HospitalInfoCard extends StatelessWidget {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.deepPurple,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

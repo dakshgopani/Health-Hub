@@ -7,6 +7,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'dart:ui';
 
+import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
+
 class QRCodeScreen extends StatefulWidget {
   final String qrCodeData;
 
@@ -283,18 +286,26 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       child: Scaffold(
         backgroundColor: const Color(0xFFEDECF4),
         appBar: AppBar(
-          title: const Text(
-            "Your QR Code",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Raleway',
-            ),
-          ),
           centerTitle: true,
+          elevation: 0,
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+            weight: 900,
+            size: 26,
+          ),
+          title: Text(
+            "Your QR Code",
+            style: AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: _confirmExit,
+          ),
+          backgroundColor: AppColors.deepPurple,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
           ),
         ),
         body: Padding(

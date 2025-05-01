@@ -350,7 +350,6 @@ class DoctorHistoryPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        // 🔹 Set the back button color here
         iconTheme: const IconThemeData(
           color: Colors.white, // Change this to any color
         ),

@@ -14,7 +14,6 @@ class _MedicinePageState extends State<MedicinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

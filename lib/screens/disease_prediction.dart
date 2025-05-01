@@ -116,7 +116,7 @@ class CategoryScreen extends StatelessWidget {
                     );
                   },
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     curve: Curves.easeInOut,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -166,7 +166,7 @@ class CategoryScreen extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     // Set the status bar color to match AppBar
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: AppColors.deepPurple, // Make status bar color deep purple
       statusBarIconBrightness: Brightness.light, // White icons
     ));
@@ -270,7 +270,7 @@ class _SymptomScreenState extends State<SymptomScreen>
                   'Meaning of $symptom',
                   style: const TextStyle(
                     fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     fontFamily: 'Raleway',
                     color: AppColors.textPurple,
                   ),
@@ -438,6 +438,7 @@ class _SymptomScreenState extends State<SymptomScreen>
                               fontFamily: 'Raleway',
                               fontSize: 16,
                               color: Colors.grey[700],
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ],
@@ -575,7 +576,7 @@ class _SymptomScreenState extends State<SymptomScreen>
                                             fontSize: 24,
                                             fontFamily: 'Raleway',
                                             color: Colors.grey[700],
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w900,
                                             height: 1.4,
                                           ),
                                           children: [
@@ -585,7 +586,7 @@ class _SymptomScreenState extends State<SymptomScreen>
                                                 fontSize: 24,
                                                 fontFamily: 'Raleway',
                                                 color: AppColors.deepPurple,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.w900,
                                                 decoration:
                                                 TextDecoration.underline,
                                               ),
@@ -679,7 +680,7 @@ class _SymptomScreenState extends State<SymptomScreen>
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18,
           fontFamily: 'Raleway',
           fontWeight: FontWeight.bold,
@@ -920,7 +921,7 @@ class _PredictionResultState extends State<PredictionResult>
                                 fontSize: 22,
                                 fontFamily: 'Raleway',
                                 color: AppColors.textPurple,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                               ),
                             ),
                           ],
@@ -936,7 +937,7 @@ class _PredictionResultState extends State<PredictionResult>
                     style: TextStyle(
                       fontSize: 18,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       color: AppColors.textPurple,
                     ),
                   ),
@@ -1024,7 +1025,7 @@ class _PredictionResultState extends State<PredictionResult>
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: 'Raleway',
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
                 color: AppColors.textPurple,
               ),
             ),
@@ -1092,7 +1093,7 @@ class _PredictionResultState extends State<PredictionResult>
                                 fontSize: 12,
                                 fontFamily: 'Raleway',
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           );
@@ -1172,7 +1173,7 @@ class _PredictionResultState extends State<PredictionResult>
                 style: TextStyle(
                   fontSize: 20,
                   fontFamily: 'Raleway',
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                   color: AppColors.textPurple,
                 ),
               ),

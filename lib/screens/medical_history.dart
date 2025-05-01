@@ -12,7 +12,6 @@ import 'package:url_launcher/url_launcher.dart'; // Added for URL launching
 import 'package:uuid/uuid.dart'; // Add this import
 import 'dart:convert';
 import 'dart:io';
-
 import '../theme/colors.dart';
 import '../theme/text_styles.dart';
 
@@ -99,7 +98,6 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
       ),
     );
   }
-
 
   // Upload file to Pinata and save metadata to Firestore
   Future<void> _uploadFileToPinata() async {

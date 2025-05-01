@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:csv/csv.dart';
-import '../models/doctor_data_model.dart';
-import '../widgets/doctor_grid.dart';
+import '../../models/doctor_data_model.dart';
+import '../../widgets/doctor_grid.dart';
 import 'doctor_profile_screen.dart';
-import 'home/home_page.dart';
+import '../home/home_page.dart';
 
 class DoctorPage extends StatelessWidget {
   const DoctorPage({super.key});
@@ -339,7 +339,7 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     // Generate a random seed based on doctor's name for consistent image
     final int imageSeed = doctor.name.hashCode.abs() % 100; // Limit to 0-99
     final String randomImageUrl = "https://randomuser.me/api/portraits/$gender/$imageSeed.jpg";
-
+   // final String randomImageUrl = "https://source.unsplash.com/300x300/?doctor";
     return Container(
       margin: const EdgeInsets.only(bottom: 16), // Note: 'custom' seems like a typo; should be 'bottom' or another valid property
       decoration: BoxDecoration(
@@ -608,5 +608,3 @@ class _DoctorListScreenState extends State<DoctorListScreen>
     return spans;
   }
 }
-
-

@@ -1,11 +1,14 @@
+import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:geolocator/geolocator.dart'; // Geolocator for location fetching
-import 'package:flutter_map/flutter_map.dart'; // Flutter Map for OpenStreetMap
-import 'package:latlong2/latlong.dart'; // LatLong for map coordinates
-import 'package:geocoding/geocoding.dart'; // Geocoding for location name
-import 'home/home_page.dart'; // Ensure HomePage is imported
+import 'package:geolocator/geolocator.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:geocoding/geocoding.dart';
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
+import 'home/home_page.dart';
 
 class ProfileSetupPage extends StatefulWidget {
   final String userId;
@@ -18,11 +21,10 @@ class ProfileSetupPage extends StatefulWidget {
 
 class _ProfileSetupPageState extends State<ProfileSetupPage> {
   final TextEditingController _nameController = TextEditingController();
-  bool _isLoading = false; // To handle loading state
-  LatLng? _currentLatLng; // To store user's current coordinates
-  String _locationName = ''; // To store the location name
+  bool _isLoading = false;
+  LatLng? _currentLatLng;
+  String _locationName = '';
 
-  // Function to fetch the user's current location and location name
   Future<void> _getCurrentLocation() async {
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -42,7 +44,6 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         throw Exception('Location permissions are permanently denied.');
       }
 
-      // Get the current position
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -50,7 +51,6 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         _currentLatLng = LatLng(position.latitude, position.longitude);
       });
 
-      // Use geocoding to get the address based on the coordinates
       List<Placemark> placemarks =
           await GeocodingPlatform.instance!.placemarkFromCoordinates(
         position.latitude,
@@ -59,23 +59,16 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
 
       if (placemarks.isNotEmpty) {
         setState(() {
-          // Extract detailed address information
-          String buildingName =
-              placemarks[0].name ?? 'N/A'; // This may contain the building name
-          String roadName = placemarks[0].thoroughfare ??
-              'N/A'; // This is the road/street name
-          String subLocality = placemarks[0].subLocality ??
-              'N/A'; // This is a more detailed area like a neighborhood
-          String locality = placemarks[0].locality ?? 'N/A'; // City name
-          String administrativeArea =
-              placemarks[0].administrativeArea ?? 'N/A'; // State/Region
-          String country = placemarks[0].country ?? 'N/A'; // Country
+          String buildingName = placemarks[0].name ?? 'N/A';
+          String roadName = placemarks[0].thoroughfare ?? 'N/A';
+          String subLocality = placemarks[0].subLocality ?? 'N/A';
+          String locality = placemarks[0].locality ?? 'N/A';
+          String administrativeArea = placemarks[0].administrativeArea ?? 'N/A';
+          String country = placemarks[0].country ?? 'N/A';
 
-          // Format the location as a more detailed string
           _locationName =
               '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
 
-          // Save each location detail separately in Firestore
           _saveLocationToFirestore(
             buildingName,
             roadName,
@@ -93,14 +86,49 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         });
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching location: $error')),
-      );
+      _showSnackBar('Error fetching location: $error');
     }
   }
 
-// Function to save location details to Firestore
-// Save location details if the document exists or create a new one if it doesn't
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.info_outline, // Icon indicating info
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8), // Space between the icon and text
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold, // Make text bold for emphasis
+                  fontSize: 16, // Slightly larger font size
+                  fontFamily: 'Raleway',
+                ),
+                overflow: TextOverflow.ellipsis, // Prevent text overflow
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF432C81),
+        // Deep purple background
+        behavior: SnackBarBehavior.floating,
+        // Change to floating behavior
+        duration: const Duration(seconds: 3),
+        // Duration for the SnackBar
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8), // Rounded corners
+        ),
+        margin: const EdgeInsets.all(16),
+        // Margin around the SnackBar
+        elevation: 6, // Slight elevation for a 3D effect
+      ),
+    );
+  }
+
   Future<void> _saveLocationToFirestore(
     String buildingName,
     String roadName,
@@ -115,13 +143,11 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       final userRef =
           FirebaseFirestore.instance.collection('users').doc(widget.userId);
 
-      // Fetch the document
       final userDoc = await userRef.get();
 
       if (!userDoc.exists) {
-        // Document doesn't exist, create a new one
         await userRef.set({
-          'name': 'New User', // or get it from some input
+          'name': 'New User',
           'location': {
             'buildingName': buildingName,
             'roadName': roadName,
@@ -135,7 +161,6 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
           'updatedAt': FieldValue.serverTimestamp(),
         });
       } else {
-        // Document exists, update the existing one
         await userRef.update({
           'location': {
             'buildingName': buildingName,
@@ -151,20 +176,14 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         });
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location updated successfully')),
-      );
+      _showSnackBar('Location updated successfully');
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error saving location: $error')),
-      );
+      _showSnackBar('Error saving location: $error');
     }
   }
 
-  // Function to fetch the address of the manually tapped location
   Future<void> _getLocationNameFromCoordinates(LatLng coordinates) async {
     try {
-      // Fetch placemarks (address components) from coordinates
       List<Placemark> placemarks =
           await GeocodingPlatform.instance!.placemarkFromCoordinates(
         coordinates.latitude,
@@ -173,23 +192,16 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
 
       if (placemarks.isNotEmpty) {
         setState(() {
-          // Extract detailed address information
-          String buildingName =
-              placemarks[0].name ?? 'N/A'; // This may contain the building name
-          String roadName = placemarks[0].thoroughfare ??
-              'N/A'; // This is the road/street name
-          String subLocality = placemarks[0].subLocality ??
-              'N/A'; // This is a more detailed area like a neighborhood
-          String locality = placemarks[0].locality ?? 'N/A'; // City name
-          String administrativeArea =
-              placemarks[0].administrativeArea ?? 'N/A'; // State/Region
-          String country = placemarks[0].country ?? 'N/A'; // Country
+          String buildingName = placemarks[0].name ?? 'N/A';
+          String roadName = placemarks[0].thoroughfare ?? 'N/A';
+          String subLocality = placemarks[0].subLocality ?? 'N/A';
+          String locality = placemarks[0].locality ?? 'N/A';
+          String administrativeArea = placemarks[0].administrativeArea ?? 'N/A';
+          String country = placemarks[0].country ?? 'N/A';
 
-          // Format the location as a more detailed string
           _locationName =
               '$buildingName, $roadName, $subLocality, $locality, $administrativeArea, $country';
 
-          // Save each location detail separately in Firestore
           _saveLocationToFirestore(
             buildingName,
             roadName,
@@ -207,42 +219,34 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         });
       }
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching location: $error')),
-      );
+      _showSnackBar('Error fetching location: $error');
     }
   }
 
-  // Function to complete the profile setup
   Future<void> completeProfile() async {
     if (_nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your name')),
-      );
+      _showSnackBar('Please enter your name');
       return;
     }
 
     if (_currentLatLng == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fetch your location')),
-      );
+      _showSnackBar('Please fetch your location');
       await _getCurrentLocation();
       return;
     }
 
     setState(() {
-      _isLoading = true; // Show loading indicator
+      _isLoading = true;
     });
 
     try {
       final userRef =
           FirebaseFirestore.instance.collection('users').doc(widget.userId);
 
-      // Update user profile data in Firestore
       await userRef.set(
         {
           'name': _nameController.text,
-          'isProfileComplete': true, // Mark profile as complete
+          'isProfileComplete': true,
           'email': FirebaseAuth.instance.currentUser?.email,
           'location': {
             'latitude': _currentLatLng!.latitude,
@@ -250,29 +254,24 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
           },
           'updatedAt': FieldValue.serverTimestamp(),
         },
-        SetOptions(merge: true), // Use merge to avoid overwriting existing data
+        SetOptions(merge: true),
       );
 
-      // Navigate to HomePage after profile setup
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => HomePage(
-            // userId: widget.userId, // Pass userId to HomePage
             userId: FirebaseAuth.instance.currentUser!.uid,
             userName: _nameController.text,
-            // userName: FirebaseAuth.instance.currentUser!.displayName ?? "User",
             userEmail: FirebaseAuth.instance.currentUser!.email ?? "Email",
           ),
         ),
       );
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error saving profile: $error')),
-      );
+      _showSnackBar('Error saving profile: $error');
     } finally {
       setState(() {
-        _isLoading = false; // Hide loading indicator
+        _isLoading = false;
       });
     }
   }
@@ -281,108 +280,402 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
   void initState() {
     super.initState();
 
-    // Fetch user's name from Firebase Auth and set it in the controller
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.displayName != null && user.displayName!.isNotEmpty) {
+    if (user != null &&
+        user.displayName != null &&
+        user.displayName!.isNotEmpty) {
       _nameController.text = user.displayName!;
     }
 
-    _getCurrentLocation(); // Fetch user's location on page load
+    _getCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile Setup')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'Complete Your Profile',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
+      appBar: AppBar(
+        title: Text(
+          'Profile Setup',
+          style:
+              AppTextStyles.whiteHeading.copyWith(fontWeight: FontWeight.w900),
+        ),
+        backgroundColor: AppColors.deepPurple,
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header Section
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundPurple,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.deepPurple.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  // Name input field
-                  TextField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Your Name',
-                      border: OutlineInputBorder(),
-                    ),
+                  child: Column(
+                    children: [
+                      const Icon(
+                        Icons.person_pin_circle,
+                        size: 60,
+                        color: AppColors.deepPurple,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Complete Your Profile',
+                        style: AppTextStyles.heading.copyWith(
+                          color: AppColors.deepPurple,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5),
+                      const Text(
+                        'Let us know who you are',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textPurple,
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  // Map Section
-                  Expanded(
-                    child: _currentLatLng == null
-                        ? const Center(
-                            child: Text(
-                              'Fetching your location...',
-                              style: TextStyle(color: Colors.red),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Name Input Field
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Your Name',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.textPurple,
+                          fontFamily: 'Raleway',
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: _nameController,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.w700,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Enter your full name',
+                          filled: true,
+                          fillColor: AppColors.veryLightPurple.withOpacity(0.3),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.person_outline,
+                            color: AppColors.lightPurple,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Location Section
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Your Location',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.textPurple,
+                              fontFamily: 'Raleway',
                             ),
-                          )
-                        : FlutterMap(
-                            options: MapOptions(
-                              center: _currentLatLng!,
-                              // Set the initial center of the map
-                              zoom: 15,
-                              // Set the initial zoom level
-                              onTap: (tapPosition, point) {
-                                setState(() {
-                                  _currentLatLng = point;
-                                  _getLocationNameFromCoordinates(
-                                      point); // Get address for the tapped location
-                                });
-                              },
+                          ),
+                          TextButton.icon(
+                            onPressed: _getCurrentLocation,
+                            icon: const Icon(
+                              Icons.my_location,
+                              size: 18,
+                              color: AppColors.deepPurple,
                             ),
-                            children: [
-                              // Tile Layer for OpenStreetMap
-                              TileLayer(
-                                urlTemplate:
-                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                                subdomains: const ['a', 'b', 'c'],
+                            label: const Text(
+                              'Refresh',
+                              style: TextStyle(
+                                color: AppColors.deepPurple,
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.w700,
                               ),
-                              // Marker Layer
-                              MarkerLayer(
-                                markers: [
-                                  Marker(
-                                    point: _currentLatLng!,
-                                    builder: (context) => const Icon(
-                                      Icons.location_pin,
-                                      color: Colors.red,
-                                      size: 40,
+                            ),
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  AppColors.veryLightPurple.withOpacity(0.3),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        height: 250,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppColors.veryLightPurple,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.deepPurple.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: _currentLatLng == null
+                            ? const Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      color: AppColors.deepPurple,
                                     ),
+                                    SizedBox(height: 16),
+                                    Text(
+                                      'Fetching your location...',
+                                      style: TextStyle(
+                                        color: AppColors.textPurple,
+                                        fontFamily: 'Raleway',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : FlutterMap(
+                                options: MapOptions(
+                                  center: _currentLatLng!,
+                                  zoom: 15,
+                                  onTap: (tapPosition, point) {
+                                    setState(() {
+                                      _currentLatLng = point;
+                                      _getLocationNameFromCoordinates(point);
+                                    });
+                                  },
+                                ),
+                                children: [
+                                  TileLayer(
+                                    urlTemplate:
+                                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                    subdomains: const ['a', 'b', 'c'],
+                                  ),
+                                  MarkerLayer(
+                                    markers: [
+                                      Marker(
+                                        point: _currentLatLng!,
+                                        builder: (context) => Container(
+                                          decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: AppColors.deepPurple
+                                                    .withOpacity(0.4),
+                                                blurRadius: 12,
+                                                spreadRadius: 2,
+                                              ),
+                                            ],
+                                          ),
+                                          child: const Icon(
+                                            Icons.location_on,
+                                            color: AppColors.deepPurple,
+                                            size: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
+                              ),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: AppColors.veryLightPurple.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: AppColors.veryLightPurple,
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.info_outline,
+                                  size: 16,
+                                  color: AppColors.textPurple,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Location Details',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w900,
+                                    color: AppColors.textPurple,
+                                    fontFamily: 'Raleway',
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              _currentLatLng == null
+                                  ? 'No location selected'
+                                  : _locationName,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                                fontFamily: 'Raleway',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            if (_currentLatLng != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                'Coordinates: (${_currentLatLng!.latitude.toStringAsFixed(4)}, ${_currentLatLng!.longitude.toStringAsFixed(4)})',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.deepPurple,
+                                  fontFamily: 'Raleway',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Complete Profile Button
+                SizedBox(
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : completeProfile,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.deepPurple,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 3,
+                      shadowColor: AppColors.deepPurple.withOpacity(0.5),
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.check_circle_outline,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Complete Profile',
+                                style: AppTextStyles.whiteHeading.copyWith(
+                                  fontSize: 18,
+                                ),
                               ),
                             ],
                           ),
                   ),
+                ),
 
-                  const SizedBox(height: 10),
-                  Text(
-                    _currentLatLng == null
-                        ? 'No location selected'
-                        : 'Location: $_locationName (${_currentLatLng!.latitude.toStringAsFixed(4)}, ${_currentLatLng!.longitude.toStringAsFixed(4)})',
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  // Loading indicator or complete profile button
-                  _isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ElevatedButton(
-                          onPressed: completeProfile,
-                          child: const Text('Complete Profile'),
-                        ),
-                ],
-              ),
+                const SizedBox(height: 24),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

@@ -94,7 +94,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  lottie: ^3.3.1
+#  local_auth: ^2.3.0
 
 
 
@@ -127,7 +127,7 @@ flutter:
     - assets/images/certificate_img/cert_first_img.png
     - assets/images/certificate_img/cert_sec_img.png
     - assets/images/certificate_img/cert_third_img.png
-    - assets/images/certificate_img/cert_signature.jpg
+    - assets/images/certificate_img/cert_signature.png
     - assets/waiting_room.jpg
     - assets/waiting_room_second.jpg
     - assets/qr_scan_img.png
@@ -138,9 +138,12 @@ flutter:
     - assets/images/medicine_img/paracetamol_medicine.jpg
     - assets/images/medicine_img/cetirizine_medicine.jpg
     - assets/images/medicine_img/metformin_medicine.png
+    - assets/images/medicine_img/naproxen_medicine.png
+    - assets/images/medicine_img/tramadol_medicine.png
     - assets/images/medicine_img/losartan_medicine.jpg
     - assets/images/medicine_img/Amlodipine_medicine.jpg
     - assets/images/medicine_img/Omeprazole_medicine.jpg
+    - assets/images/medicine_img/aspirin_medicine.png
     - assets/emergency_icon.png
     - assets/icons/Back.png
     - assets/icons/arrow_next_page.png
@@ -160,6 +163,35 @@ flutter:
     - assets/images/home_page/medicine_reminder.png
     - assets/images/home_page/wellness.png
     - assets/images/home_page/robot.png
+    - assets/images/medicine_img/naproxen_medicine.png
+    - assets/images/medicine_img/tramadol_medicine.png
+    - assets/images/medicine_img/diclofenac_medicine.jpg
+    - assets/images/medicine_img/codeine_medicine.png
+    - assets/images/medicine_img/doxycycline_medicine.png
+    - assets/images/medicine_img/clindamycin_medicine.png
+    - assets/images/medicine_img/penicillin_medicine.jpg
+    - assets/images/medicine_img/erythromycin_medicine.jpg
+    - assets/images/medicine_img/levofloxacin_medicine.png
+    - assets/images/medicine_img/loratadine_medicine.png
+    - assets/images/medicine_img/fexofenadine_medicine.jpg
+    - assets/images/medicine_img/diphenhydramine_medicine.png
+    - assets/images/medicine_img/levocetirizine_medicine.jpg
+    - assets/images/medicine_img/hydroxyzine_medicine.jpeg
+    - assets/images/medicine_img/glipizide_medicine.png
+    - assets/images/medicine_img/glyburide_medicine.jpg
+    - assets/images/medicine_img/pioglitazone_medicine.jpg
+    - assets/images/medicine_img/sitagliptin_medicine.png
+    - assets/images/medicine_img/insulin_glargine_medicine.jpg
+    - assets/images/medicine_img/hctz_medicine.jpg
+    - assets/images/medicine_img/enalapril_medicine.jpg
+    - assets/images/medicine_img/ramipril_medicine.png
+    - assets/images/medicine_img/atenolol_medicine.jpg
+    - assets/images/medicine_img/valsartan_medicine.jpg
+    - assets/images/medicine_img/ranitidine_medicine.jpg
+    - assets/images/medicine_img/lansoprazole_medicine.jpg
+    - assets/images/medicine_img/domperidone_medicine.jpg
+    - assets/images/medicine_img/esomeprazole_medicine.jpeg
+    - assets/images/medicine_img/pantoprazole_medicine.jpg
   #     - images/a_dot_burr.jpeg
 #     - images/a_dot_ham.jpeg
 

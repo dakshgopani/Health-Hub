@@ -15,7 +15,7 @@ import 'donation_screen.dart';
 import '../emergency_services_screen.dart';
 import 'qr_code_scanner.dart';
 import 'qr_code_screen.dart';
-import '../store_screen.dart';
+import 'store_screen.dart';
 
 class BloodDonationPage extends StatefulWidget {
   final String userId;

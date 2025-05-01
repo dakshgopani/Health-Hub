@@ -5,7 +5,8 @@ import '../../services/pdf_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart'; // Add this import for date formatting
 import 'package:confetti/confetti.dart';
-import '../rewards_screen.dart';
+import '../../theme/colors.dart';
+import 'rewards_screen.dart';
 
 class DonationSuccessScreen extends StatefulWidget {
   final String userId;
@@ -16,11 +17,11 @@ class DonationSuccessScreen extends StatefulWidget {
 
   const DonationSuccessScreen(
       {super.key,
-      required this.userId,
-      required this.requestId,
-      required this.hospitalName,
-      required this.hospitalLocation,
-      required this.userEmail});
+        required this.userId,
+        required this.requestId,
+        required this.hospitalName,
+        required this.hospitalLocation,
+        required this.userEmail});
 
   @override
   State<DonationSuccessScreen> createState() => _DonationSuccessScreenState();
@@ -214,31 +215,204 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
           "Donation Status",
           style: TextStyle(
             fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway', // Applying Raleway font
+            fontWeight: FontWeight.w900,
+            fontFamily: 'Raleway',
+            color: Colors.white,// Applying Raleway font
           ),
         ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+          weight: 900,
+          size: 26,
+        ),
         centerTitle: true,
+        backgroundColor: AppColors.deepPurple,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        elevation: 0,
       ),
       body: Center(
         child: _isLoading
             ? const CircularProgressIndicator() // ✅ Show loader while checking donation status
             : _hasDonated
-                ? (_showCertificate
-                    ? _buildCertificate() // ✅ Show certificate if donation is verified
-                    : const CircularProgressIndicator()) // (Fallback, should not trigger)
-                : ElevatedButton(
+            ? (_showCertificate
+            ? _buildCertificate() // ✅ Show certificate if donation is verified
+            : const CircularProgressIndicator()) // (Fallback, should not trigger)
+            : _buildNotDonatedYet(),
+      ),
+    );
+  }
+
+  Widget _buildNotDonatedYet() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Card(
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFFE53935), Color(0xFFEF5350)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: const Column(
+                children: [
+                  Icon(Icons.error_outline, color: Colors.white, size: 50),
+                  SizedBox(height: 10),
+                  Text(
+                    "Donation Not Found",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      fontFamily: 'Raleway',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            const Icon(Icons.bloodtype_outlined, color: Colors.red, size: 60),
+            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "We couldn't verify your donation",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.red,
+                  fontFamily: 'Raleway',
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Your blood donation at this hospital hasn't been recorded in our system yet. "
+                    "If you've already donated, please allow some time for the records to update.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'Raleway',
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.local_hospital, color: Colors.red),
+                      const SizedBox(width: 8),
+                      Text(
+                        widget.hospitalName,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'Raleway',
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.location_on, color: Colors.deepPurple),
+                      const SizedBox(width: 8),
+                      Text(
+                        widget.hospitalLocation,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'Raleway',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 140,
+                  child: ElevatedButton.icon(
                     onPressed: () {
-                      // Handle retry logic or other actions
+                      Navigator.pop(context);
                     },
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    label: const Text(
+                      "Go Back",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Raleway',
+                        color: Colors.white,
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: Colors.grey[700],
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: const Text("Not Donated Yet"),
                   ),
+                ),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: 140,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      _checkDonationStatus(); // Refresh and check again
+                    },
+                    icon: const Icon(Icons.refresh, color: Colors.white),
+                    label: const Text(
+                      "Retry",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Raleway',
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
@@ -299,7 +473,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                       end: Alignment.bottomRight,
                     ),
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20)),
+                    BorderRadius.vertical(top: Radius.circular(20)),
                   ),
                   child: const Column(
                     children: [
@@ -309,7 +483,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                         "Donation Certificate",
                         style: TextStyle(
                           fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                           color: Colors.white,
                           fontFamily: 'Raleway',
                         ),
@@ -326,7 +500,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                     "Congratulations, $_userName!",
                     style: const TextStyle(
                       fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w900,
                       color: Colors.green,
                       fontFamily: 'Raleway',
                     ),
@@ -338,7 +512,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     "You have successfully donated blood and made a valuable contribution to saving lives. "
-                    "Your kindness and generosity are truly appreciated!",
+                        "Your kindness and generosity are truly appreciated!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -361,7 +535,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                             widget.hospitalName,
                             style: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
                                 fontFamily: 'Raleway'),
                           ),
                         ],
@@ -377,7 +551,7 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                             widget.hospitalLocation,
                             style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w900,
                               fontFamily: 'Raleway',
                             ),
                           ),
@@ -413,8 +587,9 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                           "Go Back",
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w900,
                             fontFamily: 'Raleway',
+                            color: Colors.white,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -440,8 +615,9 @@ class _DonationSuccessScreenState extends State<DonationSuccessScreen> {
                           "Share",
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w900,
                             fontFamily: 'Raleway',
+                            color: Colors.white,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
