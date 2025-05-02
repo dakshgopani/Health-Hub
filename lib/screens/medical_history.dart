@@ -29,9 +29,9 @@ class _MedicalHistoryPageState extends State<MedicalHistoryPage>
   File? _selectedFile;
 
   // Pinata API keys
-  final String pinataApiKey = '29e74c8898cc7770b410';
+  final String pinataApiKey = 'pinataApiKey';
   final String pinataSecretApiKey =
-      '799deef38f4aa2b5300c2312c2c21c966b5405ef0a466252aa0ecefbaf18479f';
+      'pinataSecretApiKey';
 
   @override
   void initState() {
