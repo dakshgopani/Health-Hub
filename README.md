@@ -3,13 +3,9 @@
 **Your AI-Powered Healthcare Companion**
 Empowering Health Through Technology
 
----
-
 ## 🚀 Overview
 
 **HealthHub** is a unified, AI-powered healthcare platform designed to make healthcare secure, accessible, and convenient for everyone. Developed as a final-year diploma project at Shri Bhagubhai Mafatlal Polytechnic and College of Engineering, HealthHub bridges fragmented healthcare services, enhances access to specialists, and ensures privacy through blockchain-inspired technology. Our platform leverages artificial intelligence and machine learning for faster, more accurate diagnoses and seamless care delivery.
-
----
 
 ## 🌟 Key Features
 
@@ -30,8 +26,6 @@ Search for specialists, book appointments, and consult securely through integrat
     - 🚑 Book ambulances instantly using GPS.
     - 🩸 Access blood donation/request modules and earn certificates.
 
----
-
 ## 🛠️ How It Works
 
 - 🩺 **Smart Symptom Analysis:**
@@ -47,8 +41,6 @@ Interactive tools for medicine identification, safe recommendations, and gamifie
 - 🆘 **Emergency Response:**
 Real-time hospital maps, instant ambulance booking, and blood donation modules for urgent needs.
 
----
-
 ## 🏗️ Tech Stack
 
 | Layer | Technology |
@@ -59,9 +51,6 @@ Real-time hospital maps, instant ambulance booking, and blood donation modules f
 | 🗺️ Maps | OpenStreetMap (hospital/emergency tracking) |
 | 🔗 Blockchain | IPFS + SHA-256 encryption |
 
-
----
-
 ## 🔮 Future Scope
 
 - ⌚ Smartwatch integration for real-time health monitoring
@@ -70,28 +59,20 @@ Real-time hospital maps, instant ambulance booking, and blood donation modules f
 - 🛏️ Live hospital bed availability
 - 📊 Predictive health insights powered by AI
 
----
-
 ## 👨‍💻 Team
 
-- Daksh Gopani(https://github.com/dakshgopani)
-- Rudra Parmar(https://github.com/rudraparmar76)
-- Vinit Shah(https://github.com/Vinit062006)
+- [Daksh Gopani](https://github.com/dakshgopani)
+- [Rudra Parmar](https://github.com/rudraparmar76)
+- [Vinit Shah](https://github.com/Vinit062006)
 
 **Guided by:**
 Mr. Janardan Kulkarni (HOD - Computer Engineering)
-
----
 
 ## 📱 Try HealthHub
 
 Experience the future of healthcare:
 [🌍 Live Demo](https://healthhub-diplomaproject.netlify.app/)
 
----
-
 > **Your health, your way. HealthHub is your vision for the future of healthcare – smarter, more connected, and truly personalized.** 🌟
-
----
 
 **Developed at Shri Bhagubhai Mafatlal Polytechnic and College of Engineering**
