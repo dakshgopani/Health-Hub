@@ -9,7 +9,7 @@ import '../models/prediction_response.dart';
 class ApiService with ChangeNotifier {
   final String baseUrl = 'https://disease-prediction-jzs3.onrender.com';
   static const String apiKey =
-      "AIzaSyBCvLTBFuntdAk-PoMRAVJGnIrinI0ZA2k"; // Replace with your actual API key
+      "API-KEY"; // Replace with your actual API key
   static const String geminiUrl =
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
 
