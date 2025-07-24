@@ -46,7 +46,7 @@ Real-time hospital maps, instant ambulance booking, and blood donation modules f
 | Layer | Technology |
 | :-- | :-- |
 | 🎨 Frontend | Flutter (cross-platform mobile UI) |
-| ⚙️ Backend | FastApi (APIs, AI integration), Firebase |
+| ⚙️ Backend | FastApi (APIs, AI integration), Railway, Firebase |
 | 🧠 AI/ML | TensorFlow , Jupyter Notebook |
 | 🗺️ Maps | OpenStreetMap (hospital/emergency tracking) |
 | 🔗 Blockchain | IPFS + SHA-256 encryption |
