@@ -34,7 +34,7 @@ Ensemble ML models deliver accurate, data-driven predictions for better health o
 All records are encrypted and stored on IPFS, ensuring both security and accessibility.
 - 🕒 **Controlled Sharing:**
 Share medical data with doctors using privacy-preserving, time-limited codes.
-- 👨‍⚕️👩‍⚕️ **Doctor-Patient Flow:**
+- 👨‍⚕️ **Doctor-Patient Flow:**
 Seamlessly search, book, check-in, and consult with doctors-records are shared securely at every step.
 - 💊 **Medicine \& Rewards:**
 Interactive tools for medicine identification, safe recommendations, and gamified health engagement.
