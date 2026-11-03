@@ -71,7 +71,7 @@ Mr. Janardan Kulkarni (HOD - Computer Engineering)
 ## 📱 Try HealthHub
 
 Experience the future of healthcare:
-[🌍 Live Demo](https://healthhub-diplomaproject.netlify.app/)
+[🌍 Live Demo](https://healthub-web.vercel.app)
 
 > **Your health, your way. HealthHub is your vision for the future of healthcare – smarter, more connected, and truly personalized.** 🌟
 
