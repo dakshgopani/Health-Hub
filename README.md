@@ -1,11 +1,14 @@
 # HealthHub
 
-**AI-Powered Healthcare Companion**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/dakshgopani/Health-Hub)](https://github.com/dakshgopani/Health-Hub/commits/main)
 
 **A unified healthcare platform that provides AI-driven diagnostics, secure medical records, and essential health services in one integrated application.**
+
+## Live Demo
+
+[Try HealthHub](https://healthub-web.vercel.app) - Experience the future of healthcare.
 
 ## App Screenshots
 
@@ -254,8 +257,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Daksh Gopani](https://github.com/dakshgopani)
 - [Rudra Parmar](https://github.com/rudraparmar76)
 - [Vinit Shah](https://github.com/Vinit062006)
-
-## Try HealthHub
-
-Experience the future of healthcare:
-[Live Demo](https://healthub-web.vercel.app)
